@@ -10,7 +10,7 @@ Resource          ../Public/public_lib.txt
 
 *** Variable ***
 ${pwd}            123321    # 密码
-${userName}       32521559    # 用户名
+${userName}       18011884709    # 用户名
 ${ContentType}    application/x-www-form-urlencoded    # POST数据格式
 
 *** Test Cases ***    courseid           nomoment             private    wgs

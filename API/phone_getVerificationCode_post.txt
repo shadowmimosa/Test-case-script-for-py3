@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation     /phone/getVerificationCode 发送短信验证码（6位）
+Documentation     /phone/getVerificationCode 发送短信验证码（6位数）
 Resource          ../Public/public_lib.txt
 
 *** Variable ***
@@ -11,7 +11,7 @@ ${ContentType}    application/x-www-form-urlencoded;charset=UTF-8    # POST数�
 Class_01              [Documentation]    /phone/getVerificationCode 发送短信验证码（6位）
                       [Tags]             Test                                        gxy        Online
                       [Template]         /phone/getVerificationCode_Post_Keywords
-                      15920150727        0                                           Success
+                      13800138000        0                                           Success
 
 *** Keywords ***
 /phone/getVerificationCode_Post_Keywords
@@ -20,7 +20,7 @@ Class_01              [Documentation]    /phone/getVerificationCode 发送短信
     Evaluate    reload(sys)    sys
     Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
-    #${userName}    Env_username
+    ${userName}    Env_username
     ${path}=    set variable    /phone/getVerificationCode
     ${maps}=    create dictionary
     Run Keyword If    ${phoneNumber}>0    set to dictionary    ${maps}    phoneNumber=${phoneNumber}
