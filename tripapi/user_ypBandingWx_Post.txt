@@ -18,7 +18,7 @@ ${ContentType}    application/x-www-form-urlencoded;charset=UTF-8    # POST数�
 Class_01              [Documentation]    user/ypBandingWx TestCase测试用例
                       [Tags]             Test                              Online    gxy
                       [Template]         user_ypBandingWx_Post_Keywords
-                      6010               未找到关联的账号，绑定失败！
+                      6010               未找到可以关联的账号，绑定失败！
 
 *** Keywords ***
 user_ypBandingWx_Post_Keywords
