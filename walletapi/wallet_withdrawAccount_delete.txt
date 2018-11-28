@@ -13,6 +13,11 @@ Class_01              [Documentation]      删除绑定帐号
                       [Template]           withdrawAccount_delete
                       81                   "700000"                  "同一姓名最少二个才能进行删除"
 
+Class_02              [Documentation]      删除绑定帐号
+                      [Tags]               Test                      txy
+                      [Template]           withdrawAccount_delete
+                      2846                 "0"                       "成功"
+
 *** Keywords ***
 withdrawAccount_delete
     [Arguments]    ${withdrawAccountId}    ${ret}    ${msg}
