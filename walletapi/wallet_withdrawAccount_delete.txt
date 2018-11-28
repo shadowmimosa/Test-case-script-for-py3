@@ -15,7 +15,7 @@ Class_01              [Documentation]      删除绑定帐号
 Class_02              [Documentation]      删除绑定帐号
                       [Tags]               Test                      cxd
                       [Template]           withdrawAccount_delete
-                      81                   "0"                  "同一姓名最少二个才能进行删除"
+                      81                   "0"                  "成功"
 *** Keywords ***
 withdrawAccount_delete
     [Arguments]    ${withdrawAccountId}    ${ret}    ${msg}
