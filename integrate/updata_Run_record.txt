@@ -104,7 +104,8 @@ RuningRecord
     ${lasttime}=    convert to string    ${lasttime}
     ${starttime}=    convert to string    ${starttime}
     #对数组类型处理
-    ${altitude}=    Run Keyword If    ${altitude}!=0    arraytostring    ${altitude}
+    ${verify_altitude}      Evaluate       len(eval(${altitude}))
+    ${altitude}=    Run Keyword If    ${verify_altitude}!=0    arraytostring    ${altitude}
     ${heartrate}=    arraytostring    ${heartrate}
     ${content}=    arraytostring    ${content}
     ${stepcontent}=    arraytostring    ${stepcontent}
