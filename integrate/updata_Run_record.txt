@@ -25,14 +25,16 @@ RunRecord_opinion
     [Documentation]    跑步判断，是否满足条件跑步
     Evaluate    reload(sys)    sys
     Evaluate    sys.setdefaultencoding( "utf-8" )    sys
-    #环境判定和用户的选择
+    #环境判定随机选择用户和密码
     @{usrpwdenv}    usr_pass_env    0
-    #${userName}    Get From List    ${usrpwdenv}    0
+    ${userName}    Get From List    ${usrpwdenv}    0
     ${pwd}    Get From List    ${usrpwdenv}    1
     ${env}    Get From List    ${usrpwdenv}    2
-    #${userName}    set variable    13064764870
+    ##自定义用户和密码
+    #${userName}    set variable    13829744541
+    #${pwd}    set variable    67889911
     #从4个热门话题中随机选择一个热门话题
-    ${topicName}    FourTopicList_TopicName    ${userName}
+    ${topicName}    FourTopicList_TopicName    ${userName}    ${pwd}
     #从热门话题中，选择当前第1页最新的动态
     ${srcfids}    Run Keyword If    '${env}'=='Test'    TopicDetail_Fids    ${topicName}    1    2
     ...    ${userName}    8640000
@@ -83,6 +85,8 @@ RuningRecord
     ${city}    Run Keyword If    ${city1}>0    set variable    ${city1}
     ...    ELSE    set variable    香港
     ${dateline}=    get json value    ${src}    /lasttime
+    #自定义设置跑步时间和上传时间
+    #${dateline}=    set variable    1543968000
     ${lasttime}=    Evaluate    ${dateline}-120
     ${starttime}=    Evaluate    ${dateline}-${second}-120
     ${runid}    Evaluate    uuid.uuid1()    uuid
