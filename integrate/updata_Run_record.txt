@@ -103,9 +103,12 @@ RuningRecord
     ${dateline}=    convert to string    ${dateline}
     ${lasttime}=    convert to string    ${lasttime}
     ${starttime}=    convert to string    ${starttime}
+
+    # use List Or Str to verify     
+    ${verify_altitude}=     List Or Str    ${altitude}
+    ${altitude}=    Run Keyword If     ${verify_altitude}     arraytostring    ${altitude}
+    
     #对数组类型处理
-    ${verify_altitude}      Evaluate       len(eval(${altitude}))
-    ${altitude}=    Run Keyword If    ${verify_altitude}!=0    arraytostring    ${altitude}
     ${heartrate}=    arraytostring    ${heartrate}
     ${content}=    arraytostring    ${content}
     ${stepcontent}=    arraytostring    ${stepcontent}
