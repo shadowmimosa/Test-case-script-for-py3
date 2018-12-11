@@ -329,7 +329,7 @@ thejoyrun_postd
     ${Retry}    Run Keyword If    '${Retry}'=='None'    set variable    ${RetryInti}
     ...    ELSE    set variable    ${Retry}
     #log    Retry=======================${Retry}
-    ${pwd}    Run Keyword If    '${pwds}'=='None'     set variable    ${pwd}
+    ${pwd}    Run Keyword If    '${pwds}'=='None'    set variable    ${pwd}
     ...    ELSE    set variable    ${pwds}
     ${env}    Env_URL    ${Base_URL}
     ${userslist}    Get Dictionary Keys    ${usersinfo_dict}
@@ -380,9 +380,8 @@ thejoyrun_postd
     ${sign2}=    encrypt    ${signkey2}    md5    32
     log    运行环境是:${Base_URL}
     ${Testenv}    Get Lines Matching Pattern    ${Base_URL}    *-test*
-    ${sign1}    Run Keyword If    '${Testenv}'!='${EMPTY}'    
-    ...     set variable    ${signTest}
-    ...     ELSE    set variable    ${signOnline}
+    ${sign1}    Run Keyword If    '${Testenv}'!='${EMPTY}'    set variable    ${signTest}
+    ...    ELSE    set variable    ${signOnline}
     ${_sign} =    Convert To Uppercase    ${sign1}
     log    通用签名:${_sign}
     ${signature} =    Convert To Uppercase    ${sign2}
@@ -405,12 +404,10 @@ thejoyrun_postd
     ${resp}=    Post Request    run    uri=${path}    data=${post_param}
     ${ret_result}    charconver    ${resp.content}
     ${get_count}    Get Count    ${ret_result}    ret\":"401"
-    ${ret0_count}    Get Count    ${ret_result}    ret\":"0"
-    #:FOR    ${index}    IN RANGE    0    ${RetryInti}
-    #\    Exit For Loop If    ${get_count} == 0
-    #\    thejoyrun_postd
-    #\    ...    ${path}    ${maps}    ${userName}    ${Base_URL}    ${pwds}
-    ...    # ${Retry}
+    ${ret0_count}    Get Count    ${ret_result}    ret\":"0"    #:FOR    ${index}    IN RANGE
+    ...    # 0    ${RetryInti}    #\    Exit For Loop If    ${get_count} == 0    #\
+    ...    # thejoyrun_postd    #\    ...    ${path}    ${maps}    ${userName}
+    ...    # ${Base_URL}    ${pwds}    # ${Retry}
     Run Keyword If    ${get_count}==1    log    ${userName}的SID过期而登录失败
     Run Keyword If    ${get_count}==1    Pop From Dictionary    ${usersinfo_dict}    ${env}${userName}
     #Run Keyword If    ${ret0_count}==1    Set_Global_Var    ${path}    ${ret_result}    ${userName}    ${Base_URL}
@@ -510,7 +507,8 @@ thejoyrun_postnl
     ...    ELSE    Set Variable    ${1}
     ${Retry}    Run Keyword If    ${get_count}==1    Evaluate    ${Retry}-1
     ...    ELSE    Set Variable    ${-1}
-    ${resp}    Run Keyword If    ${get_count}==1 and ${Retry}>=0    thejoyrun_postnl    ${path}    ${maps}     ${Base_URL}    ${Retry}
+    ${resp}    Run Keyword If    ${get_count}==1 and ${Retry}>=0    thejoyrun_postnl    ${path}    ${maps}    ${Base_URL}
+    ...    ${Retry}
     ...    ELSE    set variable    ${resp}
     Run Keyword If    ${get_count} == 0    Return From Keyword    ${resp}
     log    thejoyrun_postnl End ......
@@ -525,7 +523,7 @@ thejoyrun_post_nosign
     log    thejoyrun_post_nosign Start ......
     ${Retry}    Run Keyword If    '${Retry}'=='None'    set variable    ${RetryInti}
     ...    ELSE    set variable    ${Retry}
-    ${pwd}    Run Keyword If    '${pwds}'=='None'   set variable    ${pwd}
+    ${pwd}    Run Keyword If    '${pwds}'=='None'    set variable    ${pwd}
     ...    ELSE    set variable    ${pwds}
     ${env}    Env_URL    ${Base_URL}
     ${userslist}    Get Dictionary Keys    ${usersinfo_dict}
@@ -844,4 +842,25 @@ thejoyrun_get_nosign
     ...    ELSE    set variable    ${resp}
     Return From Keyword If    ${get_count}==0    ${resp}
     log    thejoyrun_get_nosign End ...
+    [Return]    ${resp}
+
+thejoyrun_postjson
+    [Arguments]    ${path}    ${maps}    ${Base_URL}    ${uid}=None
+    [Documentation]    *用于微信小程序Post场景：joyrun中post请求json方式关键字*
+    ...
+    ...    参数以data提交，在出现Url中，也在body中带公共参数（appid、timestamp、sid主要用于小程序）；
+    [Timeout]    30 seconds
+    log    thejoyrun_postjson Start ......
+    ${ContentType}    Set Variable    application/json;charset=UTF-8
+    ${heards_dict}=    create dictionary
+    log    heards_dict ===${heards_dict}
+    ${URL}=    set variable    ${Base_URL}
+    ${post_dict}=    create dictionary    &{maps}
+    log    post_dict：${post_dict}
+    #请求头处理${UserAgent}
+    set to dictionary    ${heards_dict}    Content-Type=${ContentType}
+    set to dictionary    ${heards_dict}    User-Agent=Mozilla/5.0 (iPhone; CPU iPhone OS 11_3 like Mac OS X)
+    Create Session    runwx    ${URL}    headers=${heards_dict}
+    ${resp}=    Post Request    runwx    uri=${path}    data=${post_dict}
+    log    thejoyrun_postjson End ......
     [Return]    ${resp}

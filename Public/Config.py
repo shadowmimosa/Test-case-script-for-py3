@@ -171,6 +171,9 @@ if  JoyrunEvn=='Test' or JoyrunEvn=='0':
 	
 	#搜索
 	search_URL='http://search-test.api.thejoyrun.com'
+	
+	#语音训练—H5
+	training_dubbox_URL='http://training.dubbox.test.thejoyrun.com'
 
 	
 	##===================小程序相关配置=====================
@@ -293,6 +296,9 @@ else:
 
 	#搜索
 	search_URL='http://search.api.thejoyrun.com'
+	
+	#语音训练—H5
+	training_dubbox_URL='http://training.dubbox.thejoyrun.com'
 
 	
 	#=====小程序相关配置=================================
