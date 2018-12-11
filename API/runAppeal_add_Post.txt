@@ -44,6 +44,8 @@ add_runAppeal
     set to dictionary    ${maps}    images=${images}
     set to dictionary    ${maps}    postId=${postId}
     set to dictionary    ${maps}    reason=${reason}
+    #Run keyword Connect To Datebase [ dbapiModuleName=MySQL | dbName=ypucenter | dbUsername=yptest | dbPassword=6NNYAo847alv | dbHost=test01.mysql.db.thejoyrun.com | dbPort=3621 | dbCharset=None | dbConfigFile=None ]
+    #Executs Sql String UPDATE yp_ucenter.run_appeal    set status=2 where user_id=32521559
     log    ========输出接口URL：${api_URL}${path}
     log    ========接口的入参为：${userName}:${maps}==========
     ${resp}=    thejoyrun_postd    ${path}    ${maps}    ${userName}    ${api_URL}

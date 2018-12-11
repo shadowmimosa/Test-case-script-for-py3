@@ -5,12 +5,12 @@ Library           RequestsLibrary
 Library           pymysql
 Library           DatabaseLibrary
 Library           String
-# Library           HttpLibrary.HTTP
+Library           HttpLibrary.HTTP
 Resource          ../Public/public_lib.txt
 
 *** Variable ***
-${pwd}            123321    # 密码
-${userName}       18011884709    # 用户名
+${pwd}            67889911    # 密码
+${userName}       13829744541    # 用户名
 ${ContentType}    application/x-www-form-urlencoded    # POST数据格式
 
 *** Test Cases ***    courseid           nomoment             private    wgs
@@ -23,16 +23,18 @@ Class_01              [Documentation]    上传跑步记录
 RunRecord_opinion
     [Arguments]    ${courseid}    ${nomoment}    ${private}    ${wgs}
     [Documentation]    跑步判断，是否满足条件跑步
-    # Evaluate    reload(sys)    sys
-    # Evaluate    sys.setdefaultencoding( "UTF-8" )    sys
-    #环境判定和用户的选择
+    Evaluate    reload(sys)    sys
+    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    #环境判定随机选择用户和密码
     @{usrpwdenv}    usr_pass_env    0
-    #${userName}    Get From List    ${usrpwdenv}    0
+    ${userName}    Get From List    ${usrpwdenv}    0
     ${pwd}    Get From List    ${usrpwdenv}    1
     ${env}    Get From List    ${usrpwdenv}    2
-    #${userName}    set variable    13064764870
+    ##自定义用户和密码
+    #${userName}    set variable    13829744541
+    #${pwd}    set variable    67889911
     #从4个热门话题中随机选择一个热门话题
-    ${topicName}    FourTopicList_TopicName    ${userName}
+    ${topicName}    FourTopicList_TopicName    ${userName}    ${pwd}
     #从热门话题中，选择当前第1页最新的动态
     ${srcfids}    Run Keyword If    '${env}'=='Test'    TopicDetail_Fids    ${topicName}    1    2
     ...    ${userName}    8640000
@@ -56,8 +58,8 @@ RuningRecord
     [Arguments]    ${src}    ${courseid}    ${nomoment}    ${private}    ${wgs}    ${userName}
     ...    ${topicName}    ${env}=None
     [Documentation]    /po.aspx type=1或7，为上传跑步记录
-    # Evaluate    reload(sys)    sys
-    # Evaluate    sys.setdefaultencoding( "UTF-8" )    sys
+    Evaluate    reload(sys)    sys
+    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     ${isaltitude}    Get Count    ${src}    "altitude":
     ${altitude}    Run Keyword If    ${isaltitude}>0    get json value    ${src}    /runrecord/altitude
     ...    ELSE    set variable    0
@@ -78,11 +80,13 @@ RuningRecord
     ${type}=    get json value    ${src}    /runrecord/type
     ${srcuid}=    get json value    ${src}    /runrecord/uid
     ${city1}=    get json value    ${src}    /runrecord/city
-    ${province}    Run Keyword If    ${province1}!=''    set variable    ${province1}
+    ${province}    Run Keyword If    ${province1}>0    set variable    ${province1}
     ...    ELSE    set variable    香港
-    ${city}    Run Keyword If    ${city1}!=0    set variable    ${city1}
+    ${city}    Run Keyword If    ${city1}>0    set variable    ${city1}
     ...    ELSE    set variable    香港
     ${dateline}=    get json value    ${src}    /lasttime
+    #自定义设置跑步时间和上传时间
+    #${dateline}=    set variable    1543968000
     ${lasttime}=    Evaluate    ${dateline}-120
     ${starttime}=    Evaluate    ${dateline}-${second}-120
     ${runid}    Evaluate    uuid.uuid1()    uuid
@@ -103,12 +107,8 @@ RuningRecord
     ${dateline}=    convert to string    ${dateline}
     ${lasttime}=    convert to string    ${lasttime}
     ${starttime}=    convert to string    ${starttime}
-
-    # use List Or Str to verify     
-    ${verify_altitude}=     List Or Str    ${altitude}
-    ${altitude}=    Run Keyword If     ${verify_altitude}     arraytostring    ${altitude}
-    
     #对数组类型处理
+    ${altitude}=    Run Keyword If    ${altitude}!=0    arraytostring    ${altitude}
     ${heartrate}=    arraytostring    ${heartrate}
     ${content}=    arraytostring    ${content}
     ${stepcontent}=    arraytostring    ${stepcontent}
@@ -157,7 +157,7 @@ RuningRecord
     log    ${api_URL}${path}${maps}
     ${resp}=    thejoyrun_postd    ${path}    ${maps}    ${userName}    ${api_URL}
     ${content}=    charconver    ${resp.content}
-    # log json    ${content}
+    log json    ${content}
     log    验证ret是否符合预期
     should contain    ${content}    "ret":"0"
     log    ret 符合预期为"0"

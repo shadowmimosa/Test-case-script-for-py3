@@ -9,19 +9,21 @@ ${ContentType}    application/x-www-form-urlencoded    # POST数据格式
 
 *** Test Cases ***    withdrawAccountId    ret                       msg
 Class_01              [Documentation]      删除绑定帐号
-                      [Tags]               onLine                      txy
+                      [Tags]               txy                       onLine
                       [Template]           withdrawAccount_delete
                       81                   "700000"                  "同一姓名最少二个才能进行删除"
+
 Class_02              [Documentation]      删除绑定帐号
-                      [Tags]               Test                      cxd
+                      [Tags]               Test                      txy
                       [Template]           withdrawAccount_delete
-                      81                   "0"                  "成功"
+                      2846                 "0"                       "成功"
+
 *** Keywords ***
 withdrawAccount_delete
     [Arguments]    ${withdrawAccountId}    ${ret}    ${msg}
     [Documentation]    绑定钱包手机号
-    # Evaluate    reload(sys)    sys
-    # Evaluate    sys.setdefaultencoding( "UTF-8" )    sys
+    Evaluate    reload(sys)    sys
+    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /withdrawAccount/delete
     ${maps}=    create dictionary
     set to dictionary    ${maps}    withdrawAccountId=${withdrawAccountId}
@@ -31,7 +33,7 @@ withdrawAccount_delete
     log    ${bet_URL}
     ${resp}=    thejoyrun_postd    ${path}    ${maps}    ${userName}    ${wallet_URL}
     ${content}=    charconver    ${resp.content}
-    # log json    ${content}
+    log json    ${content}
     log    ======开始断言验证=====
     log    验证ret是否符合预期
     should contain    ${content}    "ret":${ret}
