@@ -27,7 +27,7 @@ runAppeal_add_Post_Keywords
     # Evaluate    reload(sys)    sys
     # Evaluate    sys.setdefaultencoding( "UTF-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
-    ${userName}    Env_username
+    #${userName}    Env_username
     ${con}    thejoyrun_Keywords    ${api_URL}    /runAppeal/canAppealRunList    ${userName}    ${pwd}    Post
     ${codelist}    get json value    ${con}    /data
     ${codelists}    FilterList    ${codelist}    status,8,8.1    postId
