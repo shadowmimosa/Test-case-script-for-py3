@@ -1,12 +1,7 @@
 *** Settings ***
 Documentation     /po.aspx复制跑步记录并上传跑步记录
-#Library    Collections
-#Library    RequestsLibrary
-#Library    pymysql
-#Library    DatabaseLibrary
-#Library    String
-#Library     HttpLibrary.HTTP
-Resource          ../Public/public_lib.txt
+Resource          ../Public/public_lib.txt    #Library    Collections    #Library    RequestsLibrary    #Library    pymysql
+...               #Library    DatabaseLibrary    #Library    String    #Library    HttpLibrary.HTTP
 
 *** Variable ***
 ${pwd}            67889911    # 密码
@@ -23,8 +18,8 @@ Class_01              [Documentation]    上传跑步记录
 RunRecord_opinion
     [Arguments]    ${courseid}    ${nomoment}    ${private}    ${wgs}
     [Documentation]    跑步判断，是否满足条件跑步
-    ######Evaluate       reload(sys)    sys
-    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate    reload(sys)    sys
+    ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     #环境判定随机选择用户和密码
     @{usrpwdenv}    usr_pass_env    0
     ${userName}    Get From List    ${usrpwdenv}    0
@@ -58,8 +53,8 @@ RuningRecord
     [Arguments]    ${src}    ${courseid}    ${nomoment}    ${private}    ${wgs}    ${userName}
     ...    ${topicName}    ${env}=None
     [Documentation]    /po.aspx type=1或7，为上传跑步记录
-    ######Evaluate       reload(sys)    sys
-    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate    reload(sys)    sys
+    ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     ${isaltitude}    Get Count    ${src}    "altitude":
     ${altitude}    Run Keyword If    ${isaltitude}>0    get json value    ${src}    /runrecord/altitude
     ...    ELSE    set variable    0
@@ -80,9 +75,9 @@ RuningRecord
     ${type}=    get json value    ${src}    /runrecord/type
     ${srcuid}=    get json value    ${src}    /runrecord/uid
     ${city1}=    get json value    ${src}    /runrecord/city
-    ${province}    Run Keyword If    ${province1}>0    set variable    ${province1}
+    ${province}    Run Keyword If    ${province1}>''    set variable    ${province1}
     ...    ELSE    set variable    香港
-    ${city}    Run Keyword If    ${city1}>0    set variable    ${city1}
+    ${city}    Run Keyword If    ${city1}>''    set variable    ${city1}
     ...    ELSE    set variable    香港
     ${dateline}=    get json value    ${src}    /lasttime
     #自定义设置跑步时间和上传时间
