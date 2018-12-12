@@ -26,8 +26,8 @@ weatherr_Post_assertClass
     [Arguments]    ${city}    ${citycode}    ${longitude}    ${latitude}    ${province}    ${ret}
     ...    ${msg}
     [Documentation]    weatherr_Post接口，【示例中仅提供最基础内容，实际编写时，可以此基础上扩展】
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /weather
     ${maps}=    create dictionary
     set to dictionary    ${maps}    city=${city}

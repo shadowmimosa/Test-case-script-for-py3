@@ -19,8 +19,8 @@ Class_01              [Documentation]    V3.2增加黑名单userBlacklist/add
 userBlacklist_add_Post_assertClass
     [Arguments]    ${toUid}    ${userName}    ${expected_code}
     [Documentation]    增加黑名单
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ########Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /userBlacklist/add
     ${maps}=    create dictionary
     set to dictionary    ${maps}    toUid=${toUid}

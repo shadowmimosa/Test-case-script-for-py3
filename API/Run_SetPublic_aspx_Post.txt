@@ -17,8 +17,8 @@ Class_01              [Documentation]    跑步记录地图设置私密接口Set
 SetPublic_select
     [Arguments]    ${fid}    ${ret}
     [Documentation]    跑步记录地图设置公开接口/Run/SetPublic.aspx
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ########Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${time}=    Get Time    epoch
     log    time= ${time}
     ${dateline}=    convert to string    ${time}
@@ -33,8 +33,8 @@ SetPublic_select
 SetPublic_Post_assertClass
     [Arguments]    ${fid}    ${userName}    ${ret}
     [Documentation]    跑步记录地图设置公开接口SetPublic.aspx
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ########Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /Run/SetPublic.aspx
     ${maps}=    create dictionary
     set to dictionary    ${maps}    fid=${fid}

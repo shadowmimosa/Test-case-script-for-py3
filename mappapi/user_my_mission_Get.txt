@@ -22,8 +22,8 @@ Class_02              [Documentation]    bet/user/my/mission TestCase测试用�
 user_my_mission_Getw_Keywords
     [Arguments]    ${uid}    ${ret}    ${msg}
     [Documentation]    bet/user/my/mission 接口用例的Keywords关健字
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /bet/user/my/mission
     ${maps}=    create dictionary
     set to dictionary    ${maps}    uid=${uid}

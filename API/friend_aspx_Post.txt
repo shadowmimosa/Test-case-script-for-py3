@@ -18,8 +18,8 @@ Class_01              [Documentation]    friend.aspx TestCase测试用例
 friend_aspx_Post_Keywords
     [Arguments]    ${option}    ${touid}    ${ret}    ${msg}
     [Documentation]    friend.aspx 接口用例的Keywords关健字
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ########Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
     #${userName}    Env_username
     ${path}=    set variable    /friend.aspx

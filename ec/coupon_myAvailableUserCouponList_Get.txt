@@ -17,8 +17,8 @@ Class_01              [Documentation]    coupon/myAvailableUserCouponList TestCa
 coupon_myAvailableUserCouponList_Getw_Keywords
     [Arguments]    ${uid}    ${ret}    ${msg}
     [Documentation]    coupon/myAvailableUserCouponList 20180530我的可用优惠券
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /ec_api/coupon/myAvailableUserCouponList
     ${maps}=    create dictionary
     set to dictionary    ${maps}    uid=${uid}

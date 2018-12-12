@@ -22,8 +22,8 @@ Class_02              [Documentation]      删除绑定帐号
 withdrawAccount_delete
     [Arguments]    ${withdrawAccountId}    ${ret}    ${msg}
     [Documentation]    绑定钱包手机号
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /withdrawAccount/delete
     ${maps}=    create dictionary
     set to dictionary    ${maps}    withdrawAccountId=${withdrawAccountId}

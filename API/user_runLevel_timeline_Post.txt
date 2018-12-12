@@ -17,8 +17,8 @@ Class_01              [Documentation]    user/runLevel/timeline TestCase测试�
 user_runLevel_timeline_Post_Keywords
     [Arguments]     ${ret}   ${msg}
     [Documentation]    user/runLevel/timeline 接口用例的Keywords关健字
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ########Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /user/runLevel/timeline
     ${maps}=    create dictionary
     log    ========输出接口URL：${api_URL}${path}

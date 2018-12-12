@@ -17,8 +17,8 @@ Class_01              [Documentation]    getUploadSetting获取动态参数接�
 getUploadSetting_Post_assertClass
     [Arguments]    ${expected_code}
     [Documentation]    getUploadSetting获取动态参数接口 基本验证
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ########Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /feed/video/getUploadSetting
     ${maps}=    create dictionary
     #set to dictionary    ${maps}    lasttime=${lasttime}

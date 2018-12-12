@@ -1,11 +1,11 @@
 *** Settings ***
 Documentation     /po.aspx复制跑步记录并上传跑步记录
-Library           Collections
-Library           RequestsLibrary
-Library           pymysql
-Library           DatabaseLibrary
-Library           String
-Library           HttpLibrary.HTTP
+#Library    Collections
+#Library    RequestsLibrary
+#Library    pymysql
+#Library    DatabaseLibrary
+#Library    String
+#Library     HttpLibrary.HTTP
 Resource          ../Public/public_lib.txt
 
 *** Variable ***
@@ -23,8 +23,8 @@ Class_01              [Documentation]    上传跑步记录
 RunRecord_opinion
     [Arguments]    ${courseid}    ${nomoment}    ${private}    ${wgs}
     [Documentation]    跑步判断，是否满足条件跑步
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     #环境判定随机选择用户和密码
     @{usrpwdenv}    usr_pass_env    0
     ${userName}    Get From List    ${usrpwdenv}    0
@@ -58,8 +58,8 @@ RuningRecord
     [Arguments]    ${src}    ${courseid}    ${nomoment}    ${private}    ${wgs}    ${userName}
     ...    ${topicName}    ${env}=None
     [Documentation]    /po.aspx type=1或7，为上传跑步记录
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${isaltitude}    Get Count    ${src}    "altitude":
     ${altitude}    Run Keyword If    ${isaltitude}>0    get json value    ${src}    /runrecord/altitude
     ...    ELSE    set variable    0

@@ -29,8 +29,8 @@ Class_03              [Documentation]     userusersetting.aspx取消屏蔽 post�
 userusersetting_Post_assertClass
     [Arguments]    ${option}    ${touid}    ${userName}    ${expected_code}    ${msg}
     [Documentation]    userusersetting.aspx 屏蔽动态 post的demo请求
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /userusersetting.aspx
     ${maps}=    create dictionary
     set to dictionary    ${maps}    option=${option}

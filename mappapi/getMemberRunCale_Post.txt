@@ -23,8 +23,8 @@ Class_02              [Documentation]    /corpcrew/crewMemberRun/getMemberRunCal
 getMemberRunCale_Post_assertClass
     [Arguments]    ${uid}    ${startDay}    ${endDay}    ${crewId}    ${expected_code}
     [Documentation]    /corpcrew/crewMemberRun/getMemberRunCale个人在跑团中的跑量接口
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /corpcrew/crewMemberRun/getMemberRunCale
     ${maps}=    create dictionary
     set to dictionary    ${maps}    uid=${uid}

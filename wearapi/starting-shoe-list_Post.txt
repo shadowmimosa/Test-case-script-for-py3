@@ -17,8 +17,8 @@ Class_01              [Documentation]    starting-shoe-list列表-无传参
 starting-shoe-list_Post_assertClass
     [Arguments]    ${expected_code}
     [Documentation]    starting-shoe-list基本验证
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /starting-shoe-list
     ${maps}=    create dictionary
     log    ---输出参数---

@@ -23,8 +23,8 @@ Class_02              [Documentation]    /corpcrew/crewDailyChampion/getListByPa
 getListByPage_Post_assertClass
     [Arguments]    ${page}    ${pageSize}    ${crewId}    ${expected_code}
     [Documentation]    /corpcrew/crewDailyChampion/getListByPage跑团冠军榜接口
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /corpcrew/crewDailyChampion/getListByPage
     ${maps}=    create dictionary
     set to dictionary    ${maps}    page=${page}

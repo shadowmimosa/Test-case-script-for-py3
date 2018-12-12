@@ -17,8 +17,8 @@ Class_01              [Documentation]    feedmessagelist获取未读的动态点
 feedMessageList_Post_assertClass
     [Arguments]    ${lasttime}    ${expected_code}    ${msg}
     [Documentation]    feedmessagelist获取未读的动态点赞及评论及回复
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ########Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /feedMessageList.aspx
     ${time}=    Get Time    epoch
     log    time= ${time}

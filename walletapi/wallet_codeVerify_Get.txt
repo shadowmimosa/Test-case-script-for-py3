@@ -18,8 +18,8 @@ wallet_codeVerify_Get_Keywords
     [Arguments]    ${mobile}    ${verifyCodes}    ${userName}    ${pwd}    ${verifyCode}    ${ret}
     ...    ${msg}
     [Documentation]    wallet/codeVerify 验证验证码
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /codeVerify
     ${maps}=    create dictionary
     set to dictionary    ${maps}    verifyCode=${verifyCode}
@@ -53,8 +53,8 @@ VerifyCodes
 sendVerifyCode
     [Arguments]    ${mobile}    ${userName}    ${pwd}
     [Documentation]    /sendVerifyCode发送验证码
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /sendVerifyCode
     ${maps}=    create dictionary
     set to dictionary    ${maps}    mobile=${mobile}

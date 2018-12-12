@@ -17,8 +17,8 @@ Class_01              [Documentation]    register/fast TestCase测试用例账�
 select_register_cell
     [Arguments]    ${cellNumber}    ${nick}    ${pwd}
     [Documentation]    register/fast 账号注册接口判断
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${nick2}    set variable    0
     ${city}    set variable    上海
     ${path}=    set variable    /validate/registered
@@ -26,7 +26,7 @@ select_register_cell
     ${maps}=    create dictionary
     Run Keyword If    ${cellNumber}>0    set to dictionary    ${maps}    cellNumber=${cellNumber}
     Run Keyword If    '${nick2}'!='0'    set to dictionary    ${maps}    nick=${nick}
-    Run Keyword If    '${nick2}'<>'0'    set to dictionary    ${maps}    city=${city}
+    Run Keyword If    '${nick2}'!='0'    set to dictionary    ${maps}    city=${city}
     log    ========输出接口URL：${api_URL}${path}
     log dictionary    ${maps}
     ${resp}=    thejoyrun_postnl    ${path}    ${maps}    ${api_URL}
@@ -38,7 +38,7 @@ select_register_cell
     ${Randstr}    Generate Random String    6    [UPPER]
     ${nick}    set variable    ${nick}${Randstr}
     Run Keyword If    '${nick}'!='0'    set to dictionary    ${maps2}    nick=${nick}
-    Run Keyword If    '${nick}'<>'0'    set to dictionary    ${maps2}    city=${city}
+    Run Keyword If    '${nick}'!='0'    set to dictionary    ${maps2}    city=${city}
     log    ========输出接口URL：${api_URL}${path}
     log dictionary    ${maps2}
     ${resp2}=    thejoyrun_postnl    ${path}    ${maps2}    ${api_URL}
@@ -65,8 +65,8 @@ select_register_cell
 register_fast_Post_Keywords
     [Arguments]    ${cellNumber}    ${nick}    ${pwd}
     [Documentation]    register/fast 账号注册接口用例的Keywords关健字
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path4}=    set variable    /register/fast
     ${maps4}=    create dictionary
     ${deviceToken}    set variable    5e04aedeb860ed09cc0c3347047958499cf898459ef6cf742debf22729dd3900

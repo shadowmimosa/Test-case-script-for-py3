@@ -18,8 +18,8 @@ crew_applyJoinCrew_Post_Keywords
     [Arguments]    ${userName}    ${autoPassPwd}    ${crewId}    ${msg}    ${nodeId}    ${ret}
     ...    ${msgs}
     [Documentation]    crew/applyJoinCrew 申请加入大跑团或子跑团
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /crew/applyJoinCrew
     ${maps}=    create dictionary
     set to dictionary    ${maps}    autoPassPwd=${autoPassPwd}

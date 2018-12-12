@@ -17,8 +17,8 @@ Class_01              [Documentation]    coupon/couponGain TestCase测试用例
 coupon_couponGain_Post_Keywords
     [Arguments]    ${userName}    ${pwd}    ${couponKey}
     [Documentation]    coupon/couponGain 20180530优惠券领取
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /ec_api/coupon/couponGain
     ${maps}=    create dictionary
     set to dictionary    ${maps}    couponKey=${couponKey}

@@ -17,8 +17,8 @@ Class_01              [Documentation]    训练计划getPlanCategoriesV2-无参�
 getPlanCategoriesV2_Post_assertClass
     [Arguments]    ${expected_code}
     [Documentation]    训练计划getplancategoriesV2基本验证
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /getPlanCategoriesV2
     ${maps}=    create dictionary
     log    ---输出参数---

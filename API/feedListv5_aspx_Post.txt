@@ -17,8 +17,8 @@ Class_01              [Documentation]    我的动态列表-无传参feedListv5.
 feedListv5_Post_assertClass
     [Arguments]    ${expected_code}
     [Documentation]    我的动态列表的基本验证
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ########Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /feedListv5.aspx
     ${maps}=    create dictionary
     log    ---输出参数---

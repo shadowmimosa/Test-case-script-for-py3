@@ -23,8 +23,8 @@ Class_02              [Documentation]    corpUserSetting/getByUid/cover接口-86
 corpUserSetting_getByUid_cover_Post_assertClass
     [Arguments]    ${targetUid}    ${expected_code}
     [Documentation]    /corpUserSetting/getByUid/cover接口
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /corpcrew/corpUserSetting/getByUid/cover
     ${maps}=    create dictionary
     set to dictionary    ${maps}    targetUid=${targetUid}

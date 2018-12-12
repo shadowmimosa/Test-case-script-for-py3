@@ -23,8 +23,8 @@ Class_02              [Documentation]    corpcrew/crewInfo/getMemberCrewInfos跑
 getMemberInfo_Post_assertClass
     [Arguments]    ${targetUid}    ${crewId}    ${expected_code}
     [Documentation]    corpcrew/crewInfo/getMemberCrewInfos跑团信息基本验证
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /corpcrew/crewMember/getMemberInfo
     ${maps}=    create dictionary
     set to dictionary    ${maps}    targetUid=${targetUid}

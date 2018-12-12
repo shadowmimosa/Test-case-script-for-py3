@@ -22,8 +22,8 @@ Class_02              [Documentation]    rank跑友的日、周、月跑量排�
 rank_Post_assertClass
     [Arguments]    ${all}    ${range}    ${ret}    ${msg}    ${env}
     [Documentation]    rank跑友的日、周、月跑量排行榜
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ########Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${userName}    Env_username    ${env}
     ${range}    randomchoice    0,1,2    ,
     ${path}=    set variable    /rank.aspx

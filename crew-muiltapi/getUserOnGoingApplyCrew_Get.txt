@@ -17,8 +17,8 @@ Class_01              [Documentation]    getUserOnGoingApplyCrew TestCase测试�
 getUserOnGoingApplyCrew_Get_Keywords
     [Arguments]    ${userName}    ${ret}    ${msg}
     [Documentation]    getUserOnGoingApplyCrew 获取用户正在申请入团记录
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /crew/getUserOnGoingApplyCrew
     ${maps}=    create dictionary
     log    ========输出接口URL：${crew_muilt_URL}${path}

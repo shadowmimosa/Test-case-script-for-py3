@@ -17,8 +17,8 @@ Class_01              [Documentation]    class/sponsorlist TestCase测试用例
 class_sponsorlist_Get_Keywords
     [Arguments]    ${classId}    ${ret}    ${msg}
     [Documentation]    class/sponsorlist 接口用例的Keywords关健字
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
     #${userName}    Env_username
     ${classIds}    classList_classids    1    runMeter,1000,10000    classId    ${userName}

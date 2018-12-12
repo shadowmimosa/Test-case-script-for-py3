@@ -1,12 +1,12 @@
 *** Settings ***
 Documentation     msgBoard/publish 发布跑团公告
-Library           Collections
-Library           RequestsLibrary
-Library           pymysql
-Library           DatabaseLibrary
-Library           String
-Library           HttpLibrary.HTTP
-Library           ../Public/Lib/tools_library.py
+#Library    Collections
+#Library    RequestsLibrary
+#Library    pymysql
+#Library    DatabaseLibrary
+#Library    String
+#Library     HttpLibrary.HTTP
+#Library     ../Public/Lib/tools_library.py
 Resource          ../Public/public_lib.txt
 
 *** Variable ***
@@ -24,8 +24,8 @@ Class_01              [Documentation]    msgBoard/publish TestCase发布跑团�
 msgBoard_publish_Post_Keywords
     [Arguments]    ${crewId}    ${content}    ${nodeId}    ${ret}    ${msg}
     [Documentation]    msgBoard/publish 接口用例的Keywords关健字
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
     #${userName}    Env_username
     ${con}    thejoyrun_Keywords    ${crew_muilt_URL}    /structure/getMyCrewInfo    ${userName}    ${pwd}    Post

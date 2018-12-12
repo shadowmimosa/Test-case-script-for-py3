@@ -1,13 +1,13 @@
 *** Settings ***
 Documentation     push-user-cache 好友推荐定时任务生成缓存接口脚本
 Test Timeout      1 minute    # 1分钟超时
-Library           Collections
-Library           RequestsLibrary
-Library           pymysql
-Library           DatabaseLibrary
-Library           String
-Library           HttpLibrary.HTTP
-Library           ../Public/Lib/tools_library.py
+#Library    Collections
+#Library    RequestsLibrary
+#Library    pymysql
+#Library    DatabaseLibrary
+#Library    String
+#Library     HttpLibrary.HTTP
+#Library     ../Public/Lib/tools_library.py
 Resource          ../Public/public_lib.txt
 
 *** Variable ***
@@ -25,8 +25,8 @@ Class_01              [Documentation]    push-user-cache TestCase好友推荐定
 push-user-cache_Get_Keywords
     [Arguments]    ${day}    ${ret}    ${msg}
     [Documentation]    push-user-cache 好友推荐定时任务生成缓存接口用例的Keywords关健字
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
     #${userName}    Env_username
     ${path}=    set variable    /push-user-cache

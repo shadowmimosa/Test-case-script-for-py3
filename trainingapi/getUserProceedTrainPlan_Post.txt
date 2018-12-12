@@ -17,8 +17,8 @@ Class_01              [Documentation]    获取本人训练计划getUserProceedT
 getUserProceedTrainPlan_Post_assertClass
     [Arguments]    ${expected_code}
     [Documentation]    获取本人训练计划基本验证getUserProceedTrainPlan
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /getUserProceedTrainPlan
     ${maps}=    create dictionary
     log    ---输出参数---

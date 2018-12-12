@@ -18,8 +18,8 @@ trip_searchVisitRankRace_Postw_Keywords
     [Arguments]    ${areaId}    ${keyword}    ${limit}    ${page}    ${provinceId}    ${raceType}
     ...    ${ret}    ${msg}
     [Documentation]    trip/searchVisitRankRace 接口用例的Keywords关健字
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /trip/searchVisitRankRace
     ${maps}=    create dictionary
     set to dictionary    ${maps}    areaId=${areaId}

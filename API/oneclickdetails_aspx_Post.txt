@@ -17,8 +17,8 @@ Class_01              [Documentation]    oneclickdetails用户本人用户信息
 oneclickdetails_Post
     [Arguments]    ${option}    ${ret}    ${msg}
     [Documentation]    oneclickdetails用户本人用户信息基本验证
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ########Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /oneclickdetails.aspx
     ${maps}=    create dictionary
     set to dictionary    ${maps}    option=${option}

@@ -1,12 +1,12 @@
 *** Settings ***
 Documentation     importPo.aspx 离线上传跑步数据接口脚本
-Library           Collections
-Library           RequestsLibrary
-Library           pymysql
-Library           DatabaseLibrary
-Library           String
-Library           HttpLibrary.HTTP
-Library           ../Public/Lib/tools_library.py
+#Library    Collections
+#Library    RequestsLibrary
+#Library    pymysql
+#Library    DatabaseLibrary
+#Library    String
+#Library     HttpLibrary.HTTP
+#Library     ../Public/Lib/tools_library.py
 Resource          ../Public/public_lib.txt
 
 *** Variable ***
@@ -24,8 +24,8 @@ Class_01              [Documentation]    importPo.aspx TestCase离线上传跑�
 importPo_aspx_Post_Keywords
     [Arguments]    ${altitude}    ${city}    ${content}    ${courseid}    ${ret}    ${msg}
     [Documentation]    importPo.aspx 离线上传跑步数据接口用例的Keywords关健字
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ########Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
     #${userName}    Env_username
     ${path}=    set variable    /importPo.aspx

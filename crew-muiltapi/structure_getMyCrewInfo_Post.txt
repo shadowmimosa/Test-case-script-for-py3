@@ -22,8 +22,8 @@ Class_02              [Documentation]    getMyCrewInfo-无传参
 getMyCrewInfo_Post_assertClass
     [Arguments]    ${userName}    ${expected_code}
     [Documentation]    getMyCrewInfo基本验证
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /structure/getMyCrewInfo
     ${maps}=    create dictionary
     log    ---输出参数---

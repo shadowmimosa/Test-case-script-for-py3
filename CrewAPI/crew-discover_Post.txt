@@ -1,12 +1,12 @@
 *** Settings ***
 Documentation     crew-discover 附近跑团
-Library           Collections
-Library           RequestsLibrary
-Library           pymysql
-Library           DatabaseLibrary
-Library           String
-Library           HttpLibrary.HTTP
-Library           ../Public/Lib/tools_library.py
+#Library    Collections
+#Library    RequestsLibrary
+#Library    pymysql
+#Library    DatabaseLibrary
+#Library    String
+#Library     HttpLibrary.HTTP
+#Library     ../Public/Lib/tools_library.py
 Resource          ../Public/public_lib.txt
 
 *** Variable ***
@@ -24,8 +24,8 @@ Class_01              [Documentation]    crew-discover TestCase测试用例
 crew-discover_Post_Keywords
     [Arguments]    ${province}    ${offset}    ${city}    ${limit}    ${ret}
     [Documentation]    crew-discover 接口用例的Keywords关健字
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
     #${userName}    Env_username
     ${path}=    set variable    /crew-discover

@@ -1,12 +1,12 @@
 *** Settings ***
 Documentation     shoe-comment-eval 跑鞋评论赞/踩
-Library           Collections
-Library           RequestsLibrary
-Library           pymysql
-Library           DatabaseLibrary
-Library           String
-Library           HttpLibrary.HTTP
-Library           ../Public/Lib/tools_library.py
+#Library    Collections
+#Library    RequestsLibrary
+#Library    pymysql
+#Library    DatabaseLibrary
+#Library    String
+#Library     HttpLibrary.HTTP
+#Library     ../Public/Lib/tools_library.py
 Resource          ../Public/public_lib.txt
 
 *** Variable ***
@@ -29,8 +29,8 @@ Class_02              [Documentation]    shoe-comment-eval TestCase测试用例
 shoe-comment-eval_Get_Keywords
     [Arguments]    ${shoe_id}    ${comment_id}    ${is_like}    ${msg}    ${ret}
     [Documentation]    shoe-comment-eval 接口用例的Keywords关健字
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
     #${userName}    Env_username
     ${path}=    set variable    /shoe-comment-eval

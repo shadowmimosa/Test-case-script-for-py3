@@ -17,8 +17,8 @@ Class_01              [Documentation]    /api/dynamic_config.do动态升级接�
 dynamic_config_Post_assertClass
     [Arguments]    ${expected_code}
     [Documentation]    /api/dynamic_config.do基本验证
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /api/dynamic_config.do
     ${maps}=    create dictionary
     #set to dictionary    ${maps}    uid=${uid}

@@ -17,8 +17,8 @@ Class_01              [Documentation]    article-favor-list TestCase测试用例
 article-favor-list_Post_Keywords
     [Arguments]    ${page}    ${pagesize}    ${ret}    ${msg}
     [Documentation]    article-favor-list 接口用例的Keywords关健字
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /article-favor-list
     ${maps}=    create dictionary
     set to dictionary    ${maps}    page=${page}

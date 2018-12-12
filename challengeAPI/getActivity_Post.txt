@@ -20,8 +20,8 @@ class_01              [Documentation]    challenge/getActivity 挑战活动详�
 getActivity
     [Arguments]    ${uid}    ${cid}    ${ret}    ${msg}
     [Documentation]    challenge/getActivity 挑战活动详情
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${userName}    Env_username    a
     @{challengeList}    challengeList_filters    activityStatus,0,1.5    challengeId    ${userName}
     ${cids}    Get From List    ${challengeList}    0

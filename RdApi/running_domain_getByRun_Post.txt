@@ -1,12 +1,12 @@
 *** Settings ***
 Documentation     running/domain/getByRun 根据跑步ID查询关联的跑场
-Library           Collections
-Library           RequestsLibrary
-Library           pymysql
-Library           DatabaseLibrary
-Library           String
-Library           HttpLibrary.HTTP
-Library           ../Public/Lib/tools_library.py
+#Library    Collections
+#Library    RequestsLibrary
+#Library    pymysql
+#Library    DatabaseLibrary
+#Library    String
+#Library     HttpLibrary.HTTP
+#Library     ../Public/Lib/tools_library.py
 Resource          ../Public/public_lib.txt
 
 *** Variable ***
@@ -24,8 +24,8 @@ Class_01              [Documentation]    running/domain/getByRun TestCase根据�
 running_domain_getByRun_Post_Keywords
     [Arguments]    ${postRunId}    ${ret}    ${msg}
     [Documentation]    running/domain/getByRun 接口用例的Keywords关健字
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
     ${userName}    Env_username
     ${con}    thejoyrun_Keywords    ${api_URL}    /userRunList.aspx    ${userName}    ${pwd}    Post

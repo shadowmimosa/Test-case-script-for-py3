@@ -17,8 +17,8 @@ Class_01              [Documentation]    ec_api/get-rootSalesRuleId TestCase测�
 ec_api_get-rootSalesRuleId_Getns_Keywords
     [Arguments]    ${marathonId}    ${ret}    ${msg}
     [Documentation]    ec_api/get-rootSalesRuleId 接口用例的Keywords关健字
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /ec_api/get-rootSalesRuleId
     ${maps}=    create dictionary
     set to dictionary    ${maps}    marathonId=${marathonId}

@@ -22,8 +22,8 @@ Class_02              [Documentation]    corpcrew/crewMemberTotal/getRankByPage�
 getRankByPage_Post_assertClass
     [Arguments]    ${uid}    ${cycle}    ${page}    ${pageSize}    ${crewId}    ${expected_code}
     [Documentation]    corpcrew/crewMemberTotal/getRankByPage跑团排名接口
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /corpcrew/crewMemberTotal/getRankByPage
     ${maps}=    create dictionary
     set to dictionary    ${maps}    uid=${uid}

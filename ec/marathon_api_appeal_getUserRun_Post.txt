@@ -17,8 +17,8 @@ Class_01              [Documentation]    marathon_api/appeal/getUserRun TestCase
 marathon_api_appeal_getUserRun_Post_Keywords
     [Arguments]    ${dateline_from}    ${dateline_to}    ${ret}    ${msg}
     [Documentation]    marathon_api/appeal/getUserRun 接口用例的Keywords关健字
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
     #${userName}    Env_username
     ${path}=    set variable    /marathon_api/appeal/getUserRun

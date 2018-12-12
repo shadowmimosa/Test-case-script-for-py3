@@ -17,8 +17,8 @@ Class_01              [Documentation]    绑定钱包手机号
 WalletBind
     [Arguments]    ${mobile}    ${verifyCode}    ${userName}    ${pwd}    ${ret}    ${msg}
     [Documentation]    绑定钱包手机号
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /wallet/bind
     ${maps}=    create dictionary
     set to dictionary    ${maps}    mobile=${mobile}
@@ -44,8 +44,8 @@ WalletBind
 sendVerifyCode
     [Arguments]    ${mobile}    ${userName}    ${pwd}
     [Documentation]    /sendVerifyCode发送验证码
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /sendVerifyCode
     ${maps}=    create dictionary
     set to dictionary    ${maps}    mobile=${mobile}

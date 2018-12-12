@@ -23,8 +23,8 @@ Class_02              [Documentation]    /corpcrew/crewMemberRun/getMemberDayRan
 getMemberDayRank_Post_assertClass
     [Arguments]    ${targetUid}    ${crewId}    ${expected_code}
     [Documentation]    /corpcrew/crewMemberRun/getMemberDayRank跑团排名接口
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /corpcrew/crewMemberRun/getMemberDayRank
     ${maps}=    create dictionary
     set to dictionary    ${maps}    targetUid=${targetUid}

@@ -18,8 +18,8 @@ wallet_withdrawAccount_bind_Post_Keywords
     [Arguments]    ${mobile}    ${verifyCode}    ${userName}    ${pwd}    ${nickname}    ${verifyCode}
     ...    ${withdrawAccount}    ${withdrawPlatform}    ${withdrawUname}    ${ret}    ${msg}
     [Documentation]    wallet/withdrawAccount/bind 接口用例的Keywords关健字
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
     #${userName}    Env_username
     ${path}=    set variable    /withdrawAccount/bind
@@ -48,8 +48,8 @@ wallet_withdrawAccount_bind_Post_Keywords
 sendVerifyCode
     [Arguments]    ${mobile}    ${userName}    ${pwd}
     [Documentation]    /sendVerifyCode发送验证码
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /sendVerifyCode
     ${maps}=    create dictionary
     set to dictionary    ${maps}    mobile=${mobile}

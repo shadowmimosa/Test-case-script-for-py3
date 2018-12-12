@@ -22,8 +22,8 @@ Class_02              [Documentation]    Run/GetInfo.aspx某跑步记录数据�
 GetInfo_Post_assertClass
     [Arguments]    ${fid}    ${wgs}    ${ret_code}    ${msg}
     [Documentation]    Run/GetInfo.aspx某跑步记录数据详情接口
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ########Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /Run/GetInfo.aspx
     ${maps}=    create dictionary
     set to dictionary    ${maps}    fid=${fid}

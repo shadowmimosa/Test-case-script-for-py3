@@ -18,8 +18,8 @@ userAdd_DEL_shoe_Post_Keywords
     [Arguments]    ${remark}    ${self_defined}    ${shoeColorId}    ${shoeGender}    ${shoeSize}    ${shoeSizeType}
     ...    ${shoe_id}    ${shoe_name}    ${userShoeId}
     [Documentation]    userAdd_DEL_shoe_Post_Keywords 增加shoe及删除shoe业务验证
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
     ${userName}    Env_username
     ${shoe_id}    Get_shoe_id    ${userName}

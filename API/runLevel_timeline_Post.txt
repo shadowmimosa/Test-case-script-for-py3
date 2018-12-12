@@ -22,8 +22,8 @@ Class_02              [Documentation]    user/runLevel/timeline个人达到等�
 runLeveltimeline_Post_assertClass
     [Arguments]    ${ret}    ${msg}    ${env}
     [Documentation]    rank跑友的日、周、月跑量排行榜
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ########Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${userName}    Env_username    ${env}
     ${path}=    set variable    /user/runLevel/timeline
     ${maps}=    create dictionary

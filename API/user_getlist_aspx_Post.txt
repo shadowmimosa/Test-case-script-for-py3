@@ -18,8 +18,8 @@ Class_01              [Documentation]           user/getlist.aspx TestCase测试
 user_getlist_aspx_Post_Keywords
     [Arguments]    ${fields}    ${uids}    ${ret}    ${msg}
     [Documentation]    user/getlist.aspx 接口用例的Keywords关健字
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ########Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /user/getlist.aspx
     ${maps}=    create dictionary
     set to dictionary    ${maps}    fields=${fields}

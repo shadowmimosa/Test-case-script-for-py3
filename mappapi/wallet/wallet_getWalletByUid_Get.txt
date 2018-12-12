@@ -23,8 +23,8 @@ Class_02              [Documentation]    wallet/getWalletByUid TestCase测试用
 wallet_getWalletByUid_Getc_Keywords
     [Arguments]    ${uid}    ${ret}    ${msg}
     [Documentation]    wallet/getWalletByUid 接口用例的Keywords关健字
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /wallet/getWalletByUid
     ${maps}=    create dictionary
     set to dictionary    ${maps}    uid=${uid}

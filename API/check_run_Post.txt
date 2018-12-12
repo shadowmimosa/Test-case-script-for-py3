@@ -20,8 +20,8 @@ class_01              [Documentation]    check/run查询跑步记录是不是发
 check_run
     [Arguments]    ${fid}    ${postRunId}    ${ret}    ${msg}
     [Documentation]    check/run查询跑步记录是不是发过动态
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ########Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${userName}    Env_username    a
     ${fids}    UserRunList_Fid    ${userName}    fraud,0,0.5    fid
     ${fid}    randomchoice    ${fids}    ,

@@ -19,8 +19,8 @@ Class_01              [Documentation]    V3.2取消黑名单userBlacklist/remove
 userBlacklist_remove_Post_assertClass
     [Arguments]    ${toUid}    ${userName}    ${expected_code}
     [Documentation]    V3.2取消黑名单
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ########Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /userBlacklist/remove
     ${maps}=    create dictionary
     set to dictionary    ${maps}    toUid=${toUid}

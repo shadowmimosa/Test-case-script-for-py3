@@ -17,8 +17,8 @@ Class_01              [Documentation]    userInvitesv2用户邀请信息-无传�
 userInvitesv2Post_assertClass
     [Arguments]    ${lasttime}    ${expected_code}
     [Documentation]    userInvitesv2用户邀请信息接口 基本验证
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ########Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /userInvitesv2.aspx
     ${time}=    Get Time    epoch
     log    time= ${time}

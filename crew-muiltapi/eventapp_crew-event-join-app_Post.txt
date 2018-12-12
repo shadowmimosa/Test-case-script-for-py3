@@ -1,12 +1,12 @@
 *** Settings ***
 Documentation     eventapp/crew-event-join-app 报名跑团活动
-Library           Collections
-Library           RequestsLibrary
-Library           pymysql
-Library           DatabaseLibrary
-Library           String
-Library           HttpLibrary.HTTP
-Library           ../Public/Lib/tools_library.py
+#Library    Collections
+#Library    RequestsLibrary
+#Library    pymysql
+#Library    DatabaseLibrary
+#Library    String
+#Library     HttpLibrary.HTTP
+#Library     ../Public/Lib/tools_library.py
 Resource          ../Public/public_lib.txt
 
 *** Variable ***
@@ -24,8 +24,8 @@ Class_01              [Documentation]                     eventapp/crew-event-jo
 eventapp_crew-event-join-app_Post_Keywords
     [Arguments]    ${event_id}    ${key_value}    ${crewid}    ${ret}    ${msg}
     [Documentation]    eventapp/crew-event-join-app 接口用例的Keywords关健字
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${crewId}    getMyCrewInfo    crewid    ${userName}
     ${con}    thejoyrun_Keywords    ${crew_muilt_URL}    /eventapp/getCrewEventList    ${userName}    ${pwd}    Post
     ...    crewId,limit,page    ${crewid},10,0

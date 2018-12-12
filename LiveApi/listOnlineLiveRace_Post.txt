@@ -17,8 +17,8 @@ Class_01              [Documentation]    listOnlineLiveRace-无传参
 listOnlineLiveRace_Post_assertClass
     [Arguments]    ${expected_code}
     [Documentation]    listOnlineLiveRace基本验证
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /listOnlineLiveRace
     ${maps}=    create dictionary
     #set to dictionary    ${maps}    uid=${uid}

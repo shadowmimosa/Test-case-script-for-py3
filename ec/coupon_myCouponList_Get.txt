@@ -17,8 +17,8 @@ Class_01              [Documentation]    coupon/myCouponList TestCase测试用�
 coupon_myCouponList_Getw_Keywords
     [Arguments]    ${uid}    ${ret}    ${msg}
     [Documentation]    coupon/myCouponList 20180530我的优惠券
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /ec_api/coupon/myCouponList
     ${maps}=    create dictionary
     set to dictionary    ${maps}    uid=${uid}

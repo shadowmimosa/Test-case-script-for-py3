@@ -17,8 +17,8 @@ Class_01              [Documentation]                                           
 regdevicetoken_Post_assertClass
     [Arguments]    ${deviceToken}    ${expected_code}
     [Documentation]    regdevicetoken注册token 基本验证
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ########Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /regdevicetoken.aspx
     ${maps}=    create dictionary
     set to dictionary    ${maps}    deviceToken=${deviceToken}

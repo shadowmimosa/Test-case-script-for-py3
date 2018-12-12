@@ -26,8 +26,8 @@ Class_02              [Documentation]     查询、屏蔽、取消屏蔽用户�
 userusersetting_Post_assertClass
     [Arguments]    ${option}    ${touid}    ${userName}    ${ret}
     [Documentation]    查询、屏蔽、取消屏蔽用户动态userusersetting.aspx
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ########Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /userusersetting.aspx
     ${maps}=    create dictionary
     set to dictionary    ${maps}    option=${option}

@@ -22,8 +22,8 @@ Class_02              [Documentation]    crew-user-crew TestCase测试用例
 crew-user-crew_Post_Keywords
     [Arguments]    ${uid}    ${ret}    ${msg}
     [Documentation]    crew-user-crew 接口用例的Keywords关健字
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
     #${userName}    Env_username
     ${path}=    set variable    /crew-user-crew

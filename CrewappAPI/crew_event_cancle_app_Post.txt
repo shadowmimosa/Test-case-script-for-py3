@@ -17,8 +17,8 @@ Class_01              [Documentation]    /crew-event-cancle-app 取消跑团活�
 /crew-event-cancle-app_Post_Keywords
     [Arguments]    ${crewid}    ${event_id}    ${ret}    ${msg}
     [Documentation]    /crew-event-cancle-app
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
     ${emv}    Env_username    1
     #${userName}    Env_username

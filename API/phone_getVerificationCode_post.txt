@@ -17,8 +17,8 @@ Class_01              [Documentation]    /phone/getVerificationCode 发送短信
 /phone/getVerificationCode_Post_Keywords
     [Arguments]    ${phoneNumber}    ${ret}    ${msg}
     [Documentation]    /phone/getVerificationCode 发送短信验证码（6位）
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ########Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
     ${userName}    Env_username
     ${path}=    set variable    /phone/getVerificationCode

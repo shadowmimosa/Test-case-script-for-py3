@@ -17,8 +17,8 @@ Class_01              [Documentation]    user/class/diploma TestCase测试用例
 user_class_diploma_Get_Keywords
     [Arguments]   ${classId}     ${ret}   ${msg}
     [Documentation]    user/class/diploma 接口用例的Keywords关健字
-    Evaluate    reload(sys)    sys
-    Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate       reload(sys)    sys
+    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
     #${userName}    Env_username
     ${path}=    set variable    /user/class/diploma
