@@ -17,8 +17,8 @@ Class_01              [Documentation]    氛围广告启动页接口advert-list-
 advert-list_Post_assertClass
     [Arguments]    ${expected_code}
     [Documentation]    氛围广告启动页接口advert-list-无参数-基本验证
-    #######Evaluate       reload(sys)    sys
-    ###Evaluate      sys.setdefaultencoding( "UTF-8" )    sys
+    #######Evaluate    reload(sys)    sys
+    ###Evaluate    sys.setdefaultencoding( "UTF-8" )    sys
     ${path}=    set variable    /advert-list
     ${maps}=    create dictionary
     log    ---输出参数---
