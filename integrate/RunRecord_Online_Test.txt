@@ -91,9 +91,9 @@ RuningRecord
     ${srcuid}=    get json value    ${src}    /runrecord/uid
     ${city1}=    get json value    ${src}    /runrecord/city
     ${province}    Run Keyword If    ${province1}>''    set variable    ${province1}
-    ...    ELSE    set variable    香港
+    ...    ELSE    set variable    西藏
     ${city}    Run Keyword If    ${city1}>''    set variable    ${city1}
-    ...    ELSE    set variable    香港
+    ...    ELSE    set variable    吉林
     ${dateline}=    get json value    ${src}    /lasttime
     ${lasttime}=    Evaluate    ${dateline}-120
     ${starttime}=    Evaluate    ${dateline}-${second}-120
