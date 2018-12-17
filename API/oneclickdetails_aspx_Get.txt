@@ -1,0 +1,58 @@
+*** Settings ***
+Documentation     oneclickdetails.aspx 更新一键报名信息
+Resource          ../Public/public_lib.txt    #Library    Collections    #Library    RequestsLibrary    #Library    pymysql
+...               #Library    DatabaseLibrary    #Library    String    #Library    HttpLibrary.HTTP    #Library
+...               # ../Public/Lib/tools_library.py
+
+*** Variable ***
+${pwd}            67889911    # 密码
+${userName}       13829744541    # 默认的用户名
+${ContentType}    application/x-www-form-urlencoded;charset=UTF-8    # POST数据格式
+
+*** Test Cases ***    option             name                                 identificationtype    identification    cellnumber     celltype    province    city    address        email          bloodtype    clothssize    emergencycontact    emergencycontactcell    emergencycontactcelltype    ret    msg
+Class_01              [Documentation]    oneclickdetails.aspx TestCase测试用例
+                      [Tags]             Test                                 Online                gxy
+                      [Template]         oneclickdetails_aspx_Get_Keywords
+                      set                nick                                 2                     A420982           13800138000    +86         广东          广州      天河区天河东路110号    123@123.con    A            X             这是紧急联系人             15802369852             +86                         0      成功
+
+*** Keywords ***
+oneclickdetails_aspx_Get_Keywords
+    [Arguments]    ${option}    ${name}    ${identificationtype}    ${identification}    ${cellnumber}    ${celltype}
+    ...    ${province}    ${city}    ${address}    ${email}    ${bloodtype}    ${clothssize}
+    ...    ${emergencycontact}    ${emergencycontactcell}    ${emergencycontactcelltype}    ${ret}    ${msg}
+    [Documentation]    oneclickdetails.aspx 接口用例的Keywords关健字
+    ######Evaluate    reload(sys)    sys
+    ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    #从配置的用户列表中随机取一个用户运行此用例
+    #${userName}    Env_username
+    ${path}=    set variable    /oneclickdetails.aspx
+    ${maps}=    create dictionary
+    set to dictionary    ${maps}    option=${option}
+    set to dictionary    ${maps}    name=${name}
+    set to dictionary    ${maps}    identificationtype=${identificationtype}
+    set to dictionary    ${maps}    identification=${identification}
+    set to dictionary    ${maps}    cellnumber=${cellnumber}
+    set to dictionary    ${maps}    celltype=${celltype}
+    set to dictionary    ${maps}    province=${province}
+    set to dictionary    ${maps}    city=${city}
+    set to dictionary    ${maps}    address=${address}
+    set to dictionary    ${maps}    email=${email}
+    set to dictionary    ${maps}    bloodtype=${bloodtype}
+    set to dictionary    ${maps}    clothssize=${clothssize}
+    set to dictionary    ${maps}    emergencycontact=${emergencycontact}
+    set to dictionary    ${maps}    emergencycontactcell=${emergencycontactcell}
+    set to dictionary    ${maps}    emergencycontactcelltype=${emergencycontactcelltype}
+    log    ========输出接口URL：${api_URL}${path}
+    log    ========接口的入参为：${userName}:${maps}==========
+    ${resp}=    thejoyrun_Getp    ${path}    ${maps}    ${userName}    ${api_URL}
+    ${content}=    charconver    ${resp.content}
+    log json    ${content}
+    log    ======开始断言验证=====
+    log    验证ret是否符合预期
+    should contain    ${content}    "ret":"${ret}"
+    log    ret 符合预期为:${ret}
+    log    验证msg是否符合预期:${msg}
+    should contain    ${content}    "msg":"${msg}"
+    #当需要添加对data的内容进行单独验证时，可以以下方式
+    #${data}    get json value    ${content}    /data
+    log    验证OK！！用户${userName}；URL：${api_URL}${path}；传参：${maps}！！
