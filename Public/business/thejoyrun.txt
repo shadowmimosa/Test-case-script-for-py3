@@ -69,7 +69,7 @@ FilterList
     ...    filters为筛选条件：格式为field1,1,2/field2,3,4(筛选字符与值之间用逗号分隔，筛选字段之间用/分隔);
     ...    Returnfield为返回值串的字符,为All返回所有字段；
     ...    Onlyone以哪个字段或字符串来分隔，默认为空；
-    ...    Num源数据列表的条数筛选，默认为空不筛选； 大于0的数时筛选前Num列【0:Num】,小于0的数时筛选倒数Num列【Num:Last】
+    ...    Num源数据列表的条数筛选，默认为空筛选倒数10条； 大于0的数时筛选前Num列【0:Num】,小于0的数时筛选倒数Num列【Num:Last】
     ...    例如从源字符串[{"fid":123,"uid": 2315,"meter1": 2315},{"fid":2123,"uid": 23151,"meter1": 22315},{"fid":1423,"uid": 23152,"meter1": 2315,"meter2": 23415},{"fid":2123,"uid": 24315,"meter1": 23415}] 中对fid、uid、meter1、meter2条件筛选符合的记录
     [Timeout]    1 minute
     log    FilterList Start ......

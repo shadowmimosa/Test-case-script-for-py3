@@ -1,13 +1,8 @@
 *** Settings ***
 Documentation     shoe-comment 跑鞋评论打分
-#Library    Collections
-#Library    RequestsLibrary
-#Library    pymysql
-#Library    DatabaseLibrary
-#Library    String
-#Library     HttpLibrary.HTTP
-#Library     ../Public/Lib/tools_library.py
-Resource          ../Public/public_lib.txt
+Resource          ../Public/public_lib.txt    #Library    Collections    #Library    RequestsLibrary    #Library    pymysql
+...               #Library    DatabaseLibrary    #Library    String    #Library    HttpLibrary.HTTP    #Library
+...               # ../Public/Lib/tools_library.py
 
 *** Variable ***
 ${pwd}            123321    # 密码
@@ -29,15 +24,30 @@ Class_02              [Documentation]    shoe-comment TestCase测试用例
 shoe-comment_Get_Keywords
     [Arguments]    ${shoe_id}    ${comment_id}    ${content}    ${score}    ${msg}    ${ret}
     [Documentation]    shoe-comment 接口用例的Keywords关健字
-    ######Evaluate       reload(sys)    sys
-    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate    reload(sys)    sys
+    ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
-    #${userName}    Env_username
+    ${evn}    Env_username    1
+    ${today}    Gettimes    ss,-1,times
+    ${comment_list}    thejoyrun_Keywords    ${wear_URL}    /shoe-comment-list    ${userName}    ${pwd}    Post
+    ...    shoe_id,page,pagesize    ${shoe_id},1,100
+    ${comment_data}    get json value    ${comment_list}    /data
+    ${comment_time}    Run Keyword IF    '${evn}'=='Test'    FilterList    ${comment_data}    uid,32521559,32521560    createtime
+    ...    ELSE    FilterList    ${comment_data}    uid,86125441,86125442    createtime    None
+    ...    10
+    ${comment_time}    Evaluate    '${comment_time}'.split(',')[0]
+    #从结果中取出第一个值
+    ${k}    Evaluate    ${today}-${comment_time}-15*24*3600
+    ${ret}    Run Keyword IF    ${k}>0    set variable    0
+    ...    ELSE    set variable    11002
+    ${msg}    Run Keyword IF    ${k}>0    set variable    成功
+    ...    ELSE    set variable    您对该款跑鞋的评论次数已达上限
     ${path}=    set variable    /shoe-comment
     ${maps}=    create dictionary
     set to dictionary    ${maps}    shoe_id=${shoe_id}
     set to dictionary    ${maps}    comment_id=${comment_id}
-    set to dictionary    ${maps}    content=${content}
+    ${today}    Evaluate    str(${today})
+    set to dictionary    ${maps}    content=${today}
     set to dictionary    ${maps}    score=${score}
     log    ========输出接口URL：${wear_URL}${path}
     log    ========接口的入参为：${userName}:${maps}==========
