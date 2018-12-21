@@ -11,7 +11,7 @@ ${ContentType}    application/x-www-form-urlencoded    # POST数据格式
 Class_01              [Documentation]    用户加入跑班===钱包支付
                       [Tags]             Test
                       [Template]         opinion_join_classid
-                      13829744541        67889911                3              112233
+                      13829744544        67889911                3              112233
 
 *** Keywords ***
 opinion_join_classid
@@ -23,9 +23,14 @@ opinion_join_classid
     ${aa}    Evaluate    len(${str} )
     ${myclassid}    Get From List    ${str}    0
     ${mywallet}    Get From List    ${str}    1
-    ${classids}    Get From List    ${str}    2
-    ${cid}    set variable    ${classids[0]}
-    Run Keyword If    '${myclassid}'!='0' or '${mywallet}'=='0' or '${cid}'=='0'    log    ====用户${userName}不满足条件（有未完成的跑班、未开通钱包、跑班列表没有报名中的跑班）=====
+    ${class_idlist}    Get From List    ${str}    2
+    ${classIds}    set variable    ${class_idlist[0]}
+    ${cids}    Run Keyword If    ${Global_Var} is True    Get From Dictionary    ${Global_Var}    betclassid
+    ...    ELSE    Set Variable    0
+    log Dictionary    ${Global_Var}
+    ${classIds}    Run Keyword If    '${classIds}'=='0'    Set Variable    ${cids}
+    ...    ELSE    Set Variable    ${classIds}
+    Run Keyword If    '${myclassid}'!='0' or '${mywallet}'=='0' or '${classIds}'=='0'    log    ====用户${userName}不满足条件（有未完成的跑班、未开通钱包、跑班列表没有报名中的跑班）=====
     ...    ELSE    classPartinPay_selete    ${classIds}    ${userName}    ${pwd}    ${paymentType}
     ...    ${verifyCode}    ${mywallet}
 
@@ -39,12 +44,12 @@ classPartinPay_selete
     ${mobile}    Replace String    ${mobile}    "    ${EMPTY}
     ${balanceAmount}    get json value    ${mywallet}    /balanceAmount
     ${status}    get json value    ${mywallet}    /status
-    ${classidsrc}    Get From List    ${classIds}    0
-    ${classId}    get json value    ${classidsrc}    /classId
+    #${classidsrc}    Get From List    ${classIds}    0
+    ${classId}    get json value    ${classIds}    /classId
     ###指定classid
     #${classId}    set variable    828
-    ${runNum}    get json value    ${classidsrc}    /runNum
-    ${singleAmount}    get json value    ${classidsrc}    /singleAmount
+    ${runNum}    get json value    ${classIds}    /runNum
+    ${singleAmount}    get json value    ${classIds}    /singleAmount
     ${payAmount1}    Evaluate    int(${singleAmount}*${runNum})
     ${payAmount}    set variable    ${payAmount1}
     Run Keyword If    ${balanceAmount}<${payAmount1} or ${status}==0 or ${mobile}<=1    log    =====用户${userName}钱包被封或余额不足，请冲值！！===========
