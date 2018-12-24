@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation     氛围广告启动页接口
+Documentation     全局广告接口
 Resource          ../Public/public_lib.txt
 
 *** Variable ***
@@ -8,7 +8,7 @@ ${userName}       13829744541    #
 ${ContentType}    application/x-www-form-urlencoded    # POST
 
 *** Test Cases ***    expected_code
-Class_01              [Documentation]    氛围广告启动页接口advert-list-无参数
+Class_01              [Documentation]    全局广告接口advert-list-无参数
                       [Tags]             Test                            Online
                       [Template]         advert-list_Post_assertClass
                       "0"
@@ -16,7 +16,7 @@ Class_01              [Documentation]    氛围广告启动页接口advert-list-
 *** Keywords ***
 advert-list_Post_assertClass
     [Arguments]    ${expected_code}
-    [Documentation]    氛围广告启动页接口advert-list-无参数-基本验证
+    [Documentation]    全局广告接口advert-list-无参数-基本验证
     #######Evaluate    reload(sys)    sys
     ###Evaluate    sys.setdefaultencoding( "UTF-8" )    sys
     ${path}=    set variable    /advert-list

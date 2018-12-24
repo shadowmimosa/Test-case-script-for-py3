@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation     newTopic/getTopicList 获取16个话题列表
+Documentation     newTopic/getTopicList 获取1页话题列表
 Resource          ../Public/public_lib.txt
 
 *** Variable ***
@@ -8,7 +8,7 @@ ${userName}       13829744541    # 默认的用户名
 ${ContentType}    application/x-www-form-urlencoded;charset=UTF-8    # POST数据格式
 
 *** Test Cases ***    ret                msg
-Class_01              [Documentation]    newTopic/getTopicList TestCase测试用例
+Class_01              [Documentation]    newTopic/getTopicList 获取1页话题列表 测试用例
                       [Tags]             Test                                   txy    Online
                       [Template]         newTopic_getTopicList_Post_Keywords
                       0                  成功
@@ -16,13 +16,14 @@ Class_01              [Documentation]    newTopic/getTopicList TestCase测试用
 *** Keywords ***
 newTopic_getTopicList_Post_Keywords
     [Arguments]    ${ret}    ${msg}
-    [Documentation]    newTopic/getTopicList 接口用例的Keywords关健字
-    ######Evaluate       reload(sys)    sys
-    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
+    [Documentation]    newTopic/getTopicList 获取1页话题列表
+    ######Evaluate    reload(sys)    sys
+    ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
     #${userName}    Env_username
     ${path}=    set variable    /newTopic/getTopicList
     ${maps}=    create dictionary
+    set to dictionary    ${maps}    page=1
     log    ========输出接口URL：${topic_URL}${path}
     log    ========接口的入参为：${maps}==========
     ${resp}=    thejoyrun_postd    ${path}    ${maps}    ${userName}    ${topic_URL}
