@@ -1,13 +1,8 @@
 *** Settings ***
 Documentation     user-shoe-meters-mark 跑步记录标记跑鞋
-#Library    Collections
-#Library    RequestsLibrary
-#Library    pymysql
-#Library    DatabaseLibrary
-#Library    String
-#Library     HttpLibrary.HTTP
-#Library     ../Public/Lib/tools_library.py
-Resource          ../Public/public_lib.txt
+Resource          ../Public/public_lib.txt    #Library    Collections    #Library    RequestsLibrary    #Library    pymysql
+...               #Library    DatabaseLibrary    #Library    String    #Library    HttpLibrary.HTTP    #Library
+...               # ../Public/Lib/tools_library.py
 
 *** Variable ***
 ${pwd}            123321    # 密码
@@ -18,7 +13,7 @@ ${ContentType}    application/x-www-form-urlencoded;charset=UTF-8    # POST数�
 Class_01              [Documentation]    user-shoe-meters-mark TestCase测试用例
                       [Tags]             Test                                  gxy
                       [Template]         user-shoe-meters-mark_Get_Keywords
-                      622134             99079522                              跑步记录已标记跑鞋    11007
+                      623900             99124446                              成功           0
 
 Class_02              [Documentation]    user-shoe-meters-mark TestCase测试用例
                       [Tags]             Online                                gxy
@@ -29,13 +24,13 @@ Class_02              [Documentation]    user-shoe-meters-mark TestCase测试用
 user-shoe-meters-mark_Get_Keywords
     [Arguments]    ${user_shoe_id}    ${fid}    ${msg}    ${ret}
     [Documentation]    user-shoe-meters-mark 接口用例的Keywords关健字
-    ######Evaluate       reload(sys)    sys
-    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate    reload(sys)    sys
+    ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
     #${userName}    Env_username
     ${con}    thejoyrun_Keywords    ${wear_URL}    /user-shoe-list    ${userName}    ${pwd}    Post
     ${codelist}    get json value    ${con}    /data
-    ${codelists}    FilterList    ${codelist}    status,1,2    user_shoe_id
+    ${codelists}    FilterList    ${codelist}    status,1,1.2    user_shoe_id
     ${user_shoe_id}    Run Keyword If    '${codelists}'=='0'    set variable    0
     ...    ELSE    randomchoice    ${codelists}    ,
     ${path}=    set variable    /user-shoe-meters-mark
