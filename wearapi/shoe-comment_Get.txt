@@ -13,7 +13,7 @@ ${ContentType}    application/x-www-form-urlencoded;charset=UTF-8    # POST数�
 Class_01              [Documentation]    shoe-comment TestCase测试用例
                       [Tags]             Test                                gxy
                       [Template]         shoe-comment_Get_Keywords
-                      339                2c49d1b614a7444b9e9a0757c40c52e9    鞋子不错       5        您对该款跑鞋的评论次数已达上限    11002
+                      454                055ef20720e94cceb5819e47cc70ef59    鞋子不错       5        您对该款跑鞋的评论次数已达上限    11002
 
 Class_02              [Documentation]    shoe-comment TestCase测试用例
                       [Tags]             Online                              gxy
