@@ -95,8 +95,8 @@ classPartinPay
     log json    ${resp.content}
     log    ---输出返回内容----
     log json    ${content}
-    ${kk}    get json values    ${content}    /ret
-    ${claid}    Run Keyword If    ${kk}=="0"    get json values    ${content}    /data/classId
+    ${kk}    get json value    ${content}    /ret
+    ${claid}    Run Keyword If    ${kk}=="0"    get json value    ${content}    /data/classId
     ${classjson}    set variable    {\"classId\":${claid},\"runNum\":${runNum},\"singleAmount\":${singleAmount}}
     log json    ${classjson}
     log    --将返回结果存在全局参数中；
