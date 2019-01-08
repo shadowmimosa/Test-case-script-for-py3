@@ -32,12 +32,12 @@ feedpostrun_opinion
     ${timemin}    evaluate    int(${time})-864000
     ${timemax}    evaluate    int(${time})
     #选择某些范围的跑步记录
-    ${Runfids}    Run Keyword If    '${env}'=='Test'    UserRunList_Fid    ${userName}    meter,1000,50000/lasttime,${timemin},${timemax}/fraud,0,0.5    fid
+    ${Runfids}    Run Keyword If    '${env}'=='Test' or '${env}'=='Beta'   UserRunList_Fid    ${userName}    meter,1000,50000/lasttime,${timemin},${timemax}/fraud,0,0.5    fid
     ...    ELSE    UserRunList_Fid    ${userName}    meter,3000,10000/lasttime,${timemin},${timemax}/fraud,0,0.5    fid
     #去掉已发表过的动态跑步记录
     ${fid}    Run Keyword If    '${Runfids}'=='${EMPTY}' or '${Runfids}'=='0'    set variable    0
     ...    ELSE    check_runfeed    ${Runfids}    ${userName}
-    ${memo}    Run Keyword If    '${env}'=='Test'    set variable    \#${topicName}\#${memo1}
+    ${memo}    Run Keyword If    '${env}'=='Test' or '${env}'=='Beta'   set variable    \#${topicName}\#${memo1}
     ...    ELSE    set variable    ${memo1}
     Run Keyword If    ${fid}==0    log    =====用户：${userName}没有满足动态发布条件不发布======
     ...    ELSE    feedpostrun_assertClass    ${imgs}    ${fid}    ${postRunId}    ${city}

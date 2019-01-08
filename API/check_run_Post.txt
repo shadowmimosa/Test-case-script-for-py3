@@ -4,7 +4,7 @@ Resource          ../Public/public_lib.txt
 
 *** Variable ***
 ${pwd}            67889911    # 密码
-#${userName}      13829744541    # 用户名
+${userName}       13829744541    # 用户名
 ${ContentType}    application/x-www-form-urlencoded    # POST数据格式
 
 *** Test Cases ***    fid                postRunId                 ret            msg
@@ -20,11 +20,10 @@ class_01              [Documentation]    check/run查询跑步记录是不是发
 check_run
     [Arguments]    ${fid}    ${postRunId}    ${ret}    ${msg}
     [Documentation]    check/run查询跑步记录是不是发过动态
-    ########Evaluate       reload(sys)    sys
-    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
-    ${userName}    Env_username    a
+    #${userName}    Env_username    a
     ${fids}    UserRunList_Fid    ${userName}    fraud,0,0.5    fid
-    ${fid}    randomchoice    ${fids}    ,
+    ${fid}    Run Keyword If    ${fids}!=0    randomchoice    ${fids}    ,
+    ...    ELSE    set variable    ${fid}
     ${path}=    set variable    /feed/check/run
     ${maps}=    create dictionary
     set to dictionary    ${maps}    fid=${fid}
@@ -32,10 +31,9 @@ check_run
     log    ---输出参数---
     log    ${maps}
     log    ---输出测试地址---
-    log    ${api_URL}
-    #${resp}=    thejoyrun_postd    ${path}    ${maps}    ${userName}    ${api_URL}
-    #${content}    thejoyrun_Keywords    ${api_URL}    ${path}    ${userName}    ${pwd}    Post
-    ...    # fid,postRunId    ${fid},${postRunId}
+    log    ${api_URL}    #${resp}=    thejoyrun_postd    ${path}    ${maps}    ${userName}
+    ...    # ${api_URL}    #${content}    thejoyrun_Keywords    ${api_URL}    ${path}    ${userName}
+    ...    # ${pwd}    Post    # fid,postRunId    ${fid},${postRunId}
     ${content}    thejoyrun_Keywords    ${api_URL}    ${path}    ${userName}    ${pwd}    Post
     ...    ${maps}    Joyrun_null
     #${content}=    charconver    ${resp.content}

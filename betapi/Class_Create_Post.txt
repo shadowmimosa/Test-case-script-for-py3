@@ -105,8 +105,6 @@ classPartinPay
 sendVerifyCode
     [Arguments]    ${mobile}    ${userName}    ${pwd}
     [Documentation]    /sendVerifyCode发送验证码
-    ######Evaluate    reload(sys)    sys
-    ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /sendVerifyCode
     #${mobile}=    set variable    13422030633
     ${maps}=    create dictionary
