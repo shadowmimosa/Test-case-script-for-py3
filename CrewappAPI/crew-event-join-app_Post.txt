@@ -1,31 +1,26 @@
 *** Settings ***
 Documentation     crew-event-join-app 报名跑团活动
-#Library    Collections
-#Library    RequestsLibrary
-#Library    pymysql
-#Library    DatabaseLibrary
-#Library    String
-#Library     HttpLibrary.HTTP
-#Library     ../Public/Lib/tools_library.py
-Resource          ../Public/public_lib.txt
+Resource          ../Public/public_lib.txt    #Library    Collections    #Library    RequestsLibrary    #Library    pymysql
+...               #Library    DatabaseLibrary    #Library    String    #Library    HttpLibrary.HTTP    #Library
+...               # ../Public/Lib/tools_library.py
 
 *** Variable ***
 ${pwd}            123321    # 密码
 ${userName}       18011884709    # 默认的用户名
 ${ContentType}    application/x-www-form-urlencoded;charset=UTF-8    # POST数据格式
 
-*** Test Cases ***    event_id                            phone                                uname     key_value    ret       msg
+*** Test Cases ***    event_id                            phone                                uname     key_value    ret    msg
 Class_01              [Documentation]                     crew-event-join-app TestCase测试用例
                       [Tags]                              Test                                 Online    gxy
                       [Template]                          crew-event-join-app_Post_Keywords
-                      7d4e007e8f1411e89e97525400a3a01b    18011884709                          悦跑悦快乐     0            加入活动成功
+                      7d4e007e8f1411e89e97525400a3a01b    \                                    \         \            0      加入活动成功
 
 *** Keywords ***
 crew-event-join-app_Post_Keywords
-    [Arguments]    ${event_id}    ${crewid}    ${key_value}    ${ret}    ${msg}
+    [Arguments]    ${event_id}    ${phone}    ${uname}    ${key_value}    ${ret}    ${msg}
     [Documentation]    crew-event-join-app 接口用例的Keywords关健字
-    ######Evaluate       reload(sys)    sys
-    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate    reload(sys)    sys
+    ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
     #${userName}    Env_username
     ${crewId}    getMyCrewInfo    crewid    ${userName}
@@ -42,6 +37,8 @@ crew-event-join-app_Post_Keywords
     set to dictionary    ${maps}    event_id=${event_id}
     set to dictionary    ${maps}    crewid=${crewid}
     set to dictionary    ${maps}    key_value=${key_value}
+    set to dictionary    ${maps}    phone=${phone}
+    set to dictionary    ${maps}    uname=${uname}
     log    ========输出接口URL：${crewapp_URL}${path}
     log    ========接口的入参为：${maps}==========
     ${resp}=    thejoyrun_postd    ${path}    ${maps}    ${userName}    ${crewapp_URL}

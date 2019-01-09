@@ -33,6 +33,7 @@ shoe-comment_Get_Keywords
     ...    shoe_id,page,pagesize    ${shoe_id},1,100
     ${comment_data}    get json value    ${comment_list}    /data
     ${comment_time}    Run Keyword IF    '${evn}'=='Test'    FilterList    ${comment_data}    uid,32521559,32521560    createtime
+    ...    ELSE IF    '${evn}'=='Beta'    FilterList    ${comment_data}    uid,32521559,32521560    createtime
     ...    ELSE    FilterList    ${comment_data}    uid,86125441,86125442    createtime    None
     ...    10
     ${comment_time}    Evaluate    '${comment_time}'.split(',')[0]

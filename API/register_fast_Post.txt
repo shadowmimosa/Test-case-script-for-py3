@@ -18,8 +18,8 @@ register_fast_Post_Keywords
     [Arguments]    ${cellNumber}    ${cellVerificationCode}    ${dateline}    ${deviceToken}    ${faceurl}    ${headerurl}
     ...    ${nick}    ${pwd}    ${sign}    ${ret}    ${msg}
     [Documentation]    register/fast 账号注册接口用例的Keywords关健字
-    ########Evaluate       reload(sys)    sys
-    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
+    ########Evaluate    reload(sys)    sys
+    ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /register/fast
     ${maps}=    create dictionary
     set to dictionary    ${maps}    cellNumber=${cellNumber}
@@ -38,10 +38,10 @@ register_fast_Post_Keywords
     log json    ${content}
     log    ======开始断言验证=====
     log    验证ret是否符合预期
-    ${ret}    Run Keyword If    '${JoyrunEvn}'=='0' or '${JoyrunEvn}'=='Test'    set variable    ${ret}
-    ...    ELSE    set variable    41006
-    ${msg}    Run Keyword If    '${JoyrunEvn}'=='0' or '${JoyrunEvn}'=='Test'    set variable    ${msg}
-    ...    ELSE    set variable    验证码错误
+    ${ret}    Run Keyword If    '${JoyrunEvn}'!='Online'    set variable    41006
+    ...    ELSE    set variable    ${ret}
+    ${msg}    Run Keyword If    '${JoyrunEvn}'!='Online'    set variable    验证码错误
+    ...    ELSE    set variable    ${msg}
     should contain    ${content}    "ret":"${ret}"
     log    ret 符合预期为:${ret}
     log    验证msg是否符合预期:${msg}
