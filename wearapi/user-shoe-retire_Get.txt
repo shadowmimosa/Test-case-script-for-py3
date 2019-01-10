@@ -25,7 +25,7 @@ user-shoe-retire_Get_Keywords
     #${userName}    Env_username
     ${con}    thejoyrun_Keywords    ${wear_URL}    /user-shoe-list    ${userName}    ${pwd}    Post
     ${codelist}    get json value    ${con}    /data
-    ${codelists}    FilterList    ${codelist}    status,1,2    user_shoe_id
+    ${codelists}    FilterList    ${codelist}    shoe_id,4,5/status,0,1    user_shoe_id
     ${user_shoe_id}    Run Keyword If    '${codelists}'=='0'    set variable    0
     ...    ELSE    randomchoice    ${codelists}    ,
     ${path}=    set variable    /user-shoe-retire
