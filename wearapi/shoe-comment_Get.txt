@@ -18,7 +18,7 @@ Class_01              [Documentation]    shoe-comment TestCase测试用例
 Class_02              [Documentation]    shoe-comment TestCase测试用例
                       [Tags]             Online                              gxy
                       [Template]         shoe-comment_Get_Keywords
-                      2825               73230f00cc354d099ff64fd7f9db2c4a    鞋子不错       5        您对该款跑鞋的评论次数已达上限    11002
+                      3375               73230f00cc354d099ff64fd7f9db2c4a    鞋子不错       5        您对该款跑鞋的评论次数已达上限    11002
 
 *** Keywords ***
 shoe-comment_Get_Keywords
