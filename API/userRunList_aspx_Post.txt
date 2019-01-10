@@ -4,7 +4,7 @@ Resource          ../Public/public_lib.txt
 
 *** Variable ***
 ${pwd}            67889911    # 密码
-${userName}       13829744541    # 用户名
+${userName}       13926281760    # 用户名
 ${ContentType}    application/x-www-form-urlencoded    # POST数据格式
 
 *** Test Cases ***    dateline           year                        expected_code    msg
@@ -17,8 +17,8 @@ Class_01              [Documentation]    userRunList用户本人的跑步记录-
 userRunList
     [Arguments]    ${lasttime}    ${year}    ${expected_code}    ${msg}
     [Documentation]    userRunList用户本人的跑步记录基本验证
-    ########Evaluate       reload(sys)    sys
-    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
+    ########Evaluate    reload(sys)    sys
+    ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /userRunList.aspx
     ${time}=    Get Time    epoch
     log    time= ${time}

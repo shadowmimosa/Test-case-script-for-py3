@@ -11,14 +11,14 @@ ${ContentType}    application/x-www-form-urlencoded;charset=UTF-8    # POST数�
 Class_01              [Documentation]    marathon_api/marathon/online-mls-subject 某线上马中跑步里程列表接口
                       [Tags]             Test                                                       auto_v1    Online
                       [Template]         marathon_api_marathon_online-mls-subject_Getns_Keywords
-                      113                0                                                          成功
+                      330                0                                                          成功
 
 *** Keywords ***
 marathon_api_marathon_online-mls-subject_Getns_Keywords
     [Arguments]    ${marathonId}    ${ret}    ${msg}
     [Documentation]    marathon_api/marathon/online-mls-subject 某线上马中跑步里程列表接口用例的Keywords关健字
-    ######Evaluate       reload(sys)    sys
-    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate    reload(sys)    sys
+    ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
     #${userName}    Env_username
     ${marathonIds}    marathonlist_marathonIds    applyMeter,-2,20000    marathonId    ${userName}    ${pwd}

@@ -38,9 +38,10 @@ register_fast_Post_Keywords
     log json    ${content}
     log    ======开始断言验证=====
     log    验证ret是否符合预期
-    ${ret}    Run Keyword If    '${JoyrunEvn}'!='Online'    set variable    41006
+    ${regevn}    Env_url    ${api_URL}
+    ${ret}    Run Keyword If    '${regevn}'=='Online'    set variable    41006
     ...    ELSE    set variable    ${ret}
-    ${msg}    Run Keyword If    '${JoyrunEvn}'!='Online'    set variable    验证码错误
+    ${msg}    Run Keyword If    '${regevn}'=='Online'    set variable    验证码错误
     ...    ELSE    set variable    ${msg}
     should contain    ${content}    "ret":"${ret}"
     log    ret 符合预期为:${ret}
