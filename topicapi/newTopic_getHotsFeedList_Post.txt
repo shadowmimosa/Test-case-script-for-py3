@@ -34,7 +34,7 @@ newTopic_getHotsFeedList_Post_assertClass
     should contain    ${content}    "ret":${expected}
     log    ret 符合预期为:${expected}
     log    验证msg是否符合预期
-    Run Keyword If    ${expected}=="0"    verfication_data    ${content}
+    Run Keyword If    ${expected}=="0"    checkField    ${content}    fid
     ...    ELSE    should contain    ${content}    "msg":${msg}
     #当需要添加对data的内容进行单独验证时，可以以下方式
     #should contain    ${data}    "temp":

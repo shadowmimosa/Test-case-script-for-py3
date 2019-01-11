@@ -41,7 +41,7 @@ topicDetail
     should contain    ${content}    "ret":${expected}
     log    ret 符合预期为:${expected}
     log    验证msg是否符合预期
-    Run Keyword If    ${expected}=="0"    verfication_data    ${content}
+    Run Keyword If    ${expected}=="0"    CheckField    ${content}    fid,topicId
     ...    ELSE    should contain    ${content}    "msg":${msg}
     log    ===topicName:${topicName}===type:${type}=====
     log    ------------------------ It is OK!!!!-------------------------------------

@@ -38,7 +38,7 @@ feedListBasicBulk_keyword
     log    验证ret是否符合预期
     should contain    ${content}    "ret":${expected}
     log    ret 符合预期为:${expected}
-    Run Keyword If    ${expected}=="0"    get json value    ${content}    /datas
+    Run Keyword If    ${expected}=="0" and '${fids}'!='0'    checkField    ${content}    fid,second,run,hasliked
     ...    ELSE    should contain    ${content}    "msg"
     #当需要添加对data的内容进行单独验证时，可以以下方式
     log    ------------------------ It is OK!!!!-------------------------------------
