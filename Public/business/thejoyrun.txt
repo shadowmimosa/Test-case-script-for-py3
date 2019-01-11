@@ -110,9 +110,10 @@ thejoyrun_postd
     #log    signature====${signature}
     set to dictionary    ${post_dict}    signature=${signature}
     ${post_dict_tolist1}=    evaluate    sorted(${post_dict}.iteritems())
-    log    参数编码前：${post_dict}
+    log    ====原编码传参为：${post_dict}
     ${post_param}    Evaluate    urllib.urlencode(${post_dict})    urllib
-    log    参数编码后：${post_param}
+    log    ====URL的传参为：${post_param}
+	log    ====访问URL：${URL}${path}
     Create Session    run    ${URL}    headers=${heards_dict}    cookies=${cookies}
     ${resp}=    Post Request    run    uri=${path}    data=${post_param}
     ${ret_result}    charconver    ${resp.content}
@@ -214,9 +215,10 @@ thejoyrun_postnl
     #log    signature====${signature}
     set to dictionary    ${post_dict}    signature=${signature}
     ${post_dict_tolist1}=    evaluate    sorted(${post_dict}.iteritems())
-    log    参数编码前：${post_dict}
+    log    ====原编码传参为：${post_dict}
     ${post_param}    Evaluate    urllib.urlencode(${post_dict})    urllib
-    log    参数编码后：${post_param}
+    log    ====URL的传参为：${post_param}
+	log    ====访问URL：${URL}${path}
     #${post_param}=    Evaluate    '${post_param}'.decode('unicode_escape')    #对中文做处理，将unicode字符解码成对应的中文字符
     Create Session    run    ${URL}    headers=${heards_dict}    cookies=${cookies}
     ${resp}=    Post Request    run    uri=${path}    data=${post_param}
@@ -275,9 +277,10 @@ thejoyrun_post_nosign
     set to dictionary    ${heards_dict}    APP_DEV_INFO=${APPDEVINFO}
     set to dictionary    ${heards_dict}    SYSVERSION=${SYSVERSION}
     set to dictionary    ${heards_dict}    MODELTYPE=${MODELTYPE}
-    log    参数编码前：${post_dict}
+    log    ====原编码传参为：${post_dict}
     ${post_param}    Evaluate    urllib.urlencode(${post_dict})    urllib
-    log    参数编码后：${post_param}
+    log    ====URL的传参为：${post_param}
+	log    ====访问URL：${URL}${path}
     #因后端和运维的签名方法不一致，兼容处理
     ${path}    set variable    ${path}?${post_param}
     ####
@@ -333,7 +336,7 @@ thejoyrun_postjson_wxminp
     set to dictionary    ${post_dict}    sid=${sid}
     log    post_dict：${post_dict}
     #${post_param}    Evaluate    urllib.urlencode(${post_dict})    urllib
-    #log    参数编码后：${post_param}
+    #log    ====URL的传参为：${post_param}
     #签名
     ${signkey}=    Run Keyword If    ${uid}==0    set variable    ${appid}${timestamp}${sid}${appkey}
     ...    ELSE    set variable    ${appid}${timestamp}${sid}${uid}${appkey}
@@ -351,6 +354,7 @@ thejoyrun_postjson_wxminp
     set to dictionary    ${heards_dict}    sign=${sign}
     set to dictionary    ${heards_dict}    Content-Type=${ContentType}
     set to dictionary    ${heards_dict}    User-Agent=Mozilla/5.0 (iPhone; CPU iPhone OS 11_3 like Mac OS X)
+	log    ====访问URL：${URL}${path}
     Create Session    runwx    ${URL}    headers=${heards_dict}
     ${resp}=    Post Request    runwx    uri=${path}    data=${post_dict}
     log    thejoyrun_postjson_wxminp End ......
@@ -407,9 +411,10 @@ thejoyrun_get_wxminp
     set to dictionary    ${heards_dict}    User-Agent=${UserAgent}
     log    sign====${sign}
     log    post_dict======${post_dict}
-    log    参数编码前：${post_dict}
+    log    ====原编码传参为：${post_dict}
     ${post_dict}    Evaluate    urllib.urlencode(${post_dict})    urllib
-    log    参数编码后：${post_dict}
+    log    ====URL的传参为：${post_dict}
+	log    ====访问URL：${URL}${path}
     Create Session    run    ${URL}    headers=${heards_dict}
     ${resp}=    Get Request    run    uri=${path}    params=${post_dict}
     log    thejoyrun_get_wxminp End ...
@@ -511,9 +516,10 @@ thejoyrun_getp
     #log    _sign====${_sign}
     #log    signature====${signature}
     set to dictionary    ${post_dict}    signature=${signature}
-    log    参数编码前：${post_dict}
+    log    ====原编码传参为：${post_dict}
     ${post_param}    Evaluate    urllib.urlencode(${post_dict})    urllib
-    log    参数编码后：${post_param}
+    log    ====URL的传参为：${post_param}
+	log    ====访问URL：${URL}${path}
     Create Session    run    ${URL}    headers=${heards_dict}    cookies=${cookies}
     ${resp}=    Get Request    run    uri=${path}    params=${post_param}
     ${get_count}    Get Count    ${resp.content}    ret\":"401"
@@ -573,9 +579,10 @@ thejoyrun_get_nosign
     set to dictionary    ${heards_dict}    APP_DEV_INFO=${APPDEVINFO}
     set to dictionary    ${heards_dict}    SYSVERSION=${SYSVERSION}
     set to dictionary    ${heards_dict}    MODELTYPE=${MODELTYPE}
-    log    参数编码前：${post_dict}
+    log    ====原编码传参为：${post_dict}
     ${post_param}    Evaluate    urllib.urlencode(${post_dict})    urllib
-    log    参数编码后：${post_param}
+    log    ====URL的传参为：${post_param}
+	log    ====访问URL：${URL}${path}
     Create Session    run    ${URL}    headers=${heards_dict}    cookies=${cookies}
     ${resp}=    Get Request    run    uri=${path}    params=${post_param}
     ${get_count}    Get Count    ${resp.content}    ret\":"401"
@@ -602,6 +609,7 @@ thejoyrun_postjson
     ${URL}=    set variable    ${Base_URL}
     ${post_dict}=    create dictionary    &{maps}
     log    post_dict：${post_dict}
+	log    ====访问URL：${URL}${path}
     #请求头处理${UserAgent}
     set to dictionary    ${heards_dict}    Content-Type=${ContentType}
     set to dictionary    ${heards_dict}    User-Agent=Mozilla/5.0 (iPhone; CPU iPhone OS 11_3 like Mac OS X)

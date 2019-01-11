@@ -100,10 +100,10 @@ joyrun_POST_heardsession
     set to dictionary    ${header}    SYSVERSION=${SYSVERSION}
     set to dictionary    ${header}    _sign=${_sign}
     set to dictionary    ${header}    MODELTYPE=${MODELTYPE}
-    log    登录前传参url=${Url}${loginUri}
-    log    登录前的heard=${header}
-    log    登录前的body=data=pwd=${pwdmd5}&timestamp=${timestamp}&username=${username}
+    log    登录Hearder=${header}
     ${data}  Set Variable  deviceToken=${deviceToken}&pwd=${pwdmd5}&signature=${signature}&timestamp=${timestamp}&username=${username}
+	log    登录URL=${Url}${loginUri}
+	log    登录Body=${data}
     Create Session    joyrun    ${Url}    headers=${header}
     ${resplogin}=    Post Request    joyrun    ${loginUri}   data=${data}      
     log    ${resplogin.headers}
