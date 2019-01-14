@@ -38,6 +38,6 @@ notifylist_Post_assertClass
     log    ret 符合预期为:${expected_code}
     log    验证msg是否符合预期
     ${msg}=    charconver    "成功"
-    Run Keyword If    ${expected_code}=="0"    verfication_data    ${content}
+    Run Keyword If    ${expected_code}=="0"    checkfield    ${content}    ntf_starttime,ntf_endtime,ntf_id
     ...    ELSE    should contain    ${content}    "msg":${msg}
     log    ------------------------ It is OK!!!!-------------------------------------

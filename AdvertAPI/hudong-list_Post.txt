@@ -17,8 +17,8 @@ Class_01              [Documentation]    活动列表-无传参
 hudonglist_Post_assertClass
     [Arguments]    ${expected_code}
     [Documentation]    基本验证-活动列表/huodong-list
-    ######Evaluate       reload(sys)    sys
-    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate    reload(sys)    sys
+    ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /huodong-list
     ${maps}=    create dictionary
     ${maps1}=    create dictionary
@@ -38,7 +38,7 @@ hudonglist_Post_assertClass
     log    验证ret是否符合预期
     should contain    ${content}    "ret":${expected_code}
     log    ret 符合预期为:${expected_code}
-    Run Keyword If    ${expected_code}=="0"    verfication_data    ${content}
+    Run Keyword If    ${expected_code}=="0"    checkfield    ${content}    data,msg,ret,start_time,end_time,depub_time
     log    测试地址:${advert_URL}${path}
     log    用户及传参:${userName}:${maps}
     #当需要添加对data的内容进行单独验证时，可以以下方式
