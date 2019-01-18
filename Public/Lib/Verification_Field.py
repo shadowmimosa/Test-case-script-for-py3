@@ -36,7 +36,7 @@ def CheckField(data,checkfeild,ignore=None):
 		checkfeild=unicodeConvList(checkfeild)
 		logging.info('checkfeild={}'.format(checkfeild))
 	list2= []
-	list2= analysis_subItem(data,checkfeild,list2)
+	list2= Sub_Isnotempty(data,None,None,checkfeild,list2)
 	logging.info(checkfeild)
 	logging.info(list2)
 	yesNo=listContain(checkfeild,list2)
@@ -55,15 +55,15 @@ def CheckField(data,checkfeild,ignore=None):
 
 	
 
-def listContain(list1,list2):
+def listContain(listx,listd):
 	'''
-	#判断list1中的值list2中，且不在的值打印出来
-	#list1的所有值都在list2中，则返回1，反之返回0
+	#判断listx中的值list2中，且不在的值打印出来
+	#listx的所有值都在list2中（即listx<=List2），则返回1，反之返回0
 	'''
 	error=[]
 	ispas=1
-	for i in list1:
-		if i in list2:
+	for i in listx:
+		if i in listd:
 			continue
 		else:
 			error.append(i)
@@ -80,16 +80,16 @@ def listContain(list1,list2):
 
 
 
-def unicodeConvList(data):
+def unicodeConvList(datas):
 	'''
 	#将unicode字符串转换成list列表，保证从RF中传入的参数为列表
 	#data为字符串,用逗号隔开,可转化为列表
 	#返回的值为列表
 	#例如：unicodeconvlist('a,b,c');unicodeconvlist('[a,b,c]')
 	'''
-	if type(data)!=list:
+	if type(datas)!=list:
 		datalist=[]
-		data_str=str(data)
+		data_str=str(datas)
 		data_str_list= data_str.split(',')
 
 		for i in xrange(len(data_str_list)):
@@ -109,53 +109,98 @@ def unicodeConvList(data):
 		return datalist
 
 
-#判断value值对应的类型，从而进行相应的处理，嵌入递归函数
-def analysis_subItem(item,checkfeild,itemfeild=None):
-	'''
-	1、不管value值取出如何，最终还是拆解成最小单元，字符串或者是整型来进行判断
-	:return:
-	'''
-	if itemfeild is None:
-		itemfeild=[]
-	if isinstance(item,str):
-		pass
-	elif isinstance(item,int):
-		if int(item)<0:
-			raise AssertionError("int <0")
 
-	elif isinstance(item,list):
-		item_len=len(item)
+def Sub_Isnotempty(subdata,retype=None,countnull=None,checkfeildlist=None,backfeild=None):
+	'''
+	#不论item为何种类型，最终还是拆解成最小单元（字符串或整型），并将所有key返回至列表，
+	#并将所有拆出来的字段拼接在itemfeild列表中；
+	#checkfeildlist为字段集列表，对item中checkfeildlist列表字段进行空校验
+	#校验不通过，将不通的字段做一些处理（格式：字段=类型Invalid）再增加至checkfeildlist；并打印来
+	#不论校验是否通过，都返回itemfeild列表，此列表为原始列表+item中字段；
+	retype为空时，只对checkfeildlist中字段进行校验是否为空,并返回所有item中的字段；
+	retype不为空时；对item中所有字段进行是否为空校验，返回不为空的字段个数
+	'''
+	if backfeild is None:
+		backfeild=[]
+	if countnull is None:
+		countnull=0
+	if retype is None:
+		retype=0
+	#logging.info('BackList={}'.format(backfeild))
+	if isinstance(subdata,str):
+		if retype:
+			k=Isnotempty(subdata,1)
+			print k
+			if k==0:
+				countnull=countnull+1
+		else:
+			pass
+	elif isinstance(subdata,(int,long)):
+		if retype:
+			k=Isnotempty(subdata,1)
+			if k==0:
+				countnull=countnull+1
+	elif isinstance(subdata,list):
+		item_len=len(subdata)
+		if retype:
+			k=Isnotempty(subdata,1)
+			if k==0:
+				countnull=countnull+1
 		for i in range(item_len):
-			analysis_subItem(item[i],checkfeild,itemfeild)
+			#logging.info('list={}'.format(subdata[i]))
+			Sub_Isnotempty(subdata[i],retype,countnull,checkfeildlist,backfeild)
 
-	elif isinstance(item,dict):
-		value_dict_len=len(item)
-		for key,value in item.items():
-			itemfeild.append(key)
-			if key in checkfeild:
-				checkrs=checkobj(value)
+	elif isinstance(subdata,dict):
+		value_dict_len=len(subdata)
+		if retype:
+			k=Isnotempty(subdata,1)
+			if k==0:
+				countnull=countnull+1
+		for key,value in subdata.items():
+			backfeild.append(key)
+			# logging.info('dictkey={}'.format(key))  
+			# logging.info('dictvalue={}'.format(value))  
+			if key in checkfeildlist:
+				checkrs=Isnotempty(value)
 				if checkrs != 1:
 					checkey=key+'='+checkrs
-					checkfeild.append(checkey)
+					checkfeildlist.append(checkey)
 					logging.info('{}:#{}# check result NG'.format(key,value))
-			analysis_subItem(value,checkfeild,itemfeild)
-	return   itemfeild
+			Sub_Isnotempty(value,retype,countnull,checkfeildlist,backfeild)
+	# elif subdata in ['',' ','\'\'',None,'\' \'']:
+			# if retype:
+				# k=Isnotempty(subdata,1)
+				# if k==0:
+					# countnull=countnull+1
+			# else:
+				
+		# else:
+			# subdata=str(subdata)
+			# print  'unicode:{}'.format(subdata).encode('GB2312')
+			# subdata=json.loads(subdata)
+			# Sub_Isnotempty(subdata,retype,countnull,checkfeildlist,backfeild)
+	if retype:
+		return  countnull
+	else:
+		return   backfeild
 
-def checkobj(obj):
+def Isnotempty(obj=None,backtype=None):
 	'''
-	#检查对象是否为空
+	#检查对象是否不为空
 	#对字符类型："",空,空格时会返回Str-Invalid
 	#对Int类型：<0时会返回Int-Invalid
 	#对list类型：为空时会返回List-Invalid
 	#对Dict类型：为空时会返回Dict-Invalid
 	#其他值返回1
+	#如retype有值，则对象为空返回0，不为空返回1
 	'''
 	rs=1
-	# logging.info(type(obj))	
-	if isinstance(obj,str):
-		if obj in ['','\"\"',' ']:
+	if obj in ['',None]:
+		rs='None-Invalid'
+	elif isinstance(obj,str):
+		if obj in ['\"\"',' ','\'\'',' \'\'']:
 			rs='Str-Invalid'
-	elif isinstance(obj,int):
+	elif isinstance(obj,(int,long)):
 		if int(obj)<0:
 			rs='Int-Invalid'
 	elif isinstance(obj,list):
@@ -167,21 +212,13 @@ def checkobj(obj):
 		if  value_dict_len<=0:
 			rs='Dict-Invalid'		
 	else:
-		obj=obj.encode('utf-8')
-		rs=checkobj(obj)
+		obj=str(obj)
+		rs=Isnotempty(obj)
+	if backtype:
+		if rs!=1:
+			rs=0		
 	return rs
 		
-#计算字符串长度
-def get_length(item):
-		length = _get_length(item)
-		return length
-
-def _get_length(item):
-		try:
-			return len(item)
-
-		except:
-			raise RuntimeError("Could not get length of '%s'." % item)
 
 
 

@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation     跑团信息查询
+Documentation     我的跑团信息查询
 Resource          ../Public/public_lib.txt
 
 *** Variable ***
@@ -8,13 +8,8 @@ ${userName}       13829744541    # 用户名
 ${ContentType}    application/x-www-form-urlencoded    # POST数据格式
 
 *** Test Cases ***    crewId             nodeId                          userName       expected_code
-Class_01              [Documentation]    跑团信息查询getCrewInfo-线上跑团号10960
-                      [Tags]             Test
-                      [Template]         getCrewInfo_Post_assertClass
-                      10960              0                               13829744541    "0"
-
-Class_02              [Documentation]    跑团信息查询getCrewInfo-测试跑团10960
-                      [Tags]             Online
+Class_01              [Documentation]    我的跑团信息getCrewInfo-线上跑团号10960
+                      [Tags]             Test                            Online
                       [Template]         getCrewInfo_Post_assertClass
                       10960              0                               13829744541    "0"
 
@@ -22,8 +17,6 @@ Class_02              [Documentation]    跑团信息查询getCrewInfo-测试跑
 getCrewInfo_Post_assertClass
     [Arguments]    ${crewId}    ${nodeId}    ${userName}    ${expected_code}
     [Documentation]    跑团信息查询getMyCrewInfo基本验证
-    ######Evaluate       reload(sys)    sys
-    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /structure/getCrewInfo
     ${maps}=    create dictionary
     set to dictionary    ${maps}    crewId=${crewId}
@@ -45,13 +38,6 @@ getCrewInfo_Post_assertClass
     log    ret 符合预期为:${expected_code}
     log    验证msg是否符合预期
     ${msg}=    charconver    "您不属于任何跑团"
-    Run Keyword If    ${expected_code}=="0"    verfication_data    ${content}
+    Run Keyword If    ${expected_code}=="0"    checkfield    ${content}    city,crewid,crewname,totalmember,totaldistance,crewtype
     ...    ELSE    should contain    ${content}    "msg":${msg}
-    #当需要添加对data的内容进行单独验证时，可以以下方式
-    #${data}    get json value    ${content}    /data
-    #${data}=    charconver    ${data}
-    #should contain    ${data}    "temp":
-    #当验证的内容有中文时，需要先转码再验证；
-    #${weather}=    charconver    "多云"
-    #should contain    ${data}    ${weather}
     log    ------------------------ It is OK!!!!-------------------------------------
