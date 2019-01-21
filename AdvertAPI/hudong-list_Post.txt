@@ -17,16 +17,14 @@ Class_01              [Documentation]    活动列表-无传参
 hudonglist_Post_assertClass
     [Arguments]    ${expected_code}
     [Documentation]    基本验证-活动列表/huodong-list
-    ######Evaluate    reload(sys)    sys
-    ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /huodong-list
     ${maps}=    create dictionary
     ${maps1}=    create dictionary
     set to dictionary    ${maps1}    ret=a1
     set to dictionary    ${maps1}    bs23=b1
     set to dictionary    ${maps1}    csee=10
-    log    测试地址:${advert_URL}${path}
-    log    用户及传参:${userName}:${maps}
+    log    Test-URL:${advert_URL}${path}
+    log    UserName-maps:${userName}:${maps}
     ${Lista}    Evaluate    ["msg","ret","data"]
     ${resp}=    thejoyrun_postd    ${path}    ${maps}    ${userName}    ${advert_URL}
     #${aaaa}    Get_Global_Var    /advert-list    ${userName}    ${advert_URL}    ${pwd}

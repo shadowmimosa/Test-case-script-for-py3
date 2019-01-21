@@ -17,8 +17,6 @@ Class_01              [Documentation]    全局广告接口advert-list-无参数
 advert-list_Post_assertClass
     [Arguments]    ${expected_code}
     [Documentation]    全局广告接口advert-list-无参数-基本验证
-    #######Evaluate    reload(sys)    sys
-    ###Evaluate    sys.setdefaultencoding( "UTF-8" )    sys
     ${path}=    set variable    /advert-list
     ${maps}=    create dictionary
     log    ---输出参数---
