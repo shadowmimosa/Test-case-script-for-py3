@@ -471,16 +471,24 @@ thejoyrun_getp
     \    set to dictionary    ${post_dict}    ${map[0]}=${map[1]}
     #排序及格式处理
     ${sign_dict_tolist}=    evaluate    sorted(${sign_dict}.iteritems())
-    ${signparam}=    convert to string    ${sign_dict_tolist}
-    ${signparam}=    Replace String    ${signparam}    [    ${EMPTY}
-    ${signparam}=    Replace String    ${signparam}    u'    '
-    ${signparam}=    Replace String    ${signparam}    ', '    ${EMPTY}
-    ${signparam}=    Replace String    ${signparam}    ('    ${EMPTY}
-    ${signparam}=    Replace String    ${signparam}    ')    ${EMPTY}
-    ${signparam}=    Replace String    ${signparam}    ,${SPACE}    ${EMPTY}
-    ${signparam}=    Replace String    ${signparam}    ]    ${EMPTY}
-    #${signparam}=    Replace String    ${signparam}    &    ${EMPTY}
-    ${signparam}=    Evaluate    '${signparam}'.decode('unicode_escape')    #对中文做处理，将unicode字符解码成对应的中文字符
+	log list   ${sign_dict_tolist}
+    #${signparam}=    convert to string    ${sign_dict_tolist}
+	${signparam}   Set Variable  ${EMPTY}
+	: FOR  ${x}  IN  @{sign_dict_tolist}
+	\	${sign-key}      evaluate   ${x}[0]
+	\	${sign-value}    evaluate   ${x}[1]
+	\	${sign-value}   convert to string   ${sign-value}
+	\   ${signparam}   Run Keyword IF   '${signparam}'=='${EMPTY}'  Set Variable  ${sign-key}${sign-value}
+	\	...		ELSE  Set Variable  ${signparam}${sign-key}${sign-value} 
+    #${signparam}=    Replace String    ${signparam}    [    ${EMPTY}
+    #${signparam}=    Replace String    ${signparam}    u'    '
+    #${signparam}=    Replace String    ${signparam}    ', '    ${EMPTY}
+    #${signparam}=    Replace String    ${signparam}    ('    ${EMPTY}
+    #${signparam}=    Replace String    ${signparam}    ')    ${EMPTY}
+    #${signparam}=    Replace String    ${signparam}    ,${SPACE}    ${EMPTY}
+    #${signparam}=    Replace String    ${signparam}    ]    ${EMPTY}
+    ##${signparam}=    Replace String    ${signparam}    &    ${EMPTY}
+    #${signparam}=    Evaluate    '${signparam}'.decode('unicode_escape')    #对中文做处理，将unicode字符解码成对应的中文字符
     #log    ${signparam}
     #排序及格式处理
     log    signparam===${signparam}

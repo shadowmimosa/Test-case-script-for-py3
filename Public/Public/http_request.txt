@@ -168,7 +168,7 @@ Joyrun_Add_deviceid
 	Create Session    joyrun    ${advert_URL}    headers=${header}
     ${respaddeveiceid}=    Post Request    joyrun   ${Add_deveiceid_path}    data=${data}  
 	${Add_deviceid_content}=    charconver    ${respaddeveiceid.content}
-	log json   ${Add_deviceid_content}
+	#log json   ${Add_deviceid_content}
     ${Add_deviceid_ret}     Get Json Value   ${Add_deviceid_content}   /ret
     ${Add_deviceid_ret}     Replace String    ${Add_deviceid_ret}    "    ${EMPTY}
 	${Add_deviceid_error}   Run Keyword If   ${Add_deviceid_ret}!=0   Get Json Value   ${Add_deviceid_content}   /msg

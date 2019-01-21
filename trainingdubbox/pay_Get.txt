@@ -1,0 +1,51 @@
+*** Settings ***
+Documentation     dubbox的钱包增减圈币接口脚本/wallet/pay
+Resource          ../Public/public_lib.txt    #Library    Collections    #Library    RequestsLibrary    #Library    pymysql
+...               #Library    DatabaseLibrary    #Library    String    #Library    HttpLibrary.HTTP    #Library
+...               # ../Public/Lib/tools_library.py
+
+*** Variable ***
+${pwd}            67889911    # 密码
+${userName}       13829744541    # 默认的用户名
+${ContentType}    application/x-www-form-urlencoded;charset=UTF-8    # POST数据格式
+
+*** Test Cases ***    payRequestVO        ret                                          msg
+Class_01              [Documentation]     dubbox的钱包增减圈币接口脚本/wallet/pay uid:32518359
+                      [Tags]              auto_v1
+                      [Template]          pay_Get_Keywords
+                      {"uid":32518359}    0                                            成功
+
+*** Keywords ***
+pay_Get_Keywords
+    [Arguments]    ${payRequestVO}    ${ret}    ${msg}
+    [Documentation]    pay 接口用例的Keywords关健字
+    #${userName}    Env_username
+    ${path}=    set variable    /wallet/pay
+    ${timest}    GetServertime    ${login_URL}
+    ${uid}    set variable    ${32518359}
+    ${dubboxurl}    set Variable    http://wallet.dubbox.betaenv.thejoyrun.com
+    ${env}    env_url    ${login_URL}
+    ${dubboxurl}    Run Keyword IF    '${env}'=='Test'    Replace String    ${dubboxurl}    .betaenv    .test
+    ...    ELSE    Replace String    ${dubboxurl}    .test    .betaenv
+    ${maps}=    create dictionary
+    set to dictionary    ${maps}    amount=${100}
+    set to dictionary    ${maps}    bizCode=WPA
+    set to dictionary    ${maps}    bizOrderNo=${${timest}${uid}}
+    set to dictionary    ${maps}    isNotice=${0}
+    set to dictionary    ${maps}    orderDesc=AutoTest
+    set to dictionary    ${maps}    type=${1}
+    set to dictionary    ${maps}    uid=${uid}
+    log    ========输出接口URL：${dubboxurl}${path}
+    log    ========接口的入参为：${userName}:${maps}==========
+    ${resp}=    thejoyrun_postjson    ${path}    ${maps}    ${dubboxurl}
+    ${content}=    charconver    ${resp.content}
+    log json    ${content}
+    log    ======开始断言验证=====
+    log    验证ret是否符合预期
+    should contain    ${content}    "ret":"${ret}"
+    log    ret 符合预期为:${ret}
+    log    验证msg是否符合预期:${msg}
+    should contain    ${content}    "msg":"${msg}"
+    #当需要添加对data的内容进行单独验证时，可以以下方式
+    #${data}    get json value    ${content}    /data
+    log    验证OK！！用户${userName}；URL：${dubboxurl}${path}；传参：${maps}！！

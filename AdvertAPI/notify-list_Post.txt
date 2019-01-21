@@ -4,7 +4,7 @@ Resource          ../Public//public_lib.txt
 
 *** Variable ***
 ${pwd}            67889911    # 密码
-${userName}       13829744550    # 用户名
+${userName}       13829744541    # 用户名
 ${ContentType}    application/x-www-form-urlencoded    # POST数据格式
 
 *** Test Cases ***    expected_code
@@ -21,18 +21,11 @@ notifylist_Post_assertClass
     ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /notify-list
     ${maps}=    create dictionary
-    log    ---输出参数---
-    log    ${maps}
-    log    ---输出测试地址---
-    log    ${advert_URL}
+    log    输出测试地址${advert_URL}${path}
+    log    用户名及传参${userName}:${maps}
     ${resp}=    thejoyrun_postd    ${path}    ${maps}    ${userName}    ${advert_URL}
     ${content}=    charconver    ${resp.content}
-    log json    ${resp.content}
-    log    ---输出返回内容----
     log json    ${content}
-    log    ---开始断言验证---
-    log    response数据为：
-    log    ${resp}
     log    验证ret是否符合预期
     should contain    ${content}    "ret":${expected_code}
     log    ret 符合预期为:${expected_code}
