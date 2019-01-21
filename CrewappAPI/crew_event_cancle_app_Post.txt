@@ -17,8 +17,6 @@ Class_01              [Documentation]    /crew-event-cancle-app 取消跑团活�
 /crew-event-cancle-app_Post_Keywords
     [Arguments]    ${crewid}    ${event_id}    ${ret}    ${msg}
     [Documentation]    /crew-event-cancle-app
-    ######Evaluate    reload(sys)    sys
-    ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
     ${emv}    Env_username    1
     #${userName}    Env_username
@@ -28,9 +26,14 @@ Class_01              [Documentation]    /crew-event-cancle-app 取消跑团活�
     ${con}    thejoyrun_Keywords    ${crewapp_URL}    /crew-app-event-list    ${userName}    ${pwd}    Post
     ...    crewid,crew_node_id    ${crewid},0
     ${codelist}    get json value    ${con}    /data
-    ${codelists}    FilterList    ${codelist}    join_cnt,1,99/deadline,${deadline1},${deadline2}    event_id
-    ${event_id}    Run Keyword If    '${codelists}'=='0'    set variable    2e1b98234a9f4c58a4e7ffd9ae077c4d
-    ...    ELSE    randomchoice    ${codelists}    ,
+    ${eventlist}    FilterList    ${codelist}    join_cnt,1,99/deadline,${deadline1},${deadline2}    event_id
+    Run Keyword If    '${eventlist}'=='0' or '${crewId}'=='0'    log    没有参加跑团或没有符合条件跑团活动
+    ...    ELSE    cancle_crew_event_post    ${crewid}    ${eventlist}    ${ret}    ${msg}
+
+cancle_crew_event_post
+    [Arguments]    ${crewid}    ${eventlist}    ${ret}    ${msg}
+    [Documentation]    /crew-event-cancle-app
+    ${event_id}    randomchoice    ${eventlist}    ,
     ${event_id}    Replace String    ${event_id}    "    ${EMPTY}
     ${path}=    set variable    /crew-event-cancle-app
     ${maps}=    create dictionary
@@ -43,9 +46,6 @@ Class_01              [Documentation]    /crew-event-cancle-app 取消跑团活�
     log json    ${content}
     log    ======开始断言验证=====
     log    验证ret是否符合预期
-    Run Keyword If    "${event_id}"=="2e1b98234a9f4c58a4e7ffd9ae077c4d" and "${emv}" =="Test"    should contain    ${content}    "ret":"3","msg":"event not exist"
-    ...    ELSE IF    "${event_id}"=="2e1b98234a9f4c58a4e7ffd9ae077c4d" and "${emv}" =="Beta"    should contain    ${content}    "ret":"3","msg":"event not exist"
-    ...    ELSE IF    "${event_id}"=="2e1b98234a9f4c58a4e7ffd9ae077c4d" and "${emv}" =="Online"    should contain    ${content}    "ret":"5","msg":"event expired"
-    ...    ELSE    should contain    ${content}    "ret":"${ret}"
+    should contain    ${content}    "ret":"${ret}"
     #当需要添加对data的内容进行单独验证时，可以以下方式
     log    ------------------------ It is OK!!!!-------------------------------------

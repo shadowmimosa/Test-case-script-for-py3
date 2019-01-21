@@ -1,13 +1,8 @@
 *** Settings ***
 Documentation     crew-event-detail-app 查询跑团活动详情
-#Library    Collections
-#Library    RequestsLibrary
-#Library    pymysql
-#Library    DatabaseLibrary
-#Library    String
-#Library     HttpLibrary.HTTP
-#Library     ../Public/Lib/tools_library.py
-Resource          ../Public/public_lib.txt
+Resource          ../Public/public_lib.txt    #Library    Collections    #Library    RequestsLibrary    #Library    pymysql
+...               #Library    DatabaseLibrary    #Library    String    #Library    HttpLibrary.HTTP    #Library
+...               # ../Public/Lib/tools_library.py
 
 *** Variable ***
 ${pwd}            123321    # 密码
@@ -24,8 +19,6 @@ Class_01              [Documentation]                     crew-event-detail-app 
 crew-event-detail-app_Get_Keywords
     [Arguments]    ${event_id}    ${crewid}    ${ret}    ${msg}
     [Documentation]    crew-event-detail-app 接口用例的Keywords关健字
-    ######Evaluate       reload(sys)    sys
-    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
     #${userName}    Env_username
     ${crewId}    getMyCrewInfo    crewid    ${userName}
@@ -34,9 +27,14 @@ crew-event-detail-app_Get_Keywords
     ${codelist}    get json value    ${con}    /data
     ${end_time}    Gettimes    ss,+1,times
     ${end_time1}    Gettimes    MM,+3,times
-    ${codelists}    FilterList    ${codelist}    status,0,0.1/deadline,${end_time},${end_time1}    event_id    None    -5
-    ${event_id}    Run Keyword If    '${codelists}'=='0'    set variable    2e1b98234a9f4c58a4e7ffd9ae077c4d
-    ...    ELSE    randomchoice    ${codelists}    ,
+    ${eventlist}    FilterList    ${con}    status,0,0.1/deadline,${end_time},${end_time1}    event_id    None    -5
+    Run Keyword If    '${eventlist}'=='0' or '${crewId}'=='0'    log    没有参加跑团或没有符合条件跑团活动
+    ...    ELSE    crew-event-detail-app_Get    ${eventlist}    ${crewid}    ${ret}    ${msg}
+
+crew-event-detail-app_Get
+    [Arguments]    ${eventlist}    ${crewid}    ${ret}    ${msg}
+    [Documentation]    crew-event-detail-app 接口用例的Keywords关健字
+    ${event_id}    randomchoice    ${eventlist}    ,
     ${path}=    set variable    /crew-event-detail-app
     ${maps}=    create dictionary
     set to dictionary    ${maps}    event_id=${event_id}
@@ -52,6 +50,5 @@ crew-event-detail-app_Get_Keywords
     log    ret 符合预期为:${ret}
     log    验证msg是否符合预期:${msg}
     should contain    ${content}    "msg":"${msg}"
-    #当需要添加对data的内容进行单独验证时，可以以下方式
-    #${data}    get json value    ${content}    /data
+    checkfield    ${content}    event_id,crewid,creator_uid,start_time,end_time
     log    验证OK！！用户${userName}；URL：${crewapp_URL}${path}；传参：${maps}！！
