@@ -470,8 +470,7 @@ thejoyrun_getp
     : FOR    ${map}    IN    @{mapstolist}
     \    set to dictionary    ${post_dict}    ${map[0]}=${map[1]}
     #排序及格式处理
-    ${sign_dict_tolist}=    evaluate    sorted(${sign_dict}.iteritems())
-	log list   ${sign_dict_tolist}
+    @{sign_dict_tolist}=    evaluate    sorted(${sign_dict}.iteritems())
     #${signparam}=    convert to string    ${sign_dict_tolist}
 	${signparam}   Set Variable  ${EMPTY}
 	: FOR  ${x}  IN  @{sign_dict_tolist}
