@@ -170,16 +170,21 @@ FourTopicList_TopicName
     ${resp}=    thejoyrun_getp    ${path}    ${maps}    ${userName}    ${topic_URL}   ${pwd}
     ${getFourTopicListcontent}=    charconver    ${resp.content}
     log json    ${getFourTopicListcontent}
+	${list_count}    Get Count    ${getFourTopicListcontent}    topicName":"
     ${FourTopicdata}    get json value    ${getFourTopicListcontent}    /data
-    ${FourTopicdata}    replace string    ${FourTopicdata}    [    ${EMPTY}
-    ${FourTopicdata}    replace string    ${FourTopicdata}    ]    ${EMPTY}
-    ${FourTopicdata}    replace string    ${FourTopicdata}    ${SPACE}    ${EMPTY}
-    @{FourTopicdatalist}    Split String    ${FourTopicdata}    },{
+	@{FourTopicdatalist}    Create List  
+	: FOR    ${indexa}    IN RANGE    ${list_count}
+	\	${lista}    get json value    ${getFourTopicListcontent}    /data/${indexa}
+	\	Append To List  ${FourTopicdatalist}     ${lista}  
+    #${FourTopicdata}    replace string    ${FourTopicdata}    [    ${EMPTY}
+    #${FourTopicdata}    replace string    ${FourTopicdata}    ]    ${EMPTY}
+    #${FourTopicdata}    replace string    ${FourTopicdata}    ${SPACE}    ${EMPTY}
+    #@{FourTopicdatalist}    Split String    ${FourTopicdata}    },{
     log    ${FourTopicdatalist[0]}
     ${topicNameKeyspit}    set variable    约定跑
     ${topicLen}    evaluate    len(${FourTopicdatalist})
     : FOR    ${topindex}    IN RANGE    ${topicLen}
-    \    ${TopfourList}    Get Regexp Matches    ${FourTopicdatalist[${topindex}]}    "topicName":"(.*)"    1
+    \    ${TopfourList}    Get Regexp Matches    ${FourTopicdatalist[${topindex}]}    "topicName":.*"(.*)"    1
     \    log    ${TopfourList[0]}
     \    ${topicNamesting}    Get From List    ${TopfourList}    0
     \    ${topicNameKeyspit}    Run Keyword If    "${topicNameKeyspit}"!="${EMPTY}"    set variable    ${topicNameKeyspit},${topicNamesting}

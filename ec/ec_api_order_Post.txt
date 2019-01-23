@@ -7,19 +7,17 @@ ${pwd}            000000    # 密码
 ${userName}       3712714    # 默认的用户名
 ${ContentType}    application/x-www-form-urlencoded;charset=UTF-8    # POST数据格式
 
-*** Test Cases ***    couponNumbers      customerInfo                                                                                                                                                                          distributionCode    skus                                                                              voucherNumbers          ret        msg
+*** Test Cases ***    couponNumbers      customerInfo                                                                                                                                                                          distributionCode    skus                                                                              voucherNumbers          ret    msg
 Class_01              [Documentation]    ec_api/order TestCase测试用例
-                      [Tags]             Test                                                                                                                                                                                  txy                 txy                                                                               txy                     auto_v1
+                      [Tags]             Test                                                                                                                                                                                  txy                 auto_v1
                       [Template]         ec_api_order_Postns_Keywords
-                      \[\]               \{\"name\":\"刚给\",\"phone\":\"13620568989\",\"address\":\{\"country\":\"\",\"province\":\"北京市\",\"city\":\"北京市\",\"district\":\"昌平区\",\"address\":\"搞不好反反复复\",\"zipcode\":\"\"\}\}    ${EMPTY}            \[\{\"skuId\":9004589,\"salesRuleId\":111558,\"quantity\":1,\"price\":99.9\}\]    \[\"A00000530818\"\]    1          未达到优惠券的金额要求
+                      \[\]               \{\"name\":\"刚给\",\"phone\":\"13620568989\",\"address\":\{\"country\":\"\",\"province\":\"北京市\",\"city\":\"北京市\",\"district\":\"昌平区\",\"address\":\"搞不好反反复复\",\"zipcode\":\"\"\}\}    ${EMPTY}            \[\{\"skuId\":9004589,\"salesRuleId\":111558,\"quantity\":1,\"price\":99.9\}\]    \[\"A00000530818\"\]    1      未达到优惠券的金额要求
 
 *** Keywords ***
 ec_api_order_Postns_Keywords
     [Arguments]    ${couponNumbers}    ${customerInfo}    ${distributionCode}    ${skus}    ${voucherNumbers}    ${ret}
     ...    ${msg}
     [Documentation]    ec_api/order 接口用例的Keywords关健字
-    ######Evaluate    reload(sys)    sys
-    ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
     #${userName}    Env_username
     ${path}=    set variable    /ec_api/order

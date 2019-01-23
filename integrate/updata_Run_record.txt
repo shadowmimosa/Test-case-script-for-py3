@@ -31,13 +31,13 @@ RunRecord_opinion
     #从4个热门话题中随机选择一个热门话题
     ${topicName}    FourTopicList_TopicName    ${userName}    ${pwd}
     #从热门话题中，选择当前第1页最新的动态
-    ${srcfids}    Run Keyword If    '${env}'=='Test'    TopicDetail_Fids    ${topicName}    1    2
+    ${srcfids}    Run Keyword If    '${env}'=='Test' or '${env}'=='Beta'    TopicDetail_Fids    ${topicName}    1    2
     ...    ${userName}    8640000
     ...    ELSE    TopicDetail_Fids    ${topicName}    1    2    ${userName}
     ...    7200
     #从传入的动态中选出符合条件的跑步记录运态
     ${fids}    Run Keyword If    "${srcfids}"=="0"    set variable    0
-    ...    ELSE IF    '${env}'=='Test'    feedListBasicBulk_fid    ${srcfids}    ${userName}    run/meter
+    ...    ELSE IF    '${env}'=='Test' or '${env}'=='Beta'    feedListBasicBulk_fid    ${srcfids}    ${userName}    run/meter
     ...    2000    25000
     ...    ELSE    feedListBasicBulk_fid    ${srcfids}    ${userName}    run/meter    3000
     ...    12000
@@ -81,7 +81,7 @@ RuningRecord
     ...    ELSE    set variable    香港
     ${dateline}=    get json value    ${src}    /lasttime
     #自定义设置跑步时间和上传时间
-    #${dateline}=    set variable    1543968000
+    #${dateline}=    set variable    1467302400
     ${lasttime}=    Evaluate    ${dateline}-120
     ${starttime}=    Evaluate    ${dateline}-${second}-120
     ${runid}    Evaluate    uuid.uuid1()    uuid

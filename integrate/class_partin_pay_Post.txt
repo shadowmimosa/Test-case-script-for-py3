@@ -17,8 +17,6 @@ Class_01              [Documentation]    用户加入跑班===钱包支付
 opinion_join_classid
     [Arguments]    ${userName}    ${pwd}    ${paymentType}    ${verifyCode}
     [Documentation]    判断用户是否符合符加入跑班
-    ######Evaluate    reload(sys)    sys
-    ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     @{str}    callkeywords    Getmyclassid:${userName}:${pwd};Getmywallet:${userName}:${pwd}:balanceAmount:1;classList_classids:1:classStatus,20,22/singleAmount,100,3000/runNum,1,30:All:${userName}:${pwd}
     ${aa}    Evaluate    len(${str} )
     ${myclassid}    Get From List    ${str}    0
