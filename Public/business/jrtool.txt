@@ -80,7 +80,6 @@ FilterList
     log    返回值串的字段:${Returnfield}
     log    分隔串的字段:${Onlyone}
     log    源数据列表的条数筛选${Num}
-    ${ReturnValue}    set variable    joyrunzzqtestspit
     @{filterList}    Split String    ${filters}    /
     ${filterLen}    BuiltIn.Get Length    ${filterList}
     ${filterstr1}    Get From List    ${filterList}    0
@@ -128,8 +127,13 @@ FilterList
 	\	 ${field1Value}     Get Json Value   ${scr_single}     /${filterfield1}
 	\	 ${field2Value}     Get Json Value   ${scr_single}     /${filterfield2}
 	\	 ${field3Value}     Get Json Value   ${scr_single}     /${filterfield3}
+	\	 ${field1Value}     replace string   ${field1Value}   "      ${EMPTY}
+	\	 ${field2Value}     replace string   ${field2Value}   "      ${EMPTY}
+	\	 ${field3Value}     replace string   ${field3Value}   "      ${EMPTY}
 	\    ${Returnfieldstr}  Run Keyword If   '${Returnfield}'!='All'   Get Json Value   ${scr_single}     /${Returnfield}
 	\	 ...	ELSE   Set Variable    ${scr_single}
+	\    ${Returnfieldstr}  Run Keyword If   '${Returnfield}'!='All'    replace string   ${Returnfieldstr}   "    ${EMPTY}
+	\	 ...	ELSE   Set Variable    ${Returnfieldstr}
     \    ${ReturnValue}    Run Keyword If    ${filterfield1min}<=${field1Value}<=${filterfield1max} and ${filterfield2min}<=${field2Value}<=${filterfield2max} and ${filterfield3min}<=${field3Value}<=${filterfield3max}   Set Variable    ${Returnfieldstr}      ELSE   Set Variable   ${EMPTY}
 	\    ${ReturnValuesting}    Run Keyword If   '${ReturnValue}'!='${EMPTY}'   Set Variable   ${ReturnValue}
 	\	 Run Keyword If  '${ReturnValue}'!='${EMPTY}'    Append To List    ${returnlist}     ${ReturnValue}  

@@ -27,7 +27,7 @@ crew-event-detail-app_Get_Keywords
     ${codelist}    get json value    ${con}    /data
     ${end_time}    Gettimes    ss,+1,times
     ${end_time1}    Gettimes    MM,+3,times
-    ${eventlist}    FilterList    ${con}    status,0,0.1/deadline,${end_time},${end_time1}    event_id    None    -5
+    ${eventlist}    FilterList    ${codelist}    status,0,0.1/deadline,${end_time},${end_time1}    event_id    None    -5
     Run Keyword If    '${eventlist}'=='0' or '${crewId}'=='0'    log    没有参加跑团或没有符合条件跑团活动
     ...    ELSE    crew-event-detail-app_Get    ${eventlist}    ${crewid}    ${ret}    ${msg}
 

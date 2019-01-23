@@ -28,6 +28,7 @@ user-shoe-delete_Get_Keywords
     ${codelists}    FilterList    ${codelist}    status,2,3    user_shoe_id
     ${user_shoe_id}    Run Keyword If    '${codelists}'=='0'    set variable    0
     ...    ELSE    randomchoice    ${codelists}    ,
+    Run Keyword IF    '${user_shoe_id}'=='0'    Return From Keyword    0
     ${path}=    set variable    /user-shoe-delete
     ${maps}=    create dictionary
     set to dictionary    ${maps}    user_shoe_id=${user_shoe_id}
