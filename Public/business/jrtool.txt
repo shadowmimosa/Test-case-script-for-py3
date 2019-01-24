@@ -120,25 +120,20 @@ FilterList
 	##以下处理条件过滤处理
 	${ReturnValuesting}   Set Variable  ${EMPTY}
 	@{returnlist}    Create List    
-    : FOR    ${i}    IN RANGE    ${sllen}
-	\	 ${scr_single}     Set Variable   ${SrcList[${i}]}
-	\    ${scr_single}     Stringify Json   ${scr_single} 
-	\	 Log Json   ${scr_single}
-	\	 ${field1Value}     Get Json Value   ${scr_single}     /${filterfield1}
-	\	 ${field2Value}     Get Json Value   ${scr_single}     /${filterfield2}
-	\	 ${field3Value}     Get Json Value   ${scr_single}     /${filterfield3}
-	\	 ${field1Value}     replace string   ${field1Value}   "      ${EMPTY}
-	\	 ${field2Value}     replace string   ${field2Value}   "      ${EMPTY}
-	\	 ${field3Value}     replace string   ${field3Value}   "      ${EMPTY}
-	\    ${Returnfieldstr}  Run Keyword If   '${Returnfield}'!='All'   Get Json Value   ${scr_single}     /${Returnfield}
-	\	 ...	ELSE   Set Variable    ${scr_single}
-	\    ${Returnfieldstr}  Run Keyword If   '${Returnfield}'!='All'    replace string   ${Returnfieldstr}   "    ${EMPTY}
-	\	 ...	ELSE   Set Variable    ${Returnfieldstr}
-    \    ${ReturnValue}    Run Keyword If    ${filterfield1min}<=${field1Value}<=${filterfield1max} and ${filterfield2min}<=${field2Value}<=${filterfield2max} and ${filterfield3min}<=${field3Value}<=${filterfield3max}   Set Variable    ${Returnfieldstr}      ELSE   Set Variable   ${EMPTY}
+    : FOR    ${scr_single}    IN     @{SrcList}
+	\	 ${f1}   Get Count   ${scr_single}   ${filterfield1}
+	\	 ${f2}   Get Count   ${scr_single}   ${filterfield2}
+	\	 ${f3}   Get Count   ${scr_single}   ${filterfield3}
+	\	 ${field1Value}  Run Keyword If   ${f1}>0   Get From Dictionary    ${scr_single}     ${filterfield1}     ELSE   Set Variable  ${-2}
+	\	 ${field2Value}  Run Keyword If   ${f2}>0   Get From Dictionary    ${scr_single}     ${filterfield2}     ELSE   Set Variable  ${-2}
+	\	 ${field3Value}  Run Keyword If   ${f3}>0   Get From Dictionary    ${scr_single}     ${filterfield3}     ELSE   Set Variable  ${-2}
+	\    ${Returnfieldstr}  Run Keyword If   '${Returnfield}'!='All'    Get From Dictionary    ${scr_single}   ${Returnfield}
+	\	 ...	ELSE   Stringify Json    ${scr_single}
+    \    ${ReturnValue}    Run Keyword If    ${filterfield1min}<=${field1Value}<=${filterfield1max} and ${filterfield2min}<=${field2Value}<=${filterfield2max} and ${filterfield3min}<=${field3Value}<=${filterfield3max}   Set Variable    ${Returnfieldstr}      
 	\    ${ReturnValuesting}    Run Keyword If   '${ReturnValue}'!='${EMPTY}'   Set Variable   ${ReturnValue}
-	\	 Run Keyword If  '${ReturnValue}'!='${EMPTY}'    Append To List    ${returnlist}     ${ReturnValue}  
+	\	 Run Keyword If    '${ReturnValue}'!='${EMPTY}'    Append To List    ${returnlist}     ${ReturnValue}  
 	\	 Run Keyword If    "${Returnfield}"=="All" and '${ReturnValue}'!='${EMPTY}'     Return From Keyword    @{returnlist}
-    \    Run Keyword If    "${Returnfield}"!="All" and '${ReturnValue}'!='${EMPTY}'   Return From Keyword    ${ReturnValuesting}
+    \    Run Keyword If    "${Returnfield}"!="All" and '${ReturnValue}'!='${EMPTY}'     Return From Keyword    ${ReturnValuesting}
     #Remove Values From List    ${returnlist}    ${EMPTY}
 	##对没有找到符合条件时返回的处理
     @{returnlist}    Create List    0
@@ -176,6 +171,9 @@ randomchoice
     [Arguments]    ${str}    ${spitstr}
     [Documentation]    将字符串分割后随机返回 abcdef;12;aaaa;123ewq;ddd 以;分割随机返回${str}为源字符串，${spitstr}为源字符串中的分割符；
     log    randomchoice Start ......
+	Run Keyword IF  '${str}'=='${EMPTY}'    Return From Keyword  0
+	${len}   Get Count  ${str}  ${spitstr}
+	Run Keyword IF  ${len}==0    Return From Keyword  ${str}
     @{list}=    Split String    ${str}    ${spitstr}
     ${stinglen}    evaluate    len(${list})
     ${strReturn}    evaluate    random.choice(${list})    random

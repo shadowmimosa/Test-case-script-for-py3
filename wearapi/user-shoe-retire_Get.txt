@@ -28,6 +28,7 @@ user-shoe-retire_Get_Keywords
     ${codelists}    FilterList    ${codelist}    brand_id,2,2.5/status,0,1    user_shoe_id
     ${user_shoe_id}    Run Keyword If    '${codelists}'=='0'    set variable    0
     ...    ELSE    randomchoice    ${codelists}    ,
+    ${user_shoe_id}    replace string    ${user_shoe_id}    "    ${EMPTY}
     ${path}=    set variable    /user-shoe-retire
     ${maps}=    create dictionary
     set to dictionary    ${maps}    user_shoe_id=${user_shoe_id}

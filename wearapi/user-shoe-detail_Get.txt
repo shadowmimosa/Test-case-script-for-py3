@@ -1,13 +1,8 @@
 *** Settings ***
 Documentation     user-shoe-detail 查询用户跑鞋详情
-#Library    Collections
-#Library    RequestsLibrary
-#Library    pymysql
-#Library    DatabaseLibrary
-#Library    String
-#Library     HttpLibrary.HTTP
-#Library     ../Public/Lib/tools_library.py
-Resource          ../Public/public_lib.txt
+Resource          ../Public/public_lib.txt    #Library    Collections    #Library    RequestsLibrary    #Library    pymysql
+...               #Library    DatabaseLibrary    #Library    String    #Library    HttpLibrary.HTTP    #Library
+...               # ../Public/Lib/tools_library.py
 
 *** Variable ***
 ${pwd}            67889911    # 密码
@@ -24,8 +19,8 @@ Class_01              [Documentation]    user-shoe-detail TestCase测试用例
 user-shoe-detail_Get_Keywords
     [Arguments]    ${user_shoe_id}    ${ret}    ${msg}
     [Documentation]    user-shoe-detail 接口用例的Keywords关健字
-    ######Evaluate       reload(sys)    sys
-    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate    reload(sys)    sys
+    ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
     #${userName}    Env_username
     ${con}    thejoyrun_Keywords    ${wear_URL}    /user-shoe-list    ${userName}    ${pwd}    Post
@@ -33,6 +28,7 @@ user-shoe-detail_Get_Keywords
     ${codelists}    FilterList    ${codelist}    status,1,2    user_shoe_id
     ${user_shoe_id}    Run Keyword If    '${codelists}'=='0'    set variable    0
     ...    ELSE    randomchoice    ${codelists}    ,
+    ${user_shoe_id}    replace string    ${user_shoe_id}    "    ${EMPTY}
     ${path}=    set variable    /user-shoe-detail
     ${maps}=    create dictionary
     set to dictionary    ${maps}    user_shoe_id=${user_shoe_id}

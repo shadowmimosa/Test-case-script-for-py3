@@ -33,6 +33,7 @@ user-shoe-meters-mark_Get_Keywords
     ${codelists}    FilterList    ${codelist}    status,1,1.2    user_shoe_id
     ${user_shoe_id}    Run Keyword If    '${codelists}'=='0'    set variable    0
     ...    ELSE    randomchoice    ${codelists}    ,
+    ${user_shoe_id}    replace string    ${user_shoe_id}    "    ${EMPTY}
     Run Keyword IF    '${user_shoe_id}'=='0'    Return From Keyword    0
     ${path}=    set variable    /user-shoe-meters-mark
     ${maps}=    create dictionary
