@@ -225,6 +225,7 @@ TopicDetail_Fids
     ${TopicDetaildata}    Run Keyword If    ${feedscount}==0    get json value    ${TopicDetailcontent}    /data/feeds
     ...    ELSE    set variable    "fid":0
     ${Fids}    FilterList    ${TopicDetaildata}    dateline,${timemin},${timemax}    fid
+	${Fids}    Convert To String  ${Fids}
     ${fidlen}    Run Keyword If    '${Fids}'!='0'    Get Count    ${Fids}    ,
     ...    ELSE    set variable    -1
     ${fidnum}    evaluate    int(${fidlen})+1
@@ -304,7 +305,7 @@ UserRunList_Fid
     log json    ${content}
     ${RunList}    get json value    ${content}    /datas
     ${runfid}    FilterList    ${RunList}    ${filters}    ${Returnfield}
-    ${fidRun}    Run Keyword If    '${runfid}'=='${EMPTY}'    set variable    0
+    ${fidRun}    Run Keyword If    '${runfid}'=='${EMPTY}' or '${runfid}' is None    set variable    0
     ...    ELSE    set variable    ${runfid}
     log   UserRunList_Fid End ......
     [Return]    ${fidRun}

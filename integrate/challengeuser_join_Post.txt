@@ -24,7 +24,7 @@ join_select
     @{challengeList}    challengeList_filters    activityStatus,0,1.5    challengeId    ${userName}
     ${cids}    Get From List    ${challengeList}    0
     ${uid}    Get From List    ${challengeList}    1
-    @{cidlist}    Run Keyword If    '${cids}'!='0'    Split String    ${cids}    ,
+    @{cidlist}    Run Keyword If    '${cids}'!='0'    Create List    ${cids}
     Run Keyword If    '${cids}'=='0'    log    没有未完成的活动可参加；
     ...    ELSE    select_challenge    ${uid}    ${cidlist}    ${ret}    ${msg}
     ...    ${userName}
