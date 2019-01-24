@@ -172,9 +172,6 @@ RuningRecord
     should be equal    ${Metertotal}    ${Metertotal_New}
     log    用户名==${userName}，是否被判作弊=${fraud}，是否室外：${type};跑步地区=${province}，来自话题==${topicName}
     log    跑步记录的距离==${meter},用户之前的跑步总距离为${allmeter},最新的总距离为${Metertotal_New};
-    ${vspostRunId}    UserRunList_Fid    ${userName}    fraud,0,2    postRunId
-    log    vspostRunId=${vspostRunId}
-    should contain    ${vspostRunId}    ${postRunId}
     log    跑步记录postRunId为===${postRunId},新的FID为${newfid},原fid ID== ${fid}，原uid ===${srcuid}
     log    用户名==${userName}，是否被判作弊=${fraud}，是否室外：${type};跑步地区=${province}，来自话题==${topicName}
     log    跑步记录的距离==${meter},用户之前的跑步总距离为${allmeter},最新的总距离为${Metertotal_New};

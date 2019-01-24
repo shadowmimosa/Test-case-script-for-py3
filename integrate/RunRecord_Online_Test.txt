@@ -158,10 +158,10 @@ RuningRecord
     log    ---输出参数---
     log    ${api_URL}${path}${maps}
     #${resp}=    thejoyrun_postd    ${path}    ${maps}    ${userName}    ${api_URL}
-	${envurl}    Run Keyword If   '${Env}'=='Test'   Set Variable   http://api-test.thejoyrun.com
-	...		 ELSE   Set Variable   http://api-betaenv.thejoyrun.com
-    ${content}=    thejoyrun_Keywords   ${envurl}      ${path}    ${userName}
-    ...      ${pwd}    Postd    ${maps}    Joyrun_null
+    ${envurl}    Run Keyword If    '${Env}'=='Test'    Set Variable    http://api-test.thejoyrun.com
+    ...    ELSE    Set Variable    http://api-betaenv.thejoyrun.com
+    ${content}=    thejoyrun_Keywords    ${envurl}    ${path}    ${userName}    ${pwd}    Postd
+    ...    ${maps}    Joyrun_null
     #${content}=    charconver    ${resp.content}
     log json    ${content}
     log    验证ret是否符合预期
@@ -174,9 +174,6 @@ RuningRecord
     ...    ELSE    set variable    error:${ret}
     ${newfid}=    Run Keyword If    ${ret}=="0"    get json value    ${content}    /fid
     ...    ELSE    set variable    error:${ret}
-    #${vspostRunId}    UserRunList_Fid    ${userName}    fraud,0,2    postRunId
-    #log    vspostRunId=${vspostRunId}
-    #should contain    ${vspostRunId}    ${postRunId}
     log    新跑步记录postRunId为===${postRunId},新的FID为${newfid}
     log    跑步记录的距离==${meter},用户名==${userName}，是否被判作弊=${fraud};
     log    是否室外：${type};跑步地区=${province};
