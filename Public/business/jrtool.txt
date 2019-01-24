@@ -130,7 +130,7 @@ FilterList
 	\    ${Returnfieldstr}  Run Keyword If   '${Returnfield}'!='All'    Get From Dictionary    ${scr_single}   ${Returnfield}
 	\	 ...	ELSE   Stringify Json    ${scr_single}
     \    ${ReturnValue}    Run Keyword If    ${filterfield1min}<=${field1Value}<=${filterfield1max} and ${filterfield2min}<=${field2Value}<=${filterfield2max} and ${filterfield3min}<=${field3Value}<=${filterfield3max}   Set Variable    ${Returnfieldstr}      ELSE  Set Variable   ${EMPTY}
-	\    ${ReturnValuesting}    Run Keyword If   '${ReturnValue}'!='${EMPTY}'   Set Variable   ${ReturnValue}
+	\    ${ReturnValuesting}    Run Keyword If   '${ReturnValue}'!='${EMPTY}'   Convert To String   ${ReturnValue}
 	\	 Run Keyword If    '${ReturnValue}'!='${EMPTY}'    Append To List    ${returnlist}     ${ReturnValue}  
 	\	 Run Keyword If    "${Returnfield}"=="All" and '${ReturnValue}'!='${EMPTY}'     Return From Keyword    @{returnlist}
     \    Run Keyword If    "${Returnfield}"!="All" and '${ReturnValue}'!='${EMPTY}'     Return From Keyword    ${ReturnValuesting}
