@@ -9,16 +9,16 @@ ${pwd}            123321    # 密码
 ${userName}       18011884709    # 默认的用户名
 ${ContentType}    application/x-www-form-urlencoded;charset=UTF-8    # POST数据格式
 
-*** Test Cases ***    user_shoe_id       fid                                   msg          ret
+*** Test Cases ***    user_shoe_id       fid                                   msg    ret
 Class_01              [Documentation]    user-shoe-meters-mark TestCase测试用例
                       [Tags]             Test                                  gxy
                       [Template]         user-shoe-meters-mark_Get_Keywords
-                      623900             99124446                              成功           0
+                      623900             99124446                              成功     0
 
 Class_02              [Documentation]    user-shoe-meters-mark TestCase测试用例
                       [Tags]             Online                                gxy
                       [Template]         user-shoe-meters-mark_Get_Keywords
-                      622134             230680953                             跑步记录已标记跑鞋    11007
+                      622134             230680953                             成功     0
 
 *** Keywords ***
 user-shoe-meters-mark_Get_Keywords
