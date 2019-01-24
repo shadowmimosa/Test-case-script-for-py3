@@ -168,11 +168,14 @@ Getsting
     [Return]    ${intstart}
 
 randomchoice
-    [Arguments]    ${str}    ${spitstr}
+    [Arguments]    ${str}    ${spitstr}=None
     [Documentation]    将字符串分割后随机返回 abcdef;12;aaaa;123ewq;ddd 以;分割随机返回${str}为源字符串，${spitstr}为源字符串中的分割符；
     log    randomchoice Start ......
+	${spitstr}   Run Keyword IF   '${spitstr}' is None  set Variable  ,   ELSE  Set Variable   ${spitstr}
+	Run Keyword IF  '${str}' is None    Return From Keyword  0
 	Run Keyword IF  '${str}'=='${EMPTY}'    Return From Keyword  0
-	${len}   Get Count  ${str}  ${spitstr}
+	${str}  Convert To String  ${str}
+	${len}   Get Count   ${str}   ${spitstr}
 	Run Keyword IF  ${len}==0    Return From Keyword  ${str}
     @{list}=    Split String    ${str}    ${spitstr}
     ${stinglen}    evaluate    len(${list})
