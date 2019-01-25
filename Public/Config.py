@@ -82,6 +82,10 @@ appkey2='1fd6e28fd158406995f77727b35bf20a'
 #前端验签名的版本号（需要与appkey1相对应，服务根据这个版本号验证appkey1）
 APPVERSION='100.4.1.0'
 
+#用于在robot/pybot命令##--variable  SRPam:values##传参 赋值为{'uri1':{'a1':1,'b1':'x1'}}; uri为path字符串中/替换成_
+###--variable  SRPam:{'advert-list':{'a1':1,'b1':'x1'}} 
+SRPam=123456
+
 JoyrunEvn='Beta'
 
 Env=''
