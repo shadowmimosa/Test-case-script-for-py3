@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation     daily/getDaily 获取当天日签内容
+Documentation     daily/getDaily 获取当天日签内容-v4.6
 Resource          ../Public/public_lib.txt
 
 *** Variable ***
@@ -9,7 +9,7 @@ ${ContentType}    application/x-www-form-urlencoded;charset=UTF-8    # POST数�
 
 *** Test Cases ***    ret                msg
 Class_01              [Documentation]    daily/getDaily TestCase测试用例
-                      [Tags]             Test                            auto_v1    Online
+                      [Tags]             Test                            gxy    Online
                       [Template]         daily_getDaily_Post_Keywords
                       "0"                成功
 
@@ -17,8 +17,8 @@ Class_01              [Documentation]    daily/getDaily TestCase测试用例
 daily_getDaily_Post_Keywords
     [Arguments]    ${ret}    ${msg}
     [Documentation]    daily/getDaily 接口用例的Keywords关健字
-    ########Evaluate       reload(sys)    sys
-    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
+    ########Evaluate    reload(sys)    sys
+    ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
     #${userName}    Env_username
     ${path}=    set variable    /daily/getDaily
