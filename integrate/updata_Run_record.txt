@@ -165,6 +165,7 @@ RuningRecord
     ...    ELSE    set variable    error:${ret}
     ${Metertotal}    Run Keyword If    ${fraud}=="1"    Set Variable    ${allmeter}
     ...    ELSE    Evaluate    int(${allmeter})+int(${meter})
+    BuiltIn.Sleep    3s
     ${userinfonew}    thejoyrun_Keywords    ${api_URL}    /user.aspx    ${userName}    ${pwd}    Get
     ...    option,touid    info,${EMPTY}
     ${Metertotal_New}    Get Json Value    ${userinfonew}    /user/allmeter
