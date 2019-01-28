@@ -1,0 +1,47 @@
+*** Settings ***
+Documentation     run/update/coverImg 上传跑步记录封面图-v4.6
+Resource          ../Public/public_lib.txt    #Library    Collections    #Library    RequestsLibrary    #Library    pymysql
+...               #Library    DatabaseLibrary    #Library    String    #Library    HttpLibrary.HTTP    #Library
+...               # ../Public/Lib/tools_library.py
+
+*** Variable ***
+${pwd}            123321    # 密码
+${userName}       18011884709    # 默认的用户名
+${ContentType}    application/x-www-form-urlencoded;charset=UTF-8    # POST数据格式
+
+*** Test Cases ***    coverImg                                                                                                                 postRunId                            ret       msg
+Class_01              [Documentation]                                                                                                          run/update/coverImg TestCase测试用例
+                      [Tags]                                                                                                                   Test                                 Online    gxy    v4.6
+                      [Template]                                                                                                               run_update_coverImg_Post_Keywords
+                      http:\/\/linked-runner-upyun.thejoyrun.com\/linked-runner\/record\/cover\/2019\/1\/28\/iOS_uid86121559_1548657859.jpg    1600118318                           0         成功
+
+*** Keywords ***
+run_update_coverImg_Post_Keywords
+    [Arguments]    ${coverImg}    ${postRunId}    ${ret}    ${msg}
+    [Documentation]    run/update/coverImg 接口用例的Keywords关健字
+    ######Evaluate    reload(sys)    sys
+    ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
+    #从配置的用户列表中随机取一个用户运行此用例
+    #${userName}    Env_username
+    ${now_time}    Gettimes    ss,-0,times
+    ${run_list}    thejoyrun_Keywords    ${api_URL}    /userRunList.aspx    ${userName}    ${pwd}    Post
+    ...    year,dateline    0,${now_time}
+    ${post_runid}    get json value    ${run_list}    /datas/0/postRunId
+    ${path}=    set variable    /run/update/coverImg
+    ${maps}=    create dictionary
+    set to dictionary    ${maps}    coverImg=${coverImg}
+    set to dictionary    ${maps}    postRunId=${post_runid}
+    log    ========输出接口URL：${api_URL}${path}
+    log    ========接口的入参为：${userName}:${maps}==========
+    ${resp}=    thejoyrun_postd    ${path}    ${maps}    ${userName}    ${api_URL}
+    ${content}=    charconver    ${resp.content}
+    log json    ${content}
+    log    ======开始断言验证=====
+    log    验证ret是否符合预期
+    should contain    ${content}    "ret":"${ret}"
+    log    ret 符合预期为:${ret}
+    log    验证msg是否符合预期:${msg}
+    should contain    ${content}    "msg":"${msg}"
+    #当需要添加对data的内容进行单独验证时，可以以下方式
+    #${data}    get json value    ${content}    /data
+    log    验证OK！！用户${userName}；URL：${api_URL}${path}；传参：${maps}！！
