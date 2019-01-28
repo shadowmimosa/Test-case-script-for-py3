@@ -22,8 +22,10 @@ feedpostrun_opinion
     ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     ${memo1}    Get_Words    4
     #判断环境随机选择用户
-    ${userName}    Env_username    2a
-    ${env}    Env_username    1
+    ${upe}    usr_pass_env
+    ${userName}    Get From List    ${upe}    0
+    ${pwd}    Get From List    ${upe}    1
+    ${env}    Get From List    ${upe}    2
     #${userName}    set variable    13829744542
     ${topicName}    FourTopicList_TopicName    ${userName}
     ${time}=    Get Time    epoch
@@ -59,20 +61,17 @@ feedpostrun_assertClass
     set to dictionary    ${maps}    city=${city}
     set to dictionary    ${maps}    province=${province}
     set to dictionary    ${maps}    memo=${memo}
-    log    ---输出参数---
-    log    ${maps}
-    log    ---输出测试地址---
-    log    ${api_URL}
+    log    测试地址：${api_URL}${api_URL}
+    log    用户及参数${userName}:${maps}
     ${resp}=    thejoyrun_postd    ${path}    ${maps}    ${userName}    ${api_URL}    ${pwd}
     ${content}=    charconver    ${resp.content}
-    log json    ${resp.content}
-    log    ---输出返回内容----
     log json    ${content}
-    log    ---开始断言验证---
     log    ret 符合预期
     ${ret}    get json value    ${content}    /ret
     ${fidres}=    Run Keyword If    ${ret}=="0"    get json value    ${content}    /data/fid
     ...    ELSE    set variable    0
+    log    等待3秒钟再查询feedlistv5接口验证是否成功发布
+    BuiltIn.Sleep    3s
     ${feedlistv5fid}    Run Keyword If    ${ret}=="0"    FeedListv5_Fids    ${userName}    ${pwd}
     Run Keyword If    ${ret}=="0"    Should Contain    ${feedlistv5fid}    ${fid}
     ${wallet}    Run Keyword If    ${ret}=="430004"    Getmywallet    ${userName}    ${pwd}    balanceAmount
