@@ -1,13 +1,6 @@
 ﻿#coding=utf-8
 
-import sys
-import time,traceback
-import os
-import sys
-import platform
-import subprocess
-import random
-import re
+import sys,os,platform
 ###导入其他python文件的方法，Config_Env为文件名，引入此文件要与执行文件目录一致，否则要加文件路径
 #sys.path.append(r'E:\Work\Test\Enjoytherun\Public\Sub')
 ##pathbase = os.path.dirname(os.path.realpath(__file__))    ##读取当前文件的路径
@@ -15,22 +8,39 @@ import re
 #sys.path.append(pathfile)
 #from Config_Env import * 
 
-reload(sys)
-sys.setdefaultencoding('utf-8')
+# reload(sys)
+# sys.setdefaultencoding('utf-8')
 
 # # 环境变量配置JoyrunEvn（测试环境值：Test或0；生产环境值：其他值为生产环境）
 
 
 #home=Get_pwd()
 ostype = sys.platform   #获取当前系统类型
-print  'os type is:',ostype   
+copycmd='copy1'
+
 if  ostype=='win32'  or  ostype=='win64':
 	pwd=os.popen('cd').readlines()[0]
-	print   'Path is  ', pwd
+	print('Path is  %s' %pwd)
+	copycmd='copy'
 else:
-    pwd=os.popen('pwd').readlines()[0]
-    print  'Path  is: ', pwd   
+	pwd=os.popen('pwd').readlines()[0]
+	print('Path  is: %s'% pwd)
+	copycmd='cp'
 home=pwd.replace('\n','')
+print ('Home=={}'.format(home))
+print ('copycmd=={}'.format(copycmd))
+#
+pyvs=sys.version_info.major
+RunPublic=os.path.join(home,'Public')
+print('Run Public path=={}'.format(RunPublic))
+if pyvs==3:
+	print('python version is  3')
+elif pyvs==2:
+	print('python version is  2')
+else:
+	AssertionError("Python Environmental anomaly")
+
+	
 ##==================================开发测试生产环境通用参数=======================
 #请求头参数-前端系统版本号
 SYSVERSION='11.2.1'
