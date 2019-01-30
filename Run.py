@@ -11,30 +11,29 @@ cpoption='/.'
 print('os type is:[{}]'.format(ostype))   
 if  ostype=='win32'  or  ostype=='win64':
 	pwd=os.popen('cd').readlines()[0]
-	copycmd='copy'
+	copycmd='xcopy'
 	copyoption='/y/e'
 	cpoption=''
 else:
     pwd=os.popen('pwd').readlines()[0]
-
-
 	
 home=pwd.replace('\n','')
 print ('Home=={}'.format(home))
-print ('copycmd=={}'.format(copycmd))
 
 #Environmental discrimination
 pyvs=sys.version_info.major
 py3path=os.path.join(os.path.join(home,'Public_PY3'),'Public')
-print('PY3 Public path=={}'.format(py3path))
+# print('PY3 Public path=={}'.format(py3path))
 RunPublic=os.path.join(home,'Public')
-print('Run Public path=={}'.format(RunPublic))
+# print('Run Public path=={}'.format(RunPublic))
 if pyvs==3:
-	print('python version is  3')
-	copyrz=os.popen('{}  {}   {}{}    {}'.format(copycmd,copyoption,py3path,cpoption,RunPublic)).readlines()[0]
+	print('python version is  V3.x')
+	cpcmd='{}  {}   {}{}    {}'.format(copycmd,copyoption,py3path,cpoption,RunPublic)
+	print(cpcmd)
+	copyrz=os.popen(cpcmd).read().split('\n')
 	print(copyrz)
 elif pyvs==2:
-	print('python version is  2')
+	print('python version is  V2.x')
 else:
 	AssertionError("Python Environmental anomaly") 
 	
@@ -48,7 +47,7 @@ Label='Test'
 Env='Beta'
 if cmdpamlen>=2:
 	Env=sys.argv[1]
-print('Input Env is [{}]'.format(Env))
+	
 if Env in  ['Test','test','0',0]:
 	Label='Test'
 	Vfile=os.path.join(os.path.join(home,'Public'),'JoyrunTestEnv_var.py')	
@@ -78,12 +77,12 @@ if cmdpamlen>=3:
 				else:
 					path_n=os.path.join(home,paths)
 					Runpath=Runpath + '  ' + path_n
-	print('Run Script Path is {}'.format(Runpath))
+print('Run Script Path is {}'.format(Runpath))
 
 reportpath=0
 if cmdpamlen>=4:
 	reportpath=  sys.argv[3]
-	print('Report Path {}'.format(reportpath))
+print('Report Path {}'.format(reportpath))
 	
 Varpam=0	
 if cmdpamlen>=5:
@@ -91,22 +90,22 @@ if cmdpamlen>=5:
 	Varpam=  sys.argv[4]
 	if ':' not in Varpam:
 		Varpam='JoyrunEvn:Beta'
-	print('robot_cmd  --variable is  [{}]'.format(Varpam))
+print('robot_cmd  --variable is  [{}]'.format(Varpam))
 
 # cmd    --variable  JoyrunEvn:Online   -d /var/lib/jenkins/Report/$1  
 robot_cmd='pybot --include {}    -V   {}     {}'.format(Label,Vfile,Runpath)
 if reportpath!=0 and Varpam!=0:
-	robot_cmd='pybot --include {}   --variable  {}  -V   {}  -d  {}   {}'.format(Label,Varpam,Vfile,reportpath,Runpath)
+	robot_cmd='pybot --include {}  --variable  {}  -V  {}  -d  {}  {}'.format(Label,Varpam,Vfile,reportpath,Runpath)
 elif reportpath!=0 and Varpam==0:
-	robot_cmd='pybot --include {}   -V   {}  -d  {}   {}'.format(Label,Vfile,reportpath,Runpath)
+	robot_cmd='pybot --include  {}  -V  {}  -d  {}  {}'.format(Label,Vfile,reportpath,Runpath)
 else:
 	pass
 print(robot_cmd)
-print('*********************      Script  start ...      *********************')
+print('*********************      Script  Run   start ...      *********************')
 rzlist=os.popen(robot_cmd).read().split('\n')
-print('*********************      Robot Script  Running ...      *********************')
+print('*********************      Robot Script  Running ...    *********************')
 for  results in  rzlist:
 	print(results)
-print('*********************     Script The End!!!         *********************')
+print('*********************     Script   The    End!!!        *********************')
 
 
