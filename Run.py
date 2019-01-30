@@ -1,111 +1,128 @@
-import sys,os,platform
-import time,traceback,logging
-import subprocess,random,re
+import sys, os, platform
+import time, traceback, logging
+import subprocess, random, re
 
 # run.py  test  api,advertapi   e:/log   JoyrunEvn:Beta
 # system discrimination
-ostype = sys.platform   
-copycmd='cp'
-copyoption='-r'
-cpoption='/.'
-print('os type is:[{}]'.format(ostype))   
-if  ostype=='win32'  or  ostype=='win64':
-	pwd=os.popen('cd').readlines()[0]
-	copycmd='xcopy'
-	copyoption='/y/e'
-	cpoption=''
-else:
-    pwd=os.popen('pwd').readlines()[0]
-	
-home=pwd.replace('\n','')
-print ('Home=={}'.format(home))
+ostype = sys.platform
+
+home=os.path.dirname(os.path.abspath(__file__))
+
+print('Home=={}'.format(home))
 
 #Environmental discrimination
-pyvs=sys.version_info.major
-py3path=os.path.join(os.path.join(home,'Public_PY3'),'Public')
-# print('PY3 Public path=={}'.format(py3path))
-RunPublic=os.path.join(home,'Public')
-# print('Run Public path=={}'.format(RunPublic))
-if pyvs==3:
-	print('python version is  V3.x')
-	cpcmd='{}  {}   {}{}    {}'.format(copycmd,copyoption,py3path,cpoption,RunPublic)
-	print(cpcmd)
-	copyrz=os.popen(cpcmd).read().split('\n')
-	print(copyrz)
-elif pyvs==2:
-	print('python version is  V2.x')
+pyvs = sys.version_info.major
+
+if pyvs == 3:
+    print('python version is  V3.x')
+    
+    # On python3, rename folder.
+    if not os.path.exists(os.path.join(home,'Public_PY2')):
+        try:
+            os.rename(os.path.join(home, 'Public'), os.path.join(home, 'Public_PY2'))
+            os.rename(os.path.join(home, 'Public_PY3'), os.path.join(home, 'Public'))
+        except Exception:
+            print('Rename folder NOT successful!!! Please check it.')
+    else:
+        print('Public_PY2 is existed.')
+        
+elif pyvs == 2:
+    print('python version is  V2.x')
+
+	if os.path.exists(os.path.join(home,'Public_PY2')):
+		try:
+            os.rename(os.path.join(home, 'Public'), os.path.join(home, 'Public_PY3'))
+            os.rename(os.path.join(home, 'Public_PY2'), os.path.join(home, 'Public'))
+        except Exception:
+            print('Rename folder NOT successful!!! Please check it.')
+		
 else:
-	AssertionError("Python Environmental anomaly") 
-	
+    AssertionError("Python Environmental anomaly")
+
 #Run Environmental
-cmdpamlen=len(sys.argv)
+cmdpamlen = len(sys.argv)
 print('Input argvLen is [{}]'.format(cmdpamlen))
-for i in range(0,cmdpamlen):
-	print('Script parameter[{}] is {}'.format(i,sys.argv[i]))
+for i in range(0, cmdpamlen):
+    print('Script parameter[{}] is {}'.format(i, sys.argv[i]))
 # Environmental= raw_input("please Enter Environmental:[Test/Beta/Online]")
-Label='Test'
-Env='Beta'
-if cmdpamlen>=2:
-	Env=sys.argv[1]
-	
-if Env in  ['Test','test','0',0]:
-	Label='Test'
-	Vfile=os.path.join(os.path.join(home,'Public'),'JoyrunTestEnv_var.py')	
-elif Env in  ['Beta','beta','BeataEnv','betaenv','1',1,None]:
-	Label='Test'
-	Vfile=os.path.join(os.path.join(home,'Public'),'JoyrunBetaEnv_var.py')
+Label = 'Test'
+Env = 'Beta'
+if cmdpamlen >= 2:
+    Env = sys.argv[1]
+
+if Env in ['Test', 'test', '0', 0]:
+    Label = 'Test'
+    Vfile = os.path.join(os.path.join(home, 'Public'), 'JoyrunTestEnv_var.py')
+elif Env in ['Beta', 'beta', 'BeataEnv', 'betaenv', '1', 1, None]:
+    Label = 'Test'
+    Vfile = os.path.join(os.path.join(home, 'Public'), 'JoyrunBetaEnv_var.py')
 else:
-	Label='Online'
-	Vfile=os.path.join(os.path.join(home,'Public'),'JoyrunOnline_var.py')
+    Label = 'Online'
+    Vfile = os.path.join(os.path.join(home, 'Public'), 'JoyrunOnline_var.py')
 print('Run Env is [{}]'.format(Env))
 print('Run Label is [{}]'.format(Label))
 print('Run Vfile is [{}]'.format(Vfile))
 
-
 # reportpath=  raw_input("please robot_cmd  report path  -d:[JoyrunEvn:Online]")
-Runpath=home
-if cmdpamlen>=3:
-	rpath=sys.argv[2]
-	if rpath  not in ['Home','home','All','all']:
-		if ',' not in rpath:
-			Runpath=os.path.join(home,rpath)
-		else:
-			rplist=rpath.split(',')
-			for paths in rplist:
-				if Runpath==home:
-					Runpath=os.path.join(home,paths)
-				else:
-					path_n=os.path.join(home,paths)
-					Runpath=Runpath + '  ' + path_n
+Runpath = home
+if cmdpamlen >= 3:
+    rpath = sys.argv[2]
+    if rpath not in ['Home', 'home', 'All', 'all']:
+        if ',' not in rpath:
+            Runpath = os.path.join(home, rpath)
+        else:
+            rplist = rpath.split(',')
+            for paths in rplist:
+                if Runpath == home:
+                    Runpath = os.path.join(home, paths)
+                else:
+                    path_n = os.path.join(home, paths)
+                    Runpath = Runpath + '  ' + path_n
 print('Run Script Path is {}'.format(Runpath))
 
-reportpath=0
-if cmdpamlen>=4:
-	reportpath=  sys.argv[3]
+reportpath = 0
+if cmdpamlen >= 4:
+    reportpath = sys.argv[3]
 print('Report Path {}'.format(reportpath))
-	
-Varpam=0	
-if cmdpamlen>=5:
-	# Varpam=  raw_input("please robot_cmd  --variable:[JoyrunEvn:Online]")
-	Varpam=  sys.argv[4]
-	if ':' not in Varpam:
-		Varpam='JoyrunEvn:Beta'
+
+Varpam = 0
+if cmdpamlen >= 5:
+    # Varpam=  raw_input("please robot_cmd  --variable:[JoyrunEvn:Online]")
+    Varpam = sys.argv[4]
+    if ':' not in Varpam:
+        Varpam = 'JoyrunEvn:Beta'
 print('robot_cmd  --variable is  [{}]'.format(Varpam))
 
-# cmd    --variable  JoyrunEvn:Online   -d /var/lib/jenkins/Report/$1  
-robot_cmd='pybot --include {}    -V   {}     {}'.format(Label,Vfile,Runpath)
-if reportpath!=0 and Varpam!=0:
-	robot_cmd='pybot --include {}  --variable  {}  -V  {}  -d  {}  {}'.format(Label,Varpam,Vfile,reportpath,Runpath)
-elif reportpath!=0 and Varpam==0:
-	robot_cmd='pybot --include  {}  -V  {}  -d  {}  {}'.format(Label,Vfile,reportpath,Runpath)
+# cmd    --variable  JoyrunEvn:Online   -d /var/lib/jenkins/Report/$1
+robot_cmd = 'pybot --include {}    -V   {}     {}'.format(
+    Label, Vfile, Runpath)
+if reportpath != 0 and Varpam != 0:
+    robot_cmd = 'pybot --include {}  --variable  {}  -V  {}  -d  {}  {}'.format(
+        Label, Varpam, Vfile, reportpath, Runpath)
+elif reportpath != 0 and Varpam == 0:
+    robot_cmd = 'pybot --include  {}  -V  {}  -d  {}  {}'.format(
+        Label, Vfile, reportpath, Runpath)
 else:
-	pass
+    pass
 print(robot_cmd)
-print('*********************      Script  Run   start ...      *********************')
-rzlist=os.popen(robot_cmd).read().split('\n')
-print('*********************      Robot Script  Running ...    *********************')
-for  results in  rzlist:
-	print(results)
-print('*********************     Script   The    End!!!        *********************')
+print(
+    '*********************      Script  Run   start ...      *********************'
+)
+rzlist = os.popen(robot_cmd).read().split('\n')
+print(
+    '*********************      Robot Script  Running ...    *********************'
+)
+for results in rzlist:
+    print(results)
 
+# Check folder name, and rename again.
+if os.path.exists(os.path.join(home,'Public_PY2')):
+    try:
+        os.rename(os.path.join(home, 'Public'), os.path.join(home, 'Public_PY3'))
+        os.rename(os.path.join(home, 'Public_PY2'), os.path.join(home, 'Public'))
+    except Exception:
+        print('Rename folder NOT successful!!! Please check it.')
 
+print(
+    '*********************     Script   The    End!!!        *********************'
+)
