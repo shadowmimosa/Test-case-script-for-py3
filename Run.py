@@ -29,13 +29,13 @@ if pyvs == 3:
 elif pyvs == 2:
     print('python version is  V2.x')
 
-	if os.path.exists(os.path.join(home,'Public_PY2')):
-		try:
+    if os.path.exists(os.path.join(home,'Public_PY2')):
+        try:
             os.rename(os.path.join(home, 'Public'), os.path.join(home, 'Public_PY3'))
             os.rename(os.path.join(home, 'Public_PY2'), os.path.join(home, 'Public'))
         except Exception:
             print('Rename folder NOT successful!!! Please check it.')
-		
+        
 else:
     AssertionError("Python Environmental anomaly")
 
