@@ -12,7 +12,7 @@ print('os type is:[{}]'.format(ostype))
 if  ostype=='win32'  or  ostype=='win64':
 	pwd=os.popen('cd').readlines()[0]
 	copycmd='copy'
-	copyoption='/y'
+	copyoption='/y/e'
 	cpoption=''
 else:
     pwd=os.popen('pwd').readlines()[0]
@@ -83,6 +83,7 @@ if cmdpamlen>=3:
 reportpath=0
 if cmdpamlen>=4:
 	reportpath=  sys.argv[3]
+	print('Report Path {}'.format(reportpath))
 	
 Varpam=0	
 if cmdpamlen>=5:
@@ -101,12 +102,11 @@ elif reportpath!=0 and Varpam==0:
 else:
 	pass
 print(robot_cmd)
-print('*********************      Script  Running ...      *********************')
-results=os.popen(robot_cmd).readlines(-1)
-if pyvs==3:
+print('*********************      Script  start ...      *********************')
+rzlist=os.popen(robot_cmd).read().split('\n')
+print('*********************      Robot Script  Running ...      *********************')
+for  results in  rzlist:
 	print(results)
-elif pyvs==2:
-	print('py2:{}'.format(results).encode('UTF-8'))
 print('*********************     Script The End!!!         *********************')
 
 
