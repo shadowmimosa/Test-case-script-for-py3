@@ -6,7 +6,7 @@ import subprocess, random, re
 # system discrimination
 ostype = sys.platform
 
-home=os.path.dirname(os.path.abspath(__file__))
+home = os.path.dirname(os.path.abspath(__file__))
 
 print('Home=={}'.format(home))
 
@@ -15,27 +15,31 @@ pyvs = sys.version_info.major
 
 if pyvs == 3:
     print('python version is  V3.x')
-    
+
     # On python3, rename folder.
-    if not os.path.exists(os.path.join(home,'Public_PY2')):
+    if not os.path.exists(os.path.join(home, 'Public_PY2')):
         try:
-            os.rename(os.path.join(home, 'Public'), os.path.join(home, 'Public_PY2'))
-            os.rename(os.path.join(home, 'Public_PY3'), os.path.join(home, 'Public'))
+            os.rename(
+                os.path.join(home, 'Public'), os.path.join(home, 'Public_PY2'))
+            os.rename(
+                os.path.join(home, 'Public_PY3'), os.path.join(home, 'Public'))
         except Exception:
             print('Rename folder NOT successful!!! Please check it.')
     else:
         print('Public_PY2 is existed.')
-        
+
 elif pyvs == 2:
     print('python version is  V2.x')
 
-    if os.path.exists(os.path.join(home,'Public_PY2')):
+    if os.path.exists(os.path.join(home, 'Public_PY2')):
         try:
-            os.rename(os.path.join(home, 'Public'), os.path.join(home, 'Public_PY3'))
-            os.rename(os.path.join(home, 'Public_PY2'), os.path.join(home, 'Public'))
+            os.rename(
+                os.path.join(home, 'Public'), os.path.join(home, 'Public_PY3'))
+            os.rename(
+                os.path.join(home, 'Public_PY2'), os.path.join(home, 'Public'))
         except Exception:
             print('Rename folder NOT successful!!! Please check it.')
-        
+
 else:
     AssertionError("Python Environmental anomaly")
 
@@ -116,10 +120,12 @@ for results in rzlist:
     print(results)
 
 # Check folder name, and rename again.
-if os.path.exists(os.path.join(home,'Public_PY2')):
+if os.path.exists(os.path.join(home, 'Public_PY2')):
     try:
-        os.rename(os.path.join(home, 'Public'), os.path.join(home, 'Public_PY3'))
-        os.rename(os.path.join(home, 'Public_PY2'), os.path.join(home, 'Public'))
+        os.rename(
+            os.path.join(home, 'Public'), os.path.join(home, 'Public_PY3'))
+        os.rename(
+            os.path.join(home, 'Public_PY2'), os.path.join(home, 'Public'))
     except Exception:
         print('Rename folder NOT successful!!! Please check it.')
 
