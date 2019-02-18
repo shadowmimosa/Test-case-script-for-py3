@@ -13,7 +13,7 @@ ${null}    ${EMPTY}
 null
     [Arguments]    ${nullstr}=None
     [Documentation]   处理java的null字符串
-	Return   None
+	Return   0
 
 Gettimes
     [Arguments]    ${fields}

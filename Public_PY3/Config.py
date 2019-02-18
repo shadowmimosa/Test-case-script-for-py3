@@ -1,13 +1,7 @@
 ﻿#coding=utf-8
 
-import sys
-import time, traceback
-import os
-# import sys
-import platform
-import subprocess
-import random
-import re
+import sys, os, platform
+
 ###导入其他python文件的方法，Config_Env为文件名，引入此文件要与执行文件目录一致，否则要加文件路径
 #sys.path.append(r'E:\Work\Test\Enjoytherun\Public\Sub')
 ##pathbase = os.path.dirname(os.path.realpath(__file__))    ##读取当前文件的路径
@@ -22,14 +16,11 @@ import re
 
 #home=Get_pwd()
 ostype = sys.platform  #获取当前系统类型
-print('os type is:', ostype)
-if ostype == 'win32' or ostype == 'win64':
-    pwd = os.popen('cd').readlines()[0]
-    print('Path is  ', pwd)
-else:
-    pwd = os.popen('pwd').readlines()[0]
-    print('Path  is: ', pwd)
-home = pwd.replace('\n', '')
+pyvs = sys.version_info.major
+
+print("Os type is %s" % ostype)
+print("Python version is %s" % pyvs)
+
 ##==================================开发测试生产环境通用参数=======================
 #请求头参数-前端系统版本号
 SYSVERSION = '11.2.1'
@@ -80,6 +71,10 @@ appkey2 = '1fd6e28fd158406995f77727b35bf20a'
 
 #前端验签名的版本号（需要与appkey1相对应，服务根据这个版本号验证appkey1）
 APPVERSION = '100.4.1.0'
+
+#用于在robot/pybot命令##--variable  SRPam:values##传参 赋值为{'uri1':{'a1':1,'b1':'x1'}}; uri为path字符串中/替换成_
+###--variable  SRPam:{'advert-list':{'a1':1,'b1':'x1'}} 
+SRPam=123456
 
 JoyrunEvn = 'Beta'
 

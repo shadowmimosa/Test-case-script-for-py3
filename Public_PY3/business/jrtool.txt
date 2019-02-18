@@ -6,8 +6,15 @@ Resource          thejoyrun.txt
 
 *** Variables ***
 ${Goltimestamp}    0
+${null}    ${EMPTY}
+
 
 *** Keywords ***
+null
+    [Arguments]    ${nullstr}=None
+    [Documentation]   处理java的null字符串
+	Return   0
+
 Gettimes
     [Arguments]    ${fields}
     [Documentation]    根据入参和当前时间输出处理后的相应时间格式，times输出时间戳格式；yy以年运算，MM以月运算，dd以天运算，hh以时运算，mm以分运算，ss以秒运算；ctime输出Wed Mar 21 10:36:38 2018 格式的时间； 第1、2个参数为时间运算粒度，第3个参数为输出格式,参数与参数之间用英文逗号隔开；例如：dd,+5,times 为输出当前时间的5天后的时间戳，注意：以月运算和以年运算分别是以30天和365天进行运算；
@@ -64,7 +71,7 @@ FilterList
     ...    filters为筛选条件：格式为field1,1,2/field2,3,4(筛选字符与值之间用逗号分隔，筛选字段之间用/分隔);
     ...    Returnfield为返回值串的字符,为All返回所有字段；
     ...    Onlyone以哪个字段或字符串来分隔，默认为空；
-    ...    Num源数据列表的条数筛选，默认为空不筛选； 大于0的数时筛选前Num列【0:Num】,小于0的数时筛选倒数Num列【Num:Last】
+    ...    Num源数据列表的条数筛选，默认为空筛选倒数10条； 大于0的数时筛选前Num列【0:Num】,小于0的数时筛选倒数Num列【Num:Last】
     ...    例如从源字符串[{"fid":123,"uid": 2315,"meter1": 2315},{"fid":2123,"uid": 23151,"meter1": 22315},{"fid":1423,"uid": 23152,"meter1": 2315,"meter2": 23415},{"fid":2123,"uid": 24315,"meter1": 23415}] 中对fid、uid、meter1、meter2条件筛选符合的记录
     [Timeout]    1 minute
     log    FilterList Start ......
@@ -73,9 +80,8 @@ FilterList
     log    返回值串的字段:${Returnfield}
     log    分隔串的字段:${Onlyone}
     log    源数据列表的条数筛选${Num}
-    ${ReturnValue}    set variable    joyrunzzqtestspit
     @{filterList}    Split String    ${filters}    /
-    ${filterLen}    evaluate    len(${filterList})
+    ${filterLen}    BuiltIn.Get Length    ${filterList}
     ${filterstr1}    Get From List    ${filterList}    0
     ${filterstr2}    Run Keyword If    ${filterLen}>1    Get From List    ${filterList}    1
     ...    ELSE    Get From List    ${filterList}    0
@@ -93,83 +99,47 @@ FilterList
     ${filterfield1max}    Get From List    ${filterstrList1}    2
     ${filterfield2max}    Get From List    ${filterstrList2}    2
     ${filterfield3max}    Get From List    ${filterstrList3}    2
-    ##兼容字段值带引号的情况
-    # ${SrcListstr}    Evaluate          str(${SrcListstr})
-    ${SrcListstr}    replace string    ${SrcListstr}    ${EMPTY}[{    {
-    ${SrcListstr}    replace string    ${SrcListstr}    }]${EMPTY}    }
-    ${SrcListstr}    replace string    ${SrcListstr}    ${SPACE}    ${EMPTY}
-    ${SrcListstr}    Run Keyword If    ${Onlyone}==None    replace string    ${SrcListstr}    },{    }joyrunzzqtestspit{
-    ...    ELSE    replace string    ${SrcListstr}    ${Onlyone}    ${Onlyone}joyrunzzqtestspit${Onlyone}
-    @{SrcList}    Split String    ${SrcListstr}    joyrunzzqtestspit
+    ##以下处理兼容Java中返回null的情况，在 python3 改为替换 None
+	${SrcListstr}    replace string    ${SrcListstr}    :None,    :-1,
+	${SrcListstr}    replace string    ${SrcListstr}    :None}    :-1}
+	${SrcListstr}    replace string    ${SrcListstr}    : None,    :-1,
+	${SrcListstr}    replace string    ${SrcListstr}    : None}    :-1}
+	##将源字符串转换为列表list
+    # ${SrcList}    stringtolist       ${SrcListstr}
+	${SrcList}  evaluate   ${SrcListstr}
+	# ${SrcList}  To List   ${SrcListstr} 
+	${sllen_src}   BuiltIn.Get Length    ${SrcList}
+	##以下处理处理空返回的问题
+	@{rList}   Create List   0
+	Run Keyword If    ${sllen_src} == ${0} and '${Returnfield}'=='All'    Return From Keyword   @{rList}
+	Run Keyword If    ${sllen_src} == ${0} and '${Returnfield}'!='All'    Return From Keyword   0 
+	##以下处理返回数据过多时，截取部分数据进行筛选
     ${SrcList}    Run Keyword If    ${Num} is None    Get Slice From List    ${SrcList}    -10
     ...    ELSE IF    ${Num}>0    Get Slice From List    ${SrcList}    0    ${Num}
     ...    ELSE IF    ${Num}<0    Get Slice From List    ${SrcList}    ${Num}
     ...    ELSE    Get Slice From List    ${SrcList}    0
-    : FOR    ${scr_single}    IN    @{SrcList}
-    \    ${scrsingle}    set variable    ${scr_single}
-    \    ${scrsingle}    replace string    ${scrsingle}    ${filterfield1}":${SPACE}    ${filterfield1}":
-    \    ${scrsingle}    replace string    ${scrsingle}    ${filterfield1}":"    ${filterfield1}":
-    \    log    filterfield1----${scrsingle}
-    \    ${scrsingle}    replace string    ${scrsingle}    ${filterfield2}":${SPACE}    ${filterfield2}":
-    \    ${scrsingle}    replace string    ${scrsingle}    ${filterfield2}":"    ${filterfield2}":
-    \    log    filterfield2----${scrsingle}
-    \    ${scrsingle}    replace string    ${scrsingle}    ${filterfield3}":${SPACE}    ${filterfield3}":
-    \    ${scrsingle}    replace string    ${scrsingle}    ${filterfield3}":"    ${filterfield3}":
-    \    log    filterfield3----${scrsingle}
-    \    ${scrsingle}    replace string    ${scrsingle}    ${Returnfield}":${SPACE}    ${Returnfield}":
-    \    ${scrsingle}    replace string    ${scrsingle}    ${Returnfield}":"    ${Returnfield}":
-    # \    log    Returnfield----${scrsingle}
-    # \    ${buchongfu1234}      Evaluate         type(${scrsingle})
-    # \    log        -------${buchongfu1234}
-    # # \    ${scrsingle}          Evaluate         str(${scrsingle})
-    # \    ${scrsingle}          To Str           ${scrsingle}
-    # \    ${buchongfu1234}      Evaluate         type(${scrsingle})
-    # \    log        -------${buchongfu1234}
-    \    ${filterfield1str}    Get Regexp Matches    ${scrsingle}    "${filterfield1}":([A-Za-z0-9]+)    1
-    \    ${filterfield1strlen}    evaluate    len(${filterfield1str})
-    \    ${field1Value}    Run Keyword If    ${filterfield1strlen}>0    Get From List    ${filterfield1str}    0
-    \    ...    ELSE    set variable    0
-    \    ${filterfield2str}    Get Regexp Matches    ${scrsingle}    "${filterfield2}":([A-Za-z0-9]+)    1
-    \    ${filterfield2strlen}    evaluate    len(${filterfield2str})
-    \    ${field2Value}    Run Keyword If    ${filterfield2strlen}>0    Get From List    ${filterfield2str}    0
-    \    ...    ELSE    set variable    0
-    \    ${filterfield3str}    Get Regexp Matches    ${scrsingle}    "${filterfield3}":([A-Za-z0-9]+)    1
-    \    ${filterfield3strlen}    evaluate    len(${filterfield3str})
-    \    ${field3Value}    Run Keyword If    ${filterfield3strlen}>0    Get From List    ${filterfield3str}    0
-    \    ${Returnfieldstr}    Get Regexp Matches    ${scrsingle}    "${Returnfield}":([A-Za-z0-9]+)    1
-    \    ${Returnfieldstrlen}    evaluate    len(${Returnfieldstr})
-    \    ${ReturnfieldValue1}    Run Keyword If    ${Returnfieldstrlen}>0    Get From List    ${Returnfieldstr}    0
-    \    ...    ELSE    set variable    ${EMPTY}
-    \    ${field1Value}    Run Keyword If    '${field1Value}'=='None'    set variable    -1
-    \    ...    ELSE    set variable    ${field1Value}
-    \    ${field2Value}    Run Keyword If    '${field2Value}'=='None'    set variable    -1
-    \    ...    ELSE    set variable    ${field2Value}
-    \    ${field3Value}    Run Keyword If    '${field3Value}'=='None'    set variable    -1
-    \    ...    ELSE    set variable    ${field3Value}
-    \    
-    \    ${field1Value}     Get Int      ${field1Value}
-    \    ${field2Value}     Get Int      ${field2Value}
-    \    ${field3Value}     Get Int      ${field3Value}
-    \
-    \    ${ReturnfieldValue}    Run Keyword If    "${Returnfield}"!="All" and ${filterfield1min}<=${field1Value}<=${filterfield1max} and ${filterfield2min}<=${field2Value}<=${filterfield2max} and ${filterfield3min}<=${field3Value}<=${filterfield3max}    set variable    ${ReturnfieldValue1}
-    \    ...    ELSE IF    "${Returnfield}"=="All" and ${filterfield1min}<=${field1Value}<=${filterfield1max} and ${filterfield2min}<=${field2Value}<=${filterfield2max} and ${filterfield3min}<=${field3Value}<=${filterfield3max}    set variable    ${scr_single}
-    \    ...    ELSE    set variable    joyrunzzqtestspit
-    \    ${Valuelen}    Evaluate    len(R'${ReturnValue}')
-    \    ${ReturnValue}    Run Keyword If    "${Returnfield}"!="All" and ${Valuelen}>=1    set variable    ${ReturnValue},${ReturnfieldValue}
-    \    ...    ELSE IF    "${Returnfield}"!="All" and ${Valuelen}<1    set variable    ${ReturnfieldValue}
-    \    ...    ELSE    set variable    ${ReturnValue}zzqtestlistspit${ReturnfieldValue}
-    \    ${ReturnValue}    replace string    ${ReturnValue}    ,joyrunzzqtestspit    ${EMPTY}
-    \    ${ReturnValue}    replace string    ${ReturnValue}    joyrunzzqtestspit,    ${EMPTY}
-    \    ${ReturnValue}    replace string    ${ReturnValue}    joyrunzzqtestspit    ${EMPTY}
-    ${ReturnValuelen}    Evaluate    len(R'${ReturnValue}')
-    ${ReturnValuesting}    Run Keyword If    ${ReturnValuelen}<1    set variable    0
-    ...    ELSE    set variable    ${ReturnValue}
-    @{returnlist}    Run Keyword If    "${Returnfield}"=="All"    Split String    ${ReturnValuesting}    zzqtestlistspit
-    ...    ELSE    Create List
-    Remove Values From List    ${returnlist}    ${EMPTY}
-    ${returnlistlen}    Evaluate    len(${returnlist})
-    @{returnlist}    Run Keyword If    ${returnlistlen}<1    Create List    0
-    ...    ELSE    Create List    @{returnlist}
+	${sllen}   BuiltIn.Get Length    ${SrcList}
+	##以下处理条件过滤处理
+	${ReturnValuesting}   Set Variable  ${EMPTY}
+	@{returnlist}    Create List    
+    : FOR    ${scr_single}    IN     @{SrcList}
+	\	 ${f1}   Get Count   ${scr_single}   ${filterfield1}
+	\	 ${f2}   Get Count   ${scr_single}   ${filterfield2}
+	\	 ${f3}   Get Count   ${scr_single}   ${filterfield3}
+	\	 ${field1Value}  Run Keyword If   ${f1}>0   Get From Dictionary    ${scr_single}     ${filterfield1}     ELSE   Set Variable  ${-2}
+	\	 ${field2Value}  Run Keyword If   ${f2}>0   Get From Dictionary    ${scr_single}     ${filterfield2}     ELSE   Set Variable  ${-2}
+	\	 ${field3Value}  Run Keyword If   ${f3}>0   Get From Dictionary    ${scr_single}     ${filterfield3}     ELSE   Set Variable  ${-2}
+	\    ${Returnfieldstr}  Run Keyword If   '${Returnfield}'!='All'    Get From Dictionary    ${scr_single}   ${Returnfield}
+	\	 ...	ELSE   Stringify Json    ${scr_single}
+    \    ${ReturnValue}    Run Keyword If    ${filterfield1min}<=${field1Value}<=${filterfield1max} and ${filterfield2min}<=${field2Value}<=${filterfield2max} and ${filterfield3min}<=${field3Value}<=${filterfield3max}   Set Variable    ${Returnfieldstr}      ELSE  Set Variable   ${EMPTY}
+	\    ${ReturnValuesting}    Run Keyword If   '${ReturnValue}'!='${EMPTY}'   Convert To String   ${ReturnValue}
+	\	 Run Keyword If    '${ReturnValue}'!='${EMPTY}'    Append To List    ${returnlist}     ${ReturnValue}  
+	\	 Run Keyword If    "${Returnfield}"=="All" and '${ReturnValue}'!='${EMPTY}'     Return From Keyword    @{returnlist}
+    \    Run Keyword If    "${Returnfield}"!="All" and '${ReturnValue}'!='${EMPTY}'     Return From Keyword    ${ReturnValuesting}
+    #Remove Values From List    ${returnlist}    ${EMPTY}
+	##对没有找到符合条件时返回的处理
+    @{returnlist}    Create List    0
+	${ReturnValuesting}   Set Variable  0
     log    FilterList End ......
     Run Keyword If    "${Returnfield}"=="All"    Return From Keyword    @{returnlist}
     ...    ELSE    Return From Keyword    ${ReturnValuesting}
@@ -200,9 +170,15 @@ Getsting
     [Return]    ${intstart}
 
 randomchoice
-    [Arguments]    ${str}    ${spitstr}
+    [Arguments]    ${str}    ${spitstr}=None
     [Documentation]    将字符串分割后随机返回 abcdef;12;aaaa;123ewq;ddd 以;分割随机返回${str}为源字符串，${spitstr}为源字符串中的分割符；
     log    randomchoice Start ......
+    ${spitstr}   Run Keyword IF   '${spitstr}' is None  set Variable  ,   ELSE  Set Variable   ${spitstr}
+	Run Keyword IF  '${str}' is None    Return From Keyword  0
+	Run Keyword IF  '${str}'=='${EMPTY}'    Return From Keyword  0
+	${str}  Convert To String  ${str}
+	${len}   Get Count   ${str}   ${spitstr}
+	Run Keyword IF  ${len}==0    Return From Keyword  ${str}
     @{list}=    Split String    ${str}    ${spitstr}
     ${stinglen}    evaluate    len(${list})
     ${strReturn}    evaluate    random.choice(${list})    random
@@ -257,11 +233,7 @@ arraytostring
     [Arguments]    ${array}
     [Documentation]    将字符类型改为数组类型，例如变量值"[a,b c]" 换成[a,b,c]
     log    arraytostring Start ......
-    log    ${array}
-    # ${array}    Evaluate    ${array}.replace('"','')
-    # ${list}=    Evaluate    "".join(${array})
-    ${list}=    set variable    ${array}
-    log    ${list}
+    ${list}=    evaluate    "".join(${array})
     log    arraytostring End ......
     [Return]    ${list}
 
@@ -307,11 +279,7 @@ GetServertime
     Run Keyword If    ${isend}>=0    Create Session    timestamp    ${login_URL}
     ${resptime}    Run Keyword If    ${isend}>=0    RequestsLibrary.Get Request    timestamp    /GetTimestamp.aspx
     ${contentime}    Run Keyword If    ${isend}>=0    charconver    ${resptime.content}
-    # Run Keyword If    ${isend}>=0      # # log json    ${resptime.content}
-
-    # ${abc}     get json value    ${contentime}    /lasttime
-    # ${timestamp}    Run Keyword If    ${isend}>=0    set variable    ${abc}
-
+    Run Keyword If    ${isend}>=0    log json    ${resptime.content}
     ${timestamp}    Run Keyword If    ${isend}>=0    get json value    ${contentime}    /lasttime
     ...    ELSE    set variable    ${Goltimestamp}
     set global variable    ${Goltimestamp}    ${timestamp}
@@ -322,8 +290,13 @@ Env_URL
     [Arguments]    ${InputURL}
     [Documentation]    根据URL判断运行环境
     log    Env_URL Start ......
-    ${Testcount}    Get Lines Matching Pattern    ${InputURL}    *-test*
+    log    URL==【${InputURL}】
+    ${Testcount1}    Get Lines Matching Pattern    ${InputURL}    *-test*
+	${Testcount2}    Get Lines Matching Pattern    ${InputURL}    *-betaenv*
+	${Testcount}    set variable   ${Testcount1}${Testcount2}
     ${env_out}    Run Keyword If    '${Testcount}'=='${EMPTY}'    set variable    Online
-    ...    ELSE    set variable    Test
+    ...    ELSE IF   '${Testcount1}'!='${EMPTY}'   set variable    Test
+	...    ELSE   set variable    Beta
     log    Env_URL End ......
     [Return]    ${env_out}
+

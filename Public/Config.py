@@ -16,30 +16,10 @@ import sys,os,platform
 
 #home=Get_pwd()
 ostype = sys.platform   #获取当前系统类型
-copycmd='copy1'
-
-if  ostype=='win32'  or  ostype=='win64':
-	pwd=os.popen('cd').readlines()[0]
-	print('Path is  %s' %pwd)
-	copycmd='copy'
-else:
-	pwd=os.popen('pwd').readlines()[0]
-	print('Path  is: %s'% pwd)
-	copycmd='cp'
-home=pwd.replace('\n','')
-print ('Home=={}'.format(home))
-print ('copycmd=={}'.format(copycmd))
-#
 pyvs=sys.version_info.major
-RunPublic=os.path.join(home,'Public')
-print('Run Public path=={}'.format(RunPublic))
-if pyvs==3:
-	print('python version is  3')
-elif pyvs==2:
-	print('python version is  2')
-else:
-	AssertionError("Python Environmental anomaly")
 
+print("Os type is %s" %ostype)
+print("Python version is %s" %pyvs)
 	
 ##==================================开发测试生产环境通用参数=======================
 #请求头参数-前端系统版本号

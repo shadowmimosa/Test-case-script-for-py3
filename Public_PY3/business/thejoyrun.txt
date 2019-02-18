@@ -20,6 +20,24 @@ ${RetryInti}      ${3}    #设置重试次数
 
 *** Keywords ***
 
+Map_merge
+	[Arguments]    ${path}    ${maps}    
+    [Documentation]    *用于修改和合并传参*
+	log   Map_merge Start ....
+	log   ****JoyrunEvn=${JoyrunEvn}****SRPam=${SRPam}
+	Run Keyword IF   ${SRPam}==123456   Return From Keyword   ${maps}
+	${dictKey}   Get Substring  ${path}  1
+	${keycount1}  Get Count   ${SRPam}   ${dictKey}
+	${keycount2}  Get Count   ${SRPam}   ${path}
+	&{SRPam1}  Evaluate  ${SRPam}
+	&{tcdict}   Run Keyword IF  ${keycount1}>0   Get From Dictionary   ${SRPam1}   ${dictKey}     
+	...	ELSE IF    ${keycount1}>0   Get From Dictionary   ${SRPam1}   ${dictKey}
+	...    ELSE    Return From Keyword   ${maps}
+	Set To Dictionary   ${maps}   &{tcdict} 
+	log   Map_merge End ....
+	[Return]   ${maps}
+    
+
 thejoyrun_postd
     [Arguments]    ${path}    ${maps}    ${userName}    ${Base_URL}    ${pwds}=None    ${Retry}=None
     [Documentation]    *用于APP内部需要登录和签名Post场景：post请求data方式关键字*
@@ -29,6 +47,7 @@ thejoyrun_postd
     ...    参数以data方法提交，不出现Url中，而只在body中带公共参数（sign、timestamp）；
     [Timeout]    30 seconds
     log    thejoyrun_postd Start ......
+    ${maps}   Map_merge  ${path}    ${maps}
     ${Retry}    Run Keyword If    '${Retry}'=='None'    set variable    ${RetryInti}
     ...    ELSE    set variable    ${Retry}
     #log    Retry=======================${Retry}
@@ -140,6 +159,7 @@ thejoyrun_postnl
     ...    用于app的用户注册方面，无需用户信息；参数以data方法提交，不出现Url中，而只在body中带公共参数（sign、timestamp）；
     [Timeout]    30 seconds
     log    thejoyrun_postnl Start ......
+    ${maps}   Map_merge  ${path}    ${maps}
     ${Retry}    Run Keyword If    '${Retry}'=='None'    set variable    ${RetryInti}
     ...    ELSE    set variable    ${Retry}
     ${heards}=    create dictionary
@@ -239,6 +259,7 @@ thejoyrun_post_nosign
     ...    没有加密的用于非APP的页面请求，参数以data方法提交；
     [Timeout]    30 seconds
     log    thejoyrun_post_nosign Start ......
+    ${maps}   Map_merge  ${path}    ${maps}
     ${Retry}    Run Keyword If    '${Retry}'=='None'    set variable    ${RetryInti}
     ...    ELSE    set variable    ${Retry}
     ${pwd}    Run Keyword If    '${pwds}'=='None'    set variable    ${pwd}
@@ -306,6 +327,7 @@ thejoyrun_postjson_wxminp
     ...    参数以data提交，在出现Url中，也在body中带公共参数（appid、timestamp、sid主要用于小程序）；
     [Timeout]    30 seconds
     log    thejoyrun_postjson_wxminp Start ......
+    ${maps}   Map_merge  ${path}    ${maps}
     ##通过本地获取timestamp
     ${ContentType}    Set Variable    application/json;charset=UTF-8
     ${wxminpnames}    Split String    ${path}    /
@@ -366,6 +388,7 @@ thejoyrun_get_wxminp
     ...    参数以params提交，在出现Url中，带公共参数（appid、timestamp、sid主要用于跑团小程序）；
     [Timeout]    30 seconds
     log    thejoyrun_get_wxminp Start ......
+    ${maps}   Map_merge  ${path}    ${maps}
     ${wxminpnames}    Split String    ${path}    /
     ${wxminpname1}    Get From List    ${wxminpnames}    1
     ${wxminpname}    Run Keyword If    '${wxminpname1}'!='wallet'    set variable    ${wxminpname1}
@@ -427,6 +450,7 @@ thejoyrun_getp
     ...    参数以params方法提交出现Url中，也在body带公共参数（signature、timestamp）；
     [Timeout]    30 seconds
     log    thejoyrun_getp Start ......
+    ${maps}   Map_merge  ${path}    ${maps}
     ${Retry}    Run Keyword If    '${Retry}'=='None'    set variable    ${RetryInti}
     ...    ELSE    set variable    ${Retry}
     ${pwd}    Run Keyword If    '${pwds}'=='None'    set variable    ${pwd}
@@ -552,6 +576,7 @@ thejoyrun_get_nosign
     ...    参数以params方法提交，出现Url中，也在body中，但不需要签名没有公共参数；
     [Timeout]    30 seconds
     log    thejoyrun_get_nosign Start ......
+    ${maps}   Map_merge  ${path}    ${maps}
     ${Retry}    Run Keyword If    '${Retry}'=='None'    set variable    ${RetryInti}
     ...    ELSE    set variable    ${Retry}
     ${pwd}    Run Keyword If    '${pwds}'=='None'    set variable    ${pwd}
@@ -614,6 +639,7 @@ thejoyrun_postjson
     ...    参数以json格式提交数据；
     [Timeout]    30 seconds
     log    thejoyrun_postjson Start ......
+    ${maps}   Map_merge  ${path}    ${maps}
     ${ContentType}    Set Variable    application/json;charset=UTF-8
     ${heards_dict}=    create dictionary
     log    heards_dict ===${heards_dict}
