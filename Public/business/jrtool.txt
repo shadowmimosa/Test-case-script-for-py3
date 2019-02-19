@@ -273,7 +273,7 @@ GetServertime
     log    GetServertime Start ......
     ${time}=    Get Time    epoch
     log    time= ${time}
-    ${isend}    evaluate    int(${time})-${Goltimestamp}-280
+    ${isend}    evaluate    int(${time})-${Goltimestamp}-180
     Run Keyword If    ${isend}>=0    Create Session    timestamp    ${login_URL}
     ${resptime}    Run Keyword If    ${isend}>=0    RequestsLibrary.Get Request    timestamp    /GetTimestamp.aspx
     ${contentime}    Run Keyword If    ${isend}>=0    charconver    ${resptime.content}

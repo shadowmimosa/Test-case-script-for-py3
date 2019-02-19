@@ -17,7 +17,7 @@ Class_01              [Documentation]    weatherr_Post接口
                       广州                 020                          23.17738273605205    113.3347177208698    广东省         "0"    成功
 
 Class_02              [Documentation]    weatherr_Post接口
-                      [Tags]             Demo                         Test
+                      [Tags]             Demo
                       [Template]         weatherr_Post_assertClass
                       上海                 010                          180                  180                  江西省         "0"    成功
 
@@ -26,8 +26,8 @@ weatherr_Post_assertClass
     [Arguments]    ${city}    ${citycode}    ${longitude}    ${latitude}    ${province}    ${ret}
     ...    ${msg}
     [Documentation]    weatherr_Post接口，【示例中仅提供最基础内容，实际编写时，可以此基础上扩展】
-    ######Evaluate       reload(sys)    sys
-    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate    reload(sys)    sys
+    ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /weather
     ${maps}=    create dictionary
     set to dictionary    ${maps}    city=${city}

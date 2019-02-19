@@ -15,7 +15,7 @@ Class_01              [Documentation]    接口关联例子(两个用例) 点赞
                       99042848           liked                              0      0        棒棒的     "0"              #取消点赞
 
 Class_02              [Documentation]    接口关联例子(1个用例两个关健字) 评论与删除评论-Test
-                      [Tags]             Test
+                      [Tags]
                       [Template]         feed_aspxPost_Memo2_assertClass
                       99042939           red                                0      0        棒棒的     "0"              #删除评论
 
@@ -23,8 +23,8 @@ Class_02              [Documentation]    接口关联例子(1个用例两个关�
 feed_aspxPost_assertClass
     [Arguments]    ${fid}    ${option}    ${rid}    ${touid}    ${memo}    ${expected_code}
     [Documentation]    /feed.aspx点赞与取消点赞接口基本验证
-    ######Evaluate       reload(sys)    sys
-    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate    reload(sys)    sys
+    ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /feed.aspx
     ${maps}=    create dictionary
     set to dictionary    ${maps}    fid=${fid}
@@ -56,8 +56,8 @@ feed_aspxPost_assertClass
 feed_aspxPost_Memo_assertClass
     [Arguments]    ${fid}    ${option}    ${touid}    ${memo}
     [Documentation]    /feed.aspx评论接口
-    ######Evaluate       reload(sys)    sys
-    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate    reload(sys)    sys
+    ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     ${path}=    set variable    /feed.aspx
     ${maps}=    create dictionary
     set to dictionary    ${maps}    fid=${fid}
@@ -83,8 +83,8 @@ feed_aspxPost_Memo_assertClass
 feed_aspxPost_Memo2_assertClass
     [Arguments]    ${fid}    ${option}    ${rid}    ${touid}    ${memo}    ${expected_code}
     [Documentation]    /feed.aspx评论与删除接口基本验证
-    ######Evaluate       reload(sys)    sys
-    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate    reload(sys)    sys
+    ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     ${fid}=    feed_aspxPost_Memo_assertClass    ${fid}    re    0    棒棒的
     log    fid=====${fid}
     ${path}=    set variable    /feed.aspx

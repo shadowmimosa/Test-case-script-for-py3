@@ -44,7 +44,8 @@ else:
     AssertionError("Python Environmental anomaly")
 
 #Run Environmental
-cmdpamlen = len(sys.argv)
+variablelist=sys.argv
+cmdpamlen = len(variablelist)
 print('Input argvLen is [{}]'.format(cmdpamlen))
 for i in range(0, cmdpamlen):
     print('Script parameter[{}] is {}'.format(i, sys.argv[i]))
@@ -112,12 +113,14 @@ print(robot_cmd)
 print(
     '*********************      Script  Run   start ...      *********************'
 )
-rzlist = os.popen(robot_cmd).read().split('\n')
-print(
-    '*********************      Robot Script  Running ...    *********************'
-)
-for results in rzlist:
-    print(results)
+# rzlist = os.popen(robot_cmd).read().split('\n')
+rz = os.popen(robot_cmd)
+rzline=rz.readline()
+while rzline:
+    print(rzline)
+    rzline=rz.readline()
+rz.close()
+
 
 # Check folder name, and rename again.
 if os.path.exists(os.path.join(home, 'Public_PY2')):

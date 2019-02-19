@@ -9,7 +9,7 @@ ${ContentType}    application/x-www-form-urlencoded;charset=UTF-8    # POST数�
 
 *** Test Cases ***    ret                msg
 Class_01              [Documentation]    daily/getDaily TestCase测试用例
-                      [Tags]             Test                            gxy    Online
+                      [Tags]             Test                            gxy    Online    v4.6
                       [Template]         daily_getDaily_Post_Keywords
                       "0"                成功
 

@@ -9,7 +9,7 @@ ${ContentType}    application/x-www-form-urlencoded    # POST数据格式
 
 *** Test Cases ***    rootSalesRuleId    expected                     msg
 Class_01              [Documentation]    ec_api/orders商务订单接口
-                      [Tags]             Demo                         Test
+                      [Tags]             Demo
                       [Template]         ec_api_orders_assertClass
                       101277             "0"                          成功
 
