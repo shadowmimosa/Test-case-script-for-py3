@@ -23,8 +23,9 @@ if pyvs == 3:
                 os.path.join(home, 'Public'), os.path.join(home, 'Public_PY2'))
             os.rename(
                 os.path.join(home, 'Public_PY3'), os.path.join(home, 'Public'))
-        except Exception:
+        except Exception as exc:
             print('Rename folder NOT successful!!! Please check it.')
+            print('The exception is {}'.format(exc))
     else:
         print('Public_PY2 is existed.')
 
@@ -37,8 +38,9 @@ elif pyvs == 2:
                 os.path.join(home, 'Public'), os.path.join(home, 'Public_PY3'))
             os.rename(
                 os.path.join(home, 'Public_PY2'), os.path.join(home, 'Public'))
-        except Exception:
+        except Exception as exc:
             print('Rename folder NOT successful!!! Please check it.')
+            print('The exception is {}'.format(exc))
 
 else:
     AssertionError("Python Environmental anomaly")
@@ -129,8 +131,9 @@ if os.path.exists(os.path.join(home, 'Public_PY2')):
             os.path.join(home, 'Public'), os.path.join(home, 'Public_PY3'))
         os.rename(
             os.path.join(home, 'Public_PY2'), os.path.join(home, 'Public'))
-    except Exception:
+    except Exception as exc:
         print('Rename folder NOT successful!!! Please check it.')
+        print('The exception is {}'.format(exc))
 
 print(
     '*********************     Script   The    End!!!        *********************'
