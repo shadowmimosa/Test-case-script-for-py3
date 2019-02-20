@@ -20,14 +20,15 @@ def use_jsonpointer(doc, pointer):
         print('The parameter is \'0\'')
         doc_code = "0"
         return doc_code
+    
+    pointer_in_doc = jsonpointer.resolve_pointer(doc, pointer)
 
     print('The doc\'s type after change is', type(doc))
     print('The data\'s type after filtering is',
-          type(jsonpointer.resolve_pointer(doc, pointer)))
+          type(pointer_in_doc))
     print('The data\'s after filtering is',
-          jsonpointer.resolve_pointer(doc, pointer))
+          pointer_in_doc)
 
-    pointer_in_doc = jsonpointer.resolve_pointer(doc, pointer)
 
     ### If the data return from Jsonpointer  is string, Changing it.
     if type(pointer_in_doc) == str:
@@ -44,8 +45,11 @@ def use_jsonpointer(doc, pointer):
     elif pointer_in_doc == None:
         print('It\'s Right!!!')
         return 'null'
+    elif type(pointer_in_doc) == list:
+        pointer_in_doc = str(pointer_in_doc)
+        pass
     else:
-        pointer_in_doc = str(jsonpointer.resolve_pointer(doc, pointer))
+        pointer_in_doc = str(pointer_in_doc)
         pointer_in_doc = '\"' + pointer_in_doc + '\"'
 
 
