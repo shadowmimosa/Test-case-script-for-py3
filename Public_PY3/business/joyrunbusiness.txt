@@ -191,7 +191,7 @@ FourTopicList_TopicName
     # \    ${FourTopicdatalistIndex}      Evaluate        ${FourTopicdatalist[${topindex}]}}
     # \    ${TopfourList}    Get Regexp Matches    ${FourTopicdatalistIndex}    "topicName":"(.*)"    1
     # \    ${TopfourList}     Get Json Value      ${FourTopicdatalistIndex}       /topicName
-    \    ${TopfourList}    Get Regexp Matches    ${FourTopicdatalist[${topindex}]}    "topicName":"(.*?)"    1
+    \    ${TopfourList}    Get Regexp Matches    ${FourTopicdatalist[${topindex}]}    'topicName':'(.*?)'    1
     \    log        ------${TopfourList}
     \    ${topicNamesting}    Get From List    ${TopfourList}    0
     \    ${topicNameKeyspit}    Run Keyword If    "${topicNameKeyspit}"!="${EMPTY}"    set variable    ${topicNameKeyspit},${topicNamesting}

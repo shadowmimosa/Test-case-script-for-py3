@@ -22,15 +22,19 @@ def verfication_data(data, msg=None):
     参照第1步。
     '''
 
+    null = None
+    true = True
+    false = False
+
     if type(data) == list:
         pass
     elif type(data) == dict:
         pass
     # elif type(data)==unicode:
-        # logging.info(("---传入的data数据分析完成-11----"))
+    # logging.info(("---传入的data数据分析完成-11----"))
     else:
         print("In the else now")
-        data=eval(data)
+        data = eval(data)
         # data = json.loads(data)
         ##logging.info(("---传入的data11为%s----"%(data)))
 

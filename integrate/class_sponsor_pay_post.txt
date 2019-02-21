@@ -24,7 +24,7 @@ classSponsorPay_sel_classid
     ${mywallet}    Get From List    ${str}    0
     ${classids}    Get From List    ${str}    1
     log json    ${classids[0]}
-    Run Keyword If    '${mywallet}'=='0' or '${classids[0]}'=='0'    log    ====用户${userName}不满足条件（未开通钱包或没有进行中的跑班）=====
+    Run Keyword If    "${mywallet}"=='0' or '${classids[0]}'=='0'    log    ====用户${userName}不满足条件（未开通钱包或没有进行中的跑班）=====
     ...    ELSE    classSponsorPay_sel    ${classIds}    ${userName}    ${pwd}    ${paymentType}
     ...    ${verifyCode}    ${mywallet}
 
