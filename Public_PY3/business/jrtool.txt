@@ -126,10 +126,10 @@ FilterList
 	\	 ${f1}   Get Count   ${scr_single}   ${filterfield1}
 	\	 ${f2}   Get Count   ${scr_single}   ${filterfield2}
 	\	 ${f3}   Get Count   ${scr_single}   ${filterfield3}
-	\	 ${field1Value}  Run Keyword If   ${f1}>0   Get From Dictionary    ${scr_single}     ${filterfield1}     ELSE   Set Variable  ${-2}
-	\	 ${field2Value}  Run Keyword If   ${f2}>0   Get From Dictionary    ${scr_single}     ${filterfield2}     ELSE   Set Variable  ${-2}
-	\	 ${field3Value}  Run Keyword If   ${f3}>0   Get From Dictionary    ${scr_single}     ${filterfield3}     ELSE   Set Variable  ${-2}
-	\    ${Returnfieldstr}  Run Keyword If   '${Returnfield}'!='All'    Get From Dictionary    ${scr_single}   ${Returnfield}
+	\	 ${field1Value}  Run Keyword If   ${f1}>0   Get In Dictionary    ${scr_single}     ${filterfield1}     ELSE   Set Variable  ${-2}
+	\	 ${field2Value}  Run Keyword If   ${f2}>0   Get In Dictionary    ${scr_single}     ${filterfield2}     ELSE   Set Variable  ${-2}
+	\	 ${field3Value}  Run Keyword If   ${f3}>0   Get In Dictionary    ${scr_single}     ${filterfield3}     ELSE   Set Variable  ${-2}
+	\    ${Returnfieldstr}  Run Keyword If   '${Returnfield}'!='All'    Get In Dictionary    ${scr_single}   ${Returnfield}
 	\	 ...	ELSE   Stringify Json    ${scr_single}
     \    ${ReturnValue}    Run Keyword If    ${filterfield1min}<=${field1Value}<=${filterfield1max} and ${filterfield2min}<=${field2Value}<=${filterfield2max} and ${filterfield3min}<=${field3Value}<=${filterfield3max}   Set Variable    ${Returnfieldstr}      ELSE  Set Variable   ${EMPTY}
 	\    ${ReturnValuesting}    Run Keyword If   '${ReturnValue}'!='${EMPTY}'   Convert To String   ${ReturnValue}
@@ -275,7 +275,7 @@ GetServertime
     log    GetServertime Start ......
     ${time}=    Get Time    epoch
     log    time= ${time}
-    ${isend}    evaluate    int(${time})-${Goltimestamp}-280
+    ${isend}    evaluate    int(${time})-${Goltimestamp}-180
     Run Keyword If    ${isend}>=0    Create Session    timestamp    ${login_URL}
     ${resptime}    Run Keyword If    ${isend}>=0    RequestsLibrary.Get Request    timestamp    /GetTimestamp.aspx
     ${contentime}    Run Keyword If    ${isend}>=0    charconver    ${resptime.content}

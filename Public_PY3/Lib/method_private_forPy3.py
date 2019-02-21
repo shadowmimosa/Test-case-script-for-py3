@@ -20,15 +20,12 @@ def use_jsonpointer(doc, pointer):
         print('The parameter is \'0\'')
         doc_code = "0"
         return doc_code
-    
+
     pointer_in_doc = jsonpointer.resolve_pointer(doc, pointer)
 
     print('The doc\'s type after change is', type(doc))
-    print('The data\'s type after filtering is',
-          type(pointer_in_doc))
-    print('The data\'s after filtering is',
-          pointer_in_doc)
-
+    print('The data\'s type after filtering is', type(pointer_in_doc))
+    print('The data\'s after filtering is', pointer_in_doc)
 
     ### If the data return from Jsonpointer  is string, Changing it.
     if type(pointer_in_doc) == str:
@@ -36,22 +33,26 @@ def use_jsonpointer(doc, pointer):
         print('The pointer_in_doc is str and it\'s', pointer_in_doc)
         pointer_in_doc = '\"' + pointer_in_doc + '\"'
         print('The pointer_in_doc is str and it\'s', pointer_in_doc)
-    
+
     # int timestamps
-    elif type(pointer_in_doc)==int:
-        pass
+    elif type(pointer_in_doc) == int:
+        pointer_in_doc = str(pointer_in_doc)
 
     ### If the data return from Jsonpointer is null. Returning it.
     elif pointer_in_doc == None:
-        print('It\'s Right!!!')
+        print("It's right!!")
+        print(type("null"))
         return 'null'
+
     elif type(pointer_in_doc) == list:
         pointer_in_doc = str(pointer_in_doc)
-        pass
+
+    elif type(pointer_in_doc) == dict:
+        pointer_in_doc = str(pointer_in_doc)
+
     else:
         pointer_in_doc = str(pointer_in_doc)
         pointer_in_doc = '\"' + pointer_in_doc + '\"'
-
 
     print('The data\'s type after filtering and change is',
           type(pointer_in_doc))
@@ -175,3 +176,32 @@ def list_or_str(altitude):
 
 def log_json(content):
     pass
+
+
+def get_in_dictionary(content, data):
+    """从字典中取出相应值"""
+
+    if type(content) != dict:
+        raise "The type error."
+    else:
+        print(content)
+        print(data)
+        print(content[data])
+        # print(int(content[data]))
+        try:
+            return int(content[data])
+        except ValueError:
+            return str(content[data])
+
+
+def stringify_json(content):
+    print(content)
+    import json
+    try:
+        return json.dumps(content)
+    except ValueError as exc:
+        raise ValueError("Could not stringify {} to JSON: {}".format(
+            content, exc))
+
+
+get_json_value("{'data':null}","/data")

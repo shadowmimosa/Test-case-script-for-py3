@@ -33,10 +33,10 @@ opinion_creat_class
     ${classjson}    set variable    {\"classId\":${myclassid},\"runNum\":${runNum},\"singleAmount\":${singleAmount}}
     log json    ${classjson}
     log    如果${userName}此账号有创建过或参与过的跑班，将些跑班id存入全局变量中以便后续取
-    Run Keyword If    '${myclassid}'!='0'    Set to dictionary    ${Global_Var}    betclassid=${classjson}
-    Run Keyword If    '${myclassid}'!='0'    Set global variable    ${Global_Var}    ${Global_Var}
+    Run Keyword If    "${myclassid}"!="0"    Set to dictionary    ${Global_Var}    betclassid=${classjson}
+    Run Keyword If    "${myclassid}"!="0"    Set global variable    ${Global_Var}    ${Global_Var}
     log Dictionary    ${Global_Var}
-    Run Keyword If    '${myclassid}'!='0' or '${mywallet}'=='0'    log    ====用户${userName}不满足条件（有未完成的跑班、未开通钱包）=====
+    Run Keyword If    "${myclassid}"!="0" or "${mywallet}"=="0"    log    ====用户${userName}不满足条件（有未完成的跑班、未开通钱包）=====
     ...    ELSE    class_create_Post_Keywords    ${mywallet}    ${coverImgUrl}    ${endRunTime}    ${introInfo}
     ...    ${playRuleType}    ${runMeter}    ${runNum}    ${singleAmount}    ${startRunTime}    ${title}
     ...    ${ret}    ${msg}
