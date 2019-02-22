@@ -101,17 +101,17 @@ feedListBasicBulk_fid
     ${dataList}    Get Slice From List   ${dataList}   0  10
     : FOR    ${feeddata}    IN    @{dataList}
     \    log    ${feeddata}
-    \    ${findoneValue}    Run Keyword If    ${findlistlen}>1    Get Regexp Matches    ${feeddata}    "${findlistone}":{(.*)}
+    \    ${findoneValue}    Run Keyword If    ${findlistlen}>1    Get Regexp Matches    ${feeddata}    '${findlistone}':{(.*)}
     \    ...    1
     \    ...    ELSE    Get Regexp Matches    ${feeddata}    ("${findlistone}":.*),    1
     \    ${findoneValuelen}    evaluate    len(${findoneValue})
     \    ${findtxtvalue}    Run Keyword If    ${findoneValuelen}>0    Get From List    ${findoneValue}    0
     \    ...    ELSE    set variable    0
-     \    ${findtwoValue}    Get Regexp Matches    ${findtxtvalue}    "${findlisttwo}":([0-9]+)    1
+     \    ${findtwoValue}    Get Regexp Matches    ${findtxtvalue}    '${findlisttwo}':([0-9]+)    1
     \    ${findtwoValuelen}    evaluate    len(${findtwoValue})
     \    ${findvalue}    Run Keyword If    ${findtwoValuelen}>0    Get From List    ${findtwoValue}    0
     \    ...    ELSE    set variable    0
-    \    ${fidtext}    Get Regexp Matches    ${feeddata}    "fid":([0-9]+)    1
+    \    ${fidtext}    Get Regexp Matches    ${feeddata}    'fid':([0-9]+)    1
     \    ${fidtextlen}    evaluate    len(${fidtext})
     \    ${feedfilter}    Run Keyword If    ${min}<=${findvalue}<=${max} and ${fidtextlen}>0    Get From List    ${fidtext}    0
     \    ...    ELSE    set variable    zzqrunjoyrun9527

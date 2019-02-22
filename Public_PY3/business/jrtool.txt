@@ -233,9 +233,11 @@ arraytostring
     [Arguments]    ${array}
     [Documentation]    将字符类型改为数组类型，例如变量值"[a,b c]" 换成[a,b,c]
     log    arraytostring Start ......
-    ${list}=    evaluate    "".join(${array})
+    ${array}    Replace string     ${array}     ${EMPTY}"   ${EMPTY}
+    ${array}    Replace string     ${array}     "${EMPTY}   ${EMPTY}
+    # ${list}=    evaluate    ${array}
     log    arraytostring End ......
-    [Return]    ${list}
+    [Return]    ${array}
 
 listtolist
     [Arguments]    ${a}    ${b}

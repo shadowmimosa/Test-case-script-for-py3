@@ -159,6 +159,16 @@ Get_Words
     ${translation}    Get Json Value    ${contentall}    /translation
     ${translation}    Get Substring    ${translation}    6
     ${Textjoyrun}    Textcontrl    time
+    ###处理双引号的问题
+	${content}    Replace String    ${content}    "    ${EMPTY}
+	${note}    Replace String       ${note}    "    ${EMPTY}
+	${translation}    Replace String    ${translation}    "    ${EMPTY}
+	${Textjoyrun}    Replace String    ${Textjoyrun}    "    ${EMPTY}
+    ###处理单引号的问题
+	${content}    Replace String    ${content}    '     \\'  
+	${note}    Replace String       ${note}    '     \\'  
+	${translation}    Replace String    ${translation}    '     \\'  
+	${Textjoyrun}    Replace String    ${Textjoyrun}    '     \\'  
     #${IcibaText}    set variable    ${content}${SPACE}${note}${SPACE}【${translation}】
     ${IcibaText}    set variable    ${content}${SPACE}【${note}】
     ${runEU}    Run Keyword If    ${type}==1    set variable    ${content}
