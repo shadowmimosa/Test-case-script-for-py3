@@ -357,7 +357,7 @@ getMyCrewInfo
     ${content}=    charconver    ${resp.content}
     # # # log json    ${resp.content}	
 	${data}     get json value    ${content}    /data
-    ${fieldvalue}    Run Keyword If    '${returnfield}'=='all' and "${data}"!='${EMPTY}'   set variable    ${data}    ELSE IF  "${data}"=='${EMPTY}'  set variable   0      ELSE    get json value    ${content}    /data/${returnfield}
+    ${fieldvalue}    Run Keyword If    '${returnfield}'=='all' and '${data}'!='${EMPTY}'   set variable    ${data}    ELSE IF  '${data}'=='${EMPTY}'  set variable   0      ELSE    get json value    ${content}    /data/${returnfield}
     log   getMyCrewInfo End ......
     [Return]    ${fieldvalue}	
 	
@@ -518,7 +518,7 @@ Getmyclassid
     # # # log json    ${content}	
 	${data}    get json value    ${content}    /data   
 	log  isall===${isall}====
-	${myclassid}   Run Keyword If    "${data}"=='null'  set variable   0    ELSE IF  ${isall} is None   get json value  ${data}  /classId   ELSE  set variable   ${data}
+	${myclassid}   Run Keyword If    '${data}'=='null'  set variable   0    ELSE IF  ${isall} is None   get json value  ${data}  /classId   ELSE  set variable   ${data}
     log   Getmyclassid End ......
 	[Return]    ${myclassid} 
 	
@@ -533,7 +533,7 @@ Getmyplanid
     # # # log json    ${content}	
 	${data}    get json value    ${content}    /data   
 	log  isall===${isall}====
-	${userplanId}   Run Keyword If    "${data}"=='null'  set variable   0    ELSE IF  ${isall} is None   get json value  ${data}  /userplanId   ELSE  set variable   ${data}
+	${userplanId}   Run Keyword If    '${data}'=='null'  set variable   0    ELSE IF  ${isall} is None   get json value  ${data}  /userplanId   ELSE  set variable   ${data}
 	[Return]    ${userplanId}	
 	
 Getmyplanid_filters
@@ -617,7 +617,7 @@ Getmywallet
     ${content}=    charconver    ${resp.content}
     # # # log json    ${content}	
 	${data}    get json value    ${content}    /data
-	${fieldvalue}   Run Keyword If   ${data}=='null'  set variable   0    ELSE IF   ${isall} is None  get json value  ${data}  /${field}    ELSE   set variable   ${data}
+	${fieldvalue}   Run Keyword If   '${data}'=='null'  set variable   0    ELSE IF   ${isall} is None  get json value  ${data}  /${field}    ELSE   set variable   ${data}
     log   Getmywallet End ......
 	[Return]    ${fieldvalue}
 

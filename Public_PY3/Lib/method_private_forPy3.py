@@ -1,4 +1,4 @@
-import jsonpointer
+import jsonpointer,json
 
 ### global variable
 null = None
@@ -48,7 +48,8 @@ def use_jsonpointer(doc, pointer):
         pointer_in_doc = str(pointer_in_doc)
 
     elif type(pointer_in_doc) == dict:
-        pointer_in_doc = str(pointer_in_doc)
+        # pointer_in_doc = str(pointer_in_doc)
+        pointer_in_doc=json.dumps(pointer_in_doc)
 
     else:
         pointer_in_doc = str(pointer_in_doc)
@@ -203,5 +204,63 @@ def stringify_json(content):
         raise ValueError("Could not stringify {} to JSON: {}".format(
             content, exc))
 
+
+
+a='{"ret":"0","msg":"成功","data":null}'
+import json
+# b=json.loads(a)
+
+
+# 	'{
+#     "ret": "0",
+#     "msg": "成功",
+#     "data": {
+#         "tenCount": 9,
+#         "halfCount": 12345678,
+#         "fullCount": 87654321,
+#         "bestTenNode": {
+#             "fid": 99077823,
+#             "bestValue": 1928,
+#             "getTime": 1533082915,
+#             "postRunId": 0
+#         },
+#         "bestSpeed": {
+#             "fid": 99094446,
+#             "bestValue": 6.4242425,
+#             "getTime": 1538982362,
+#             "postRunId": 0
+#         },
+#         "bestSecond": {
+#             "fid": 99082319,
+#             "bestValue": 13030,
+#             "getTime": 1535532043,
+#             "postRunId": 0
+#         },
+#         "bestFiveNode": {
+#             "fid": 99077823,
+#             "bestValue": 1114,
+#             "getTime": 1533082915,
+#             "postRunId": 0
+#         },
+#         "bestMeter": {
+#             "fid": 99082319,
+#             "bestValue": 52663,
+#             "getTime": 1535532043,
+#             "postRunId": 0
+#         },
+#         "bestHalfMara": {
+#             "fid": 99082319,
+#             "bestValue": 5214,
+#             "getTime": 1535532043,
+#             "postRunId": 0
+#         },
+#         "bestFullMara": {
+#             "fid": 99082319,
+#             "bestValue": 10444,
+#             "getTime": 1535532043,
+#             "postRunId": 0
+#         }
+#     }
+# }'
 
 get_json_value("{'data':null}","/data")
