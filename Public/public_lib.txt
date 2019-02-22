@@ -164,6 +164,10 @@ Get_Words
 	${note}    Replace String       ${note}    "    ${EMPTY}
 	${translation}    Replace String    ${translation}    "    ${EMPTY}
 	${Textjoyrun}    Replace String    ${Textjoyrun}    "    ${EMPTY}
+	${content}    Replace String    ${content}    '    \\'
+	${note}    Replace String       ${note}    '    \\'
+	${translation}    Replace String    ${translation}    '    \\'
+	${Textjoyrun}    Replace String    ${Textjoyrun}    '    \\'
     #${IcibaText}    set variable    ${content}${SPACE}${note}${SPACE}【${translation}】
     ${IcibaText}    set variable    ${content}${SPACE}【${note}】
     ${runEU}    Run Keyword If    ${type}==1    set variable    ${content}
