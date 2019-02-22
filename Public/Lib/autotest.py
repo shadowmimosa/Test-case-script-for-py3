@@ -39,6 +39,13 @@ sys.setdefaultencoding('utf-8')
 # demopath='E:\Work\Test\Enjoytherun\Demo\Demo.txt'
 
 def autotestcase(home,url,method,Interfacefields,demopath):
+	'''
+	|method:5个值分别为：Get,Post,Getns,Getc,Postc,Postns;|
+	|其中Getw,Postw为微信小程序Get\Post请求,Getns,Postns为无需签名的Get和Post请求|
+	|Get类型的接口此项传空（即使有值也是无效的）即可|
+	|Post接口中所带的入参（除公共参数外），多个入参入用逗号隔开（例如a,b,c）|
+	|Interfacefields='a,b,c,d,e,f,g,h'|
+	'''
 	fieldslist=list() 
 
 	##从url中获取host名
