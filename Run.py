@@ -101,13 +101,13 @@ if cmdpamlen >= 5:
 print('robot_cmd  --variable is  [{}]'.format(Varpam))
 
 # cmd    --variable  JoyrunEvn:Online   -d /var/lib/jenkins/Report/$1
-robot_cmd = 'pybot --include {}    -V   {}     {}'.format(
+robot_cmd = 'robot --include {}    -V   {}     {}'.format(
     Label, Vfile, Runpath)
 if reportpath != 0 and Varpam != 0:
-    robot_cmd = 'pybot --include {}  --variable  {}  -V  {}  -d  {}  {}'.format(
+    robot_cmd = 'robot --include {}  --variable  {}  -V  {}  -d  {}  {}'.format(
         Label, Varpam, Vfile, reportpath, Runpath)
 elif reportpath != 0 and Varpam == 0:
-    robot_cmd = 'pybot --include  {}  -V  {}  -d  {}  {}'.format(
+    robot_cmd = 'robot --include  {}  -V  {}  -d  {}  {}'.format(
         Label, Vfile, reportpath, Runpath)
 else:
     pass
