@@ -74,6 +74,8 @@ APPVERSION='100.4.1.0'
 
 #用于在robot/pybot命令##--variable  SRPam:values##传参 赋值为{'uri1':{'a1':1,'b1':'x1'}}; uri为path字符串中/替换成_
 ###--variable  SRPam:{'advert-list':{'a1':1,'b1':'x1'}} 
+##SRPam:{'po.aspx':{'lasttime':1549612235},'feed/feedListBasicBulk':{'fids':'277476285'},'userpass':'13829744541/67889911'}
+##userpass 此为key  用于修改登录用户名和密码  格式:用户名/用户密码  分隔符/
 SRPam=123456
 
 JoyrunEvn='Beta'

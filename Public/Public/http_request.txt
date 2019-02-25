@@ -65,6 +65,16 @@ joyrun_POST_heardsession
     ${timestamp}    GetServertime    ${login_URL}
     ${Url}=    set variable    ${login_URL}
     ${loginUri}=    set variable    /user/login/normal
+	##
+	${userp1}   Run Keyword IF   ${SRPam}==123456  Set Variable  ${0}   ELSE   Get Count   ${SRPam}   userpass
+	${UserP2}   Run Keyword IF   ${SRPam}==123456  Set Variable  ${0}   ELSE   Get Count   ${SRPam}   UserPass
+	&{SRPam1}   Run Keyword IF    ${userp1}!=0 or ${UserP2}!=0    Evaluate  ${SRPam}
+	${up}   Run Keyword IF  ${userp1}>0   Get From Dictionary   ${SRPam1}   userpass     
+	...	ELSE IF    ${UserP2}>0   Get From Dictionary   ${SRPam1}   UserPass
+	...	ELSE   Set Variable   ${username}/${pwd}
+	@{uplist}=    Split String    ${up}    /
+	${username}   Get From List    ${uplist}    0
+	${pwd}        Get From List    ${uplist}    1
     ${pwdmd5}=    encrypt    ${pwd}    md5    32
     ${keydic}    create dictionary    deviceToken=${deviceToken}
     set to dictionary    ${keydic}    username=${username}    
