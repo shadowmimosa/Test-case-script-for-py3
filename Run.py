@@ -57,15 +57,18 @@ Env = 'Beta'
 if cmdpamlen >= 2:
     Env = sys.argv[1]
 
-if Env in ['Test', 'test', '0', 0]:
+if Env in ['Test', 'test', '0', 0,'TEST','DEV','Dev']:
     Label = 'Test'
     Vfile = os.path.join(os.path.join(home, 'Public'), 'JoyrunTestEnv_var.py')
-elif Env in ['Beta', 'beta', 'BeataEnv', 'betaenv', '1', 1, None]:
+elif Env in ['Beta', 'beta', 'BeataEnv', 'betaenv', '1', 1, None,'']:
     Label = 'Test'
     Vfile = os.path.join(os.path.join(home, 'Public'), 'JoyrunBetaEnv_var.py')
-else:
+elif Env in ['Online', 'online', 'OnLine', 'ONLINE', '2', 2, 'ON','on']:
     Label = 'Online'
     Vfile = os.path.join(os.path.join(home, 'Public'), 'JoyrunOnline_var.py')
+else:
+    Label = 'All'
+    Vfile = os.path.join(os.path.join(home, 'Public'), 'JoyrunBetaEnv_var.py')
 print('Run Env is [{}]'.format(Env))
 print('Run Label is [{}]'.format(Label))
 print('Run Vfile is [{}]'.format(Vfile))
@@ -74,7 +77,7 @@ print('Run Vfile is [{}]'.format(Vfile))
 Runpath = home
 if cmdpamlen >= 3:
     rpath = sys.argv[2]
-    if rpath not in ['Home', 'home', 'All', 'all']:
+    if rpath not in ['Home', 'home', 'All', 'all','ALL','HOME',0,'0']:
         if ',' not in rpath:
             Runpath = os.path.join(home, rpath)
         else:
@@ -90,6 +93,10 @@ print('Run Script Path is {}'.format(Runpath))
 reportpath = 0
 if cmdpamlen >= 4:
     reportpath = sys.argv[3]
+    if not os.path.exists(reportpath):
+        reportpath=home
+    else:
+        pass
 print('Report Path {}'.format(reportpath))
 
 Varpam = 0
@@ -101,17 +108,23 @@ if cmdpamlen >= 5:
 print('robot_cmd  --variable is  [{}]'.format(Varpam))
 
 # cmd    --variable  JoyrunEvn:Online   -d /var/lib/jenkins/Report/$1
-robot_cmd = 'robot --include {}    -V   {}     {}'.format(
-    Label, Vfile, Runpath)
-if reportpath != 0 and Varpam != 0:
-    robot_cmd = 'robot --include {}  --variable  {}  -V  {}  -d  {}  {}'.format(
-        Label, Varpam, Vfile, reportpath, Runpath)
+
+if Label == 'All':
+    robot_cmd1 = 'robot  -V  {}  '.format(Vfile)
+else:
+    robot_cmd1 = 'robot --include {}  -V  {}  '.format(Label, Vfile )
+
+
+if  reportpath == 0 and Varpam == 0:
+    robot_cmd = '{}  {}'.format(robot_cmd1, Runpath)
+elif reportpath != 0 and Varpam != 0:
+    robot_cmd = '{}  --variable  {}  -d  {}  {}'.format(robot_cmd1, Varpam, reportpath, Runpath)
 elif reportpath != 0 and Varpam == 0:
-    robot_cmd = 'robot --include  {}  -V  {}  -d  {}  {}'.format(
-        Label, Vfile, reportpath, Runpath)
+    robot_cmd = '{}  -d  {}  {}'.format(robot_cmd1, reportpath, Runpath)
 else:
     pass
 print(robot_cmd)
+
 print(
     '*********************      Script  Run   start ...      *********************'
 )
