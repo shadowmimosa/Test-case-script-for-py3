@@ -1,13 +1,8 @@
 *** Settings ***
 Documentation     user/upLike 点赞
-#Library    Collections
-#Library    RequestsLibrary
-#Library    pymysql
-#Library    DatabaseLibrary
-#Library    String
-#Library     HttpLibrary.HTTP
-#Library     ../Public/Lib/tools_library.py
-Resource          ../Public/public_lib.txt
+Resource          ../Public/public_lib.txt    #Library    Collections    #Library    RequestsLibrary    #Library    pymysql
+...               #Library    DatabaseLibrary    #Library    String    #Library    HttpLibrary.HTTP    #Library
+...               # ../Public/Lib/tools_library.py
 
 *** Variable ***
 ${pwd}            67889911    # 密码
@@ -24,16 +19,19 @@ Class_01              [Documentation]    user/upLike TestCase测试用例
 user_upLike_Post_Keywords
     [Arguments]    ${commentId}    ${raceId}    ${ret}    ${msg}
     [Documentation]    user/upLike 接口用例的Keywords关健字
-    ######Evaluate       reload(sys)    sys
-    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
+    ######Evaluate    reload(sys)    sys
+    ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
     #${userName}    Env_username
     ${Year}    ${Month}    Get Time    year,month
     ${run}    thejoyrun_Keywords    ${trip_URL}    /race/listRaceHome    ${userName}    ${pwd}    Post
     ...    year,month,limit,page    ${Year},${Month},1000,1
     ${resultlist}    get json value    ${run}    /data
-    ${eventId}    FindAndValue    ${run}    eventId    ,    1    int
     ${raceId}    FindAndValue    ${run}    raceId    ,    1    int
+    ${runs}    thejoyrun_Keywords    ${trip_URL}    /race/getNewComment    ${userName}    ${pwd}    Post
+    ...    limit,page,raceId    10,1,${raceId}
+    ${commentId}    FindAndValue    ${runs}    id    ,    1    int
+    Run Keyword IF    ${commentId} is None    Return From Keyword    skip
     ${path}=    set variable    /user/upLike
     ${maps}=    create dictionary
     set to dictionary    ${maps}    commentId=${commentId}
