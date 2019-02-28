@@ -25,13 +25,11 @@ autotestcase_V1
     [Documentation]    调用此方法自动生成常规测试用例，method公共关健字的首字母要大写；
     ...    Interfacefields为POST请求类的非公共参数，
     ...    Get、Getns、Getnl如url中有带参数Interfacefields为空${EMPTY}
-    ######Evaluate    reload(sys)    sys
-    ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     log    =====home目录:${home}
-    ${demopath}    set variable    ${home}\\Demo\\Demo.txt
+    ${demopath}    Evaluate    os.path.join(os.path.join(\'${home}\', 'Demo'),'Demo.txt')    os
     ##以下是处理通过外部传参替换原本的URL、method Interfacdfields的情况
     ${maps}    create dictionary    a=1
-    ${maps}    Map_merge    autotestcase    ${maps}
+    ${maps}    Map_merge    /autotestcase    ${maps}
     ${maplen}    BuiltIn.Get Length    ${maps}
     ${url}    Run Keyword IF    ${maplen}>1    Get From Dictionary    ${maps}    url
     ...    ELSE    Set Variable    ${url}

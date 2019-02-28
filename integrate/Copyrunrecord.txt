@@ -1,0 +1,169 @@
+*** Settings ***
+Documentation     /po.aspx复制跑步记录
+Resource          ../Public/public_lib.txt    
+
+*** Variable ***
+${pwd}            67889911    # 密码
+${userName}       13829744541    # 用户名
+${ContentType}    application/x-www-form-urlencoded    # POST数据格式
+
+*** Test Cases ***    courseid           nomoment             private    wgs
+Class_01              [Documentation]    上传跑步记录
+                      [Tags]             Online               Test
+                      [Template]         SelectReCord
+                      0                  1                    1          1
+
+*** Keywords ***
+SelectReCord
+    [Arguments]    ${courseid}    ${nomoment}    ${private}    ${wgs}
+    [Documentation]    选择某条跑步记录并验证此记录可否访问；
+    #环境判定随机选择用户和密码
+    @{usrpwdenv}    usr_pass_env    0
+    ${userName}    Get From List    ${usrpwdenv}    0
+    ${pwd}    Get From List    ${usrpwdenv}    1
+    ${env}    Get From List    ${usrpwdenv}    2
+	##多次运行取不同的时间参数
+	${times}   Run Keyword IF  ${times}<=100   Evaluate  int(${times}+1)  ELSE  Set Variable  ${0}
+    Set global variable    ${times}    ${times}	
+    ##自定义用户和密码
+    #${userName}    set variable    13829744541
+    #${pwd}    set variable    67889911
+	${fid}     Run Keyword If   '${env}'=='Test'   Set Variable   99111331
+	...  ELSE IF  '${env}'=='Beta'   Set Variable   99116841    ELSE  Set Variable   0
+    ${src}=    Getrunrecodeinfo    ${fid}    ${wgs}    ${userName}
+    ${ret}=    get json value    ${src}    /ret
+    Run Keyword If    ${ret}=="0" and ${times}>0     RunRecord_Run    ${src}    ${courseid}    ${nomoment}    ${private}
+    ...    ${wgs}    ${userName}        ${env}   
+    ...    ELSE    log    =====环境：${env};用户：${userName} ===fid:${fid}访问失败,请检查此记录是否在话题中======
+
+RunRecord_Run
+    [Arguments]    ${src}    ${courseid}    ${nomoment}    ${private}    ${wgs}    ${userName}
+    ...       ${env}=None   
+    [Documentation]    /po.aspx type=1或7，为上传跑步记录
+    ##多次运行取不同的时间参数
+	${timestamp}   Evaluate   long(str(time.time())[0:10])  time,string
+	${timestep}    Evaluate    7*24*3600-300
+	${timesteps}   Evaluate    (${times}-1)*${timestep}
+	${timestamp}   Evaluate    ${timestamp}-${timesteps} 
+    ${isaltitude}    Get Count    ${src}    "altitude":
+    ${altitude}    Run Keyword If    ${isaltitude}>0    get json value    ${src}    /runrecord/altitude
+    ...    ELSE    set variable    0
+    ${content}=    get json value    ${src}    /runrecord/content
+    ${daka}=    get json value    ${src}    /runrecord/daka
+    ${heartrate}=    get json value    ${src}    /runrecord/heartrate
+    ${meter}=    get json value    ${src}    /runrecord/meter
+    ${node}=    get json value    ${src}    /runrecord/node
+    ${nodeattach}=    get json value    ${src}    /runrecord/nodeattach
+    ${sampleinterval}=    get json value    ${src}    /runrecord/sampleinterval
+    ${second}=    get json value    ${src}    /runrecord/second
+    ${stepcontent}=    get json value    ${src}    /runrecord/stepcontent
+    ${stepremark}=    get json value    ${src}    /runrecord/stepremark
+    ${totalsteps}=    get json value    ${src}    /runrecord/totalsteps
+    ${pausetime}=    get json value    ${src}    /runrecord/pause
+    ${province1}=    get json value    ${src}    /runrecord/province
+    ${fid}=    get json value    ${src}    /runrecord/fid
+    ${type}=    get json value    ${src}    /runrecord/type
+    ${srcuid}=    get json value    ${src}    /runrecord/uid
+    ${city1}=    get json value    ${src}    /runrecord/city
+    ${province}    Run Keyword If    ${province1}>''    set variable    ${province1}
+    ...    ELSE    set variable    香港
+    ${city}    Run Keyword If    ${city1}>''    set variable    ${city1}
+    ...    ELSE    set variable    香港
+    ${dateline}=    get json value    ${src}    /lasttime
+    #自定义设置跑步时间和上传时间${timestamp}为当前时间
+    ${dateline}=    set variable    ${timestamp}
+    ${lasttime}=    Evaluate    ${dateline}-120
+    ${starttime}=    Evaluate    ${dateline}-${second}-120
+    ${runid}    Evaluate    uuid.uuid1()    uuid
+    ${runid}=    convert to string    ${runid}
+    ${runid}=    Replace String    ${runid}    -    ${EMPTY}
+    ${time1}=    Get Time    epoch
+    #${memo}=    set variable    ${memo}${time1}
+    ${signstring}=    set variable    raowenyuanpojoy${dateline}the${lasttime}${second}${meter}run
+    #将去掉字符串中的"
+    ${ismatchcompleted}    set variable    0
+    ${matchid}    set variable    0
+    ${ismatchcompleted}    set variable    0
+    ${province}    Replace String    ${province}    \\    ${EMPTY}
+    ${province}    Replace String    ${province}    "    ${EMPTY}
+    ${city}    Replace String    ${city}    \\    ${EMPTY}
+    ${city}    Replace String    ${city}    "    ${EMPTY}
+    #对int类型参数处理
+    ${dateline}=    convert to string    ${dateline}
+    ${lasttime}=    convert to string    ${lasttime}
+    ${starttime}=    convert to string    ${starttime}
+    #对数组类型处理
+    ${altitude}=    Run Keyword If    ${altitude}!=0    arraytostring    ${altitude}
+    ${heartrate}=    arraytostring    ${heartrate}
+    ${content}=    arraytostring    ${content}
+    ${stepcontent}=    arraytostring    ${stepcontent}
+    ${stepremark}=    arraytostring    ${stepremark}
+    #对数组类型中包括了""处理
+    ${node}    replace string    ${node}    "    ${EMPTY}
+    ${nodeattach}    replace string    ${nodeattach}    "    ${EMPTY}
+    ${node}    replace string    ${node}    ${SPACE}    ${EMPTY}
+    ${nodeattach}    replace string    ${nodeattach}    ${SPACE}    ${EMPTY}
+    ${nodetime}    arraystoarray    ${node}    ${nodeattach}
+    #加密
+    ${sign}=    encrypt    ${signstring}    md5    32
+    ${path}=    set variable    /po.aspx
+    ${maps}=    create dictionary
+    set to dictionary    ${maps}    altitude=${altitude}
+    set to dictionary    ${maps}    content=${content}
+    set to dictionary    ${maps}    courseid=${courseid}
+    set to dictionary    ${maps}    heartrate=${heartrate}
+    set to dictionary    ${maps}    dateline=${dateline}
+    set to dictionary    ${maps}    ismatchcompleted=${ismatchcompleted}
+    set to dictionary    ${maps}    lasttime=${lasttime}
+    set to dictionary    ${maps}    matchid=${matchid}
+    set to dictionary    ${maps}    meter=${meter}
+    set to dictionary    ${maps}    nodetime=${nodetime}
+    set to dictionary    ${maps}    nomoment=${nomoment}
+    set to dictionary    ${maps}    pausetime=${pausetime}
+    set to dictionary    ${maps}    private=${private}
+    set to dictionary    ${maps}    runid=${runid}
+    set to dictionary    ${maps}    sampleinterval=${sampleinterval}
+    set to dictionary    ${maps}    second=${second}
+    set to dictionary    ${maps}    sign=${sign}
+    set to dictionary    ${maps}    starttime=${starttime}
+    set to dictionary    ${maps}    stepcontent=${stepcontent}
+    set to dictionary    ${maps}    stepremark=${stepremark}
+    set to dictionary    ${maps}    totalsteps=${totalsteps}
+    set to dictionary    ${maps}    wgs=${wgs}
+    set to dictionary    ${maps}    type=${type}
+    set to dictionary    ${maps}    city=${city}
+    set to dictionary    ${maps}    province=${province}
+    set to dictionary    ${maps}    daka=${daka}
+    log    先查看增加跑步记录前的用户数据
+    ${userinfo}    thejoyrun_Keywords    ${api_URL}    /user.aspx    ${userName}    ${pwd}    Get
+    ...    option,touid    info,${EMPTY}
+    ${allmeter}    Get Json Value    ${userinfo}    /user/allmeter
+    ${allmeter}    Evaluate    int(${allmeter})
+    log    ${api_URL}${path}${maps}
+    ${resp}=    thejoyrun_postd    ${path}    ${maps}    ${userName}    ${api_URL}
+    ${content}=    charconver    ${resp.content}
+    log json    ${content}
+    log    验证ret是否符合预期
+    should contain    ${content}    "ret":"0"
+    log    ret 符合预期为"0"
+    ${ret}    get json value    ${content}    /ret
+    ${fraud}=    Run Keyword If    ${ret}=="0"    get json value    ${content}    /fraud
+    ...    ELSE    set variable    error:${ret}
+    ${postRunId}=    Run Keyword If    ${ret}=="0"    get json value    ${content}    /postRunId
+    ...    ELSE    set variable    error:${ret}
+    ${newfid}=    Run Keyword If    ${ret}=="0"    get json value    ${content}    /fid
+    ...    ELSE    set variable    error:${ret}
+    ${Metertotal}    Run Keyword If    ${fraud}=="1"    Set Variable    ${allmeter}
+    ...    ELSE    Evaluate    int(${allmeter})+int(${meter})
+    BuiltIn.Sleep    3s
+    ${userinfonew}    thejoyrun_Keywords    ${api_URL}    /user.aspx    ${userName}    ${pwd}    Get
+    ...    option,touid    info,${EMPTY}
+    ${Metertotal_New}    Get Json Value    ${userinfonew}    /user/allmeter
+    ${Metertotal_New}    Evaluate    int(${Metertotal_New})
+    should be equal    ${Metertotal}    ${Metertotal_New}
+    log    用户名==${userName}，是否被判作弊=${fraud}，是否室外：${type};跑步地区=${province}
+    log    跑步记录的距离==${meter},用户之前的跑步总距离为${allmeter},最新的总距离为${Metertotal_New};
+    log    跑步记录postRunId为===${postRunId},新的FID为${newfid},原fid ID== ${fid}，原uid ===${srcuid}
+    log    用户名==${userName}，是否被判作弊=${fraud}，是否室外：${type};跑步地区=${province}
+    log    跑步记录的距离==${meter},用户之前的跑步总距离为${allmeter},最新的总距离为${Metertotal_New};
+    log    ------------------------ It is OK!!!!-------------------------------------

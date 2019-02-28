@@ -20,6 +20,7 @@ pyvs=sys.version_info.major
 
 print("Os type is %s" %ostype)
 print("Python version is %s" %pyvs)
+home=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 	
 ##==================================开发测试生产环境通用参数=======================
 #请求头参数-前端系统版本号
@@ -76,7 +77,11 @@ APPVERSION='100.4.1.0'
 ###--variable  SRPam:{'advert-list':{'a1':1,'b1':'x1'}} 
 ##SRPam:{'po.aspx':{'lasttime':1549612235},'feed/feedListBasicBulk':{'fids':'277476285'},'userpass':'13829744541/67889911'}
 ##userpass 此为key  用于修改登录用户名和密码  格式:用户名/用户密码  分隔符/
+##SRPam:{'autotestcase':{'url':'http://crew.api.thejoyrun.com/crew-config-autopass-update','method':'Post','Interfacefields':'autopass_psw'}}
 SRPam=123456
+
+##运行次数,用于运行个别用例多次运行；
+times=0
 
 JoyrunEvn='Beta'
 
