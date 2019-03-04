@@ -21,6 +21,8 @@ pyvs=sys.version_info.major
 print("Os type is %s" %ostype)
 print("Python version is %s" %pyvs)
 home=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+##用于存储存用户相关的信息 uid,sid,crewid,
+usersinfo_dict={}
 	
 ##==================================开发测试生产环境通用参数=======================
 #请求头参数-前端系统版本号

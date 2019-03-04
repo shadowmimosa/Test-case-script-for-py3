@@ -13,7 +13,7 @@ ${mapp_sginTest}    MAPP-MASTER-SECRET-TEST
 ${mapp_sginBeta}    MAPP-MASTER-SECRET-TEST
 ${mapp_sginOnline}   27509554-6861-4394-9B84-9D5698A4DD1A
 ${pwd}            67889911    #可以放置一些公共参数；
-${usersinfo_dict}    &{EMPTY}
+#${usersinfo_dict}    &{EMPTY}
 ${RetryInti}      ${3}    #设置重试次数
 
 *** Keywords ***
@@ -34,6 +34,25 @@ Map_merge
 	Set To Dictionary   ${maps}   &{tcdict} 
 	log   Map_merge End ....
 	[Return]   ${maps}
+	
+Guserinfo   
+	[Arguments]    ${Base_URL}   ${userName}    ${getfield}=None
+    [Documentation]	
+	${getfield1}  Set Variable  /${getfield}
+	${field1}   Evaluate   str('${getfield1}').split('/')[1]   
+	${field2}   replace string    ${getfield1}   /${field1}    ${EMPTY}
+	${env}    Env_URL    ${Base_URL}
+    ${userslist}    Get Dictionary Keys    ${usersinfo_dict}
+    ${user_is}    Get Count    ${userslist}    ${env}${userName}
+	${results}    Run Keyword IF  ${user_is}>0   Get From Dictionary    ${usersinfo_dict}    ${env}${userName}
+	${fieldlist}  Run Keyword IF  ${user_is}>0   Get Dictionary Keys    ${results}
+	${fieldis}    Run Keyword IF  ${user_is}>0    Get Count    ${fieldlist}    ${getfield}   ELSE  Set Variable  ${0}
+	${userinfostr}    Run Keyword IF  ${user_is}>0    Get From Dictionary    ${results}    ${field1}
+	Run Keyword IF   '${getfield}'=='None'   Return From Keyword   ${results}
+	...	ELSE IF  ${fieldis}>0   Run Keyword And Return    Get From Dictionary    ${results}   ${getfield}
+	...	ELSE   Run Keyword And Return   Get Json Value   ${userinfostr}  ${field2}
+
+	
 	
 	
 
