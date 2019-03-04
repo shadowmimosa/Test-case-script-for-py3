@@ -11,7 +11,7 @@ ${ContentType}    application/x-www-form-urlencoded;charset=UTF-8    # POST数�
 
 *** Test Cases ***    clubid             ret                                       msg
 Class_01              [Documentation]    crew-club-rank-last-week TestCase测试用例
-                      [Tags]             Test                                      auto_v1
+                      [Tags]             Test                                      Online    auto_v1
                       [Template]         crew-club-rank-last-week_Post_Keywords
                       A1391              0                                         成功
 

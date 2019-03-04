@@ -11,7 +11,7 @@ ${ContentType}    application/x-www-form-urlencoded;charset=UTF-8    # POST数�
 
 *** Test Cases ***    crewid             ret                        msg
 Class_01              [Documentation]    crew-info TestCase测试用例
-                      [Tags]             Test                       auto_v1
+                      [Tags]             Test                       Online    auto_v1
                       [Template]         crew-info_Post_Keywords
                       30269              0                          成功
 
@@ -35,8 +35,8 @@ crew-info_Post_Keywords
     log    验证ret是否符合预期
     should contain    ${content}    "ret":"${ret}"
     log    ret 符合预期为:${ret}
-    log    验证msg是否符合预期:${msg}
-    should contain    ${content}    "msg":"${msg}"
+    log    验证crewid是否符合预期:${crewid}
+    should contain    ${content}    "crewid":"${crewid}"
     #当需要添加对data的内容进行单独验证时，可以以下方式
     #${data}    get json value    ${content}    /data
     log    验证OK！！用户${userName}；URL：${crew_URL}${path}；传参：${maps}！！

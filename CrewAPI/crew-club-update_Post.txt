@@ -11,7 +11,7 @@ ${ContentType}    application/x-www-form-urlencoded;charset=UTF-8    # POST数�
 
 *** Test Cases ***    remark             ret                               msg
 Class_01              [Documentation]    crew-club-update TestCase测试用例
-                      [Tags]             Test                              auto_v1
+                      [Tags]             Test                              Online    auto_v1
                       [Template]         crew-club-update_Post_Keywords
                       测试跑团集合-t           0                                 成功
 
@@ -22,8 +22,11 @@ crew-club-update_Post_Keywords
     ######Evaluate    reload(sys)    sys
     ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
-    #${userName}    Env_username
+    ${time}    Gettimel
+    ${remark}    Set Variable    ${remark}_${time}
     ${path}=    set variable    /crew-club-update
+    ${upelist}    usr_pass_env
+    ${env}    Get From List    ${upelist}    2
     ${maps}=    create dictionary
     set to dictionary    ${maps}    remark=${remark}
     log    ========输出接口URL：${crew_URL}${path}
@@ -33,10 +36,10 @@ crew-club-update_Post_Keywords
     log json    ${content}
     log    ======开始断言验证=====
     log    验证ret是否符合预期
-    should contain    ${content}    "ret":"${ret}"
+    Run Keyword IF    '${env}'=='Online'    should contain    ${content}    "ret":"1"
+    ...    ELSE    should contain    ${content}    "ret":"${ret}"
     log    ret 符合预期为:${ret}
     log    验证msg是否符合预期:${msg}
-    should contain    ${content}    "msg":"${msg}"
-    #当需要添加对data的内容进行单独验证时，可以以下方式
-    #${data}    get json value    ${content}    /data
+    Run Keyword IF    '${env}'=='Online'    should contain    ${content}    "msg":"未加入任何联盟"
+    ...    ELSE    should contain    ${content}    "msg":"${msg}"
     log    验证OK！！用户${userName}；URL：${crew_URL}${path}；传参：${maps}！！

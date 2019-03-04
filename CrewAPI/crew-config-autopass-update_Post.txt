@@ -12,7 +12,7 @@ ${ContentType}    application/x-www-form-urlencoded;charset=UTF-8    # POST数�
 
 *** Test Cases ***    autopass_status    ret                                                       msg
 Class_01              [Documentation]    跑团管理设置是否允许自动入团crew-config-autopass-update TestCase测试用例
-                      [Tags]             Test                                                      auto_v1
+                      [Tags]             Test                                                      Online    auto_v1
                       [Template]         crew-config-autopass-update_Post_Keywords
                       1                  0                                                         成功
 
@@ -23,7 +23,8 @@ crew-config-autopass-update_Post_Keywords
     ######Evaluate    reload(sys)    sys
     ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
-    #${userName}    Env_username
+    ${upelist}    usr_pass_env
+    ${env}    Get From List    ${upelist}    2
     ${path}=    set variable    /crew-config-autopass-update
     ${maps}=    create dictionary
     set to dictionary    ${maps}    autopass_status=${autopass_status}
@@ -34,10 +35,12 @@ crew-config-autopass-update_Post_Keywords
     log json    ${content}
     log    ======开始断言验证=====
     log    验证ret是否符合预期
-    should contain    ${content}    "ret":"${ret}"
+    Run Keyword IF    '${env}'=='Online'    should contain    ${content}    "ret":"100"
+    ...    ELSE    should contain    ${content}    "ret":"${ret}"
     log    ret 符合预期为:${ret}
     log    验证msg是否符合预期:${msg}
-    should contain    ${content}    "msg":"${msg}"
+    Run Keyword IF    '${env}'=='Online'    should contain    ${content}    "msg":"您没有该权限！"
+    ...    ELSE    should contain    ${content}    "msg":"${msg}"
     #当需要添加对data的内容进行单独验证时，可以以下方式
     #${data}    get json value    ${content}    /data
     log    验证OK！！用户${userName}；URL：${crew_URL}${path}；传参：${maps}！！
