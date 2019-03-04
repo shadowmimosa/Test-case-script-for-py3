@@ -123,9 +123,9 @@ joyrun_POST_heardsession
     ${login_ret}     Replace String    ${login_ret}    "    ${EMPTY}
     ${login_error}   Run Keyword If   ${login_ret}!=0   Get Json Value   ${login_content}   /msg
     ${heards_dict}  Run Keyword If   ${login_ret}==0   Joyrun_LoginResult	 ${advert_URL}  ${username}  ${pwd}  ${header}  ${login_content}    ${timestamp}
-	Run Keyword If   ${login_ret}==0   log  ${heards_dict}
-	...	   ELSE IF   ${login_ret}==41998   log  新设备需要用手机验证码登录 
-    ...    ELSE   log    哈哈，在登录就出错了！！！！！失败原因:${login_error}
+	Run Keyword If   ${login_ret}==0   Return From Keyword  ${heards_dict}
+	...	   ELSE IF   ${login_ret}==41998   Fail  新设备需要用手机验证码登录 
+    ...    ELSE   Fail    您在登录出错了！失败code:${login_ret}错误信息:${login_error}     
 	log    -------------------------------heards_dict mothod is log End1 ---------
     log    -------------------------------heards_dict mothod is log End2 ---------
 	[Return]    ${heards_dict}
@@ -147,12 +147,14 @@ Joyrun_LoginResult
     log    登录后的ypcookie==${ypcookie}
     log    登录后用户userinfo信息为：
     log json   ${userdata}
+	#${mywallet}    Getmywallet	 ${userName}   ${pwd}   All   All   
     ${heardic}=    create dictionary
     set to dictionary    ${heardic}    uid=${uid}
     set to dictionary    ${heardic}    sid=${sid}
     set to dictionary    ${heardic}    ypcookie=${ypcookie}
     set to dictionary    ${heardic}    timestamp=${timestamp}
     set to dictionary    ${heardic}    userinfo=${userdata}   
+	#set to dictionary    ${heardic}    mywallet=${mywallet} 
     Log Dictionary       ${heardic}
     log  将登录成功的用户信息设置为全局变量
     ${env4}    Env_URL   ${advert_URL}
