@@ -77,6 +77,8 @@ folder=folder.replace('http://','')
 folder=folder.replace('https://','')
 folder=folder.replace('-test','')
 folder=folder.replace('.test','')
+folder=folder.replace('-betaenv','')
+folder=folder.replace('.betaenv','')
 folder=folder.replace('.','')
 baseurllen= len(folder)
 if 'api' in folder and baseurllen>3:

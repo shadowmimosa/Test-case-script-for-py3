@@ -54,6 +54,8 @@ def autotestcase(home,url,method,Interfacefields,demopath):
 	folder=hosta.group().replace('thejoyrun.com/','')
 	folder=folder.replace('http://','')
 	folder=folder.replace('https://','')
+	folder=folder.replace('-betaenv','')
+	folder=folder.replace('.betaenv','')	
 	folder=folder.replace('-test','')
 	folder=folder.replace('.test','')	
 	folder=folder.replace('.','')
