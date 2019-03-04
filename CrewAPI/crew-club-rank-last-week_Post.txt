@@ -1,32 +1,31 @@
 *** Settings ***
-Documentation     跑团管理设置是否允许自动入团crew-config-autopass-update 接口脚本
+Documentation     crew-club-rank-last-week 接口脚本
 Resource          ../Public/public_lib.txt    #Library    Collections    #Library    RequestsLibrary    #Library    pymysql
 ...               #Library    DatabaseLibrary    #Library    String    #Library    HttpLibrary.HTTP    #Library
 ...               # ../Public/Lib/tools_library.py
 
 *** Variable ***
 ${pwd}            67889911    # 密码
-#${userName}      32518379/63ee9419b14917ee303947321099424b    # 默认的用户名
-${userName}       13829744542
+${userName}       13829744542    # 默认的用户名
 ${ContentType}    application/x-www-form-urlencoded;charset=UTF-8    # POST数据格式
 
-*** Test Cases ***    autopass_status    ret                                                       msg
-Class_01              [Documentation]    跑团管理设置是否允许自动入团crew-config-autopass-update TestCase测试用例
-                      [Tags]             Test                                                      auto_v1
-                      [Template]         crew-config-autopass-update_Post_Keywords
-                      1                  0                                                         成功
+*** Test Cases ***    clubid             ret                                       msg
+Class_01              [Documentation]    crew-club-rank-last-week TestCase测试用例
+                      [Tags]             Test                                      auto_v1
+                      [Template]         crew-club-rank-last-week_Post_Keywords
+                      A1391              0                                         成功
 
 *** Keywords ***
-crew-config-autopass-update_Post_Keywords
-    [Arguments]    ${autopass_status}    ${ret}    ${msg}
-    [Documentation]    跑团管理设置是否允许自动入团crew-config-autopass-update 接口用例的Keywords关健字
+crew-club-rank-last-week_Post_Keywords
+    [Arguments]    ${clubid}    ${ret}    ${msg}
+    [Documentation]    crew-club-rank-last-week 接口用例的Keywords关健字
     ######Evaluate    reload(sys)    sys
     ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
     #${userName}    Env_username
-    ${path}=    set variable    /crew-config-autopass-update
+    ${path}=    set variable    /crew-club-rank-last-week
     ${maps}=    create dictionary
-    set to dictionary    ${maps}    autopass_status=${autopass_status}
+    set to dictionary    ${maps}    clubid=${clubid}
     log    ========输出接口URL：${crew_URL}${path}
     log    ========接口的入参为：${userName}:${maps}==========
     ${resp}=    thejoyrun_postd    ${path}    ${maps}    ${userName}    ${crew_URL}
