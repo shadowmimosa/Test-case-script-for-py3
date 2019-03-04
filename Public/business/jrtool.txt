@@ -42,6 +42,11 @@ Gettimes
     log    本地时间：${localctime}===${localtimes}，处理后的时间：${ctime}=====${times}
     log    Gettimes End ......
     [Return]    ${retime}
+	
+Gettimel	
+    [Arguments]    ${fields}=None
+	${timel}    Evaluate      long(str(time.time())[0:10])    time,string
+	[Return]    ${timel}
 
 Removesting
     [Arguments]    ${srcstring}    ${movestr}    ${spitsting}
