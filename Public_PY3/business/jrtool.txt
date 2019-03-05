@@ -43,6 +43,12 @@ Gettimes
     log    Gettimes End ......
     [Return]    ${retime}
 
+Gettimel	
+    [Arguments]    ${fields}=None
+	${timel}    Evaluate      long(str(time.time())[0:10])    time,string
+	[Return]    ${timel}
+	
+	
 Removesting
     [Arguments]    ${srcstring}    ${movestr}    ${spitsting}
     [Documentation]    从源字符串中删除某些字符串，如：123,abc,1234,444,eee 中删除abc,eee 两个字符串的分割符需要一致，${srcstring} 源字符串，${movestr}为需要删除的字符串， ${spitsting} 为两个字符串的分割符；

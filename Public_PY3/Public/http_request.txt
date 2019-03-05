@@ -116,8 +116,8 @@ joyrun_POST_heardsession
     ${heards_dict}  Run Keyword If   ${login_ret}==0   Joyrun_LoginResult	 ${advert_URL}  ${username}  ${pwd}  ${header}  ${login_content}    ${timestamp}
     Run Keyword If   ${login_ret}==0   log  ${heards_dict}
     Run Keyword If   ${login_ret}==0   log      ${login_content}       
-    ...	   ELSE IF   ${login_ret}==41998   log  新设备需要用手机验证码登录 
-    ...    ELSE   log    哈哈，在登录就出错了！！！！！失败原因:${login_error}
+    ...	   ELSE IF   ${login_ret}==41998   Fail  新设备需要用手机验证码登录 
+    ...    ELSE   Fail    您在登录出错了！失败code:${login_ret}错误信息:${login_error}
     log    -------------------------------heards_dict mothod is log End1 ---------
     log    -------------------------------heards_dict mothod is log End2 ---------
 	[Return]    ${heards_dict}
