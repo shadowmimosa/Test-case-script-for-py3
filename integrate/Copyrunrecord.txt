@@ -1,17 +1,17 @@
 *** Settings ***
 Documentation     /po.aspx复制跑步记录
-Resource          ../Public/public_lib.txt    
+Resource          ../Public/public_lib.txt
 
 *** Variable ***
 ${pwd}            67889911    # 密码
 ${userName}       13829744541    # 用户名
 ${ContentType}    application/x-www-form-urlencoded    # POST数据格式
 
-*** Test Cases ***    courseid           nomoment             private    wgs
+*** Test Cases ***    courseid           nomoment        private    wgs
 Class_01              [Documentation]    上传跑步记录
-                      [Tags]             Online               Test
+                      [Tags]             Online          Test
                       [Template]         SelectReCord
-                      0                  1                    1          1
+                      0                  1               1          1
 
 *** Keywords ***
 SelectReCord
@@ -22,29 +22,31 @@ SelectReCord
     ${userName}    Get From List    ${usrpwdenv}    0
     ${pwd}    Get From List    ${usrpwdenv}    1
     ${env}    Get From List    ${usrpwdenv}    2
-	##多次运行取不同的时间参数
-	${times}   Run Keyword IF  ${times}<=100   Evaluate  int(${times}+1)  ELSE  Set Variable  ${0}
-    Set global variable    ${times}    ${times}	
+    ##多次运行取不同的时间参数
+    ${times}    Run Keyword IF    ${times}<=100    Evaluate    int(${times}+1)
+    ...    ELSE    Set Variable    ${0}
+    Set global variable    ${times}    ${times}
     ##自定义用户和密码
     #${userName}    set variable    13829744541
     #${pwd}    set variable    67889911
-	${fid}     Run Keyword If   '${env}'=='Test'   Set Variable   99111331
-	...  ELSE IF  '${env}'=='Beta'   Set Variable   99116841    ELSE  Set Variable   0
+    ${fid}    Run Keyword If    '${env}'=='Test'    Set Variable    99111331
+    ...    ELSE IF    '${env}'=='Beta'    Set Variable    99116841
+    ...    ELSE    Set Variable    0
     ${src}=    Getrunrecodeinfo    ${fid}    ${wgs}    ${userName}
     ${ret}=    get json value    ${src}    /ret
-    Run Keyword If    ${ret}=="0" and ${times}>0     RunRecord_Run    ${src}    ${courseid}    ${nomoment}    ${private}
-    ...    ${wgs}    ${userName}        ${env}   
+    Run Keyword If    ${ret}=="0" and ${times}>0    RunRecord_Run    ${src}    ${courseid}    ${nomoment}    ${private}
+    ...    ${wgs}    ${userName}    ${env}
     ...    ELSE    log    =====环境：${env};用户：${userName} ===fid:${fid}访问失败,请检查此记录是否在话题中======
 
 RunRecord_Run
     [Arguments]    ${src}    ${courseid}    ${nomoment}    ${private}    ${wgs}    ${userName}
-    ...       ${env}=None   
+    ...    ${env}=None
     [Documentation]    /po.aspx type=1或7，为上传跑步记录
     ##多次运行取不同的时间参数
-	${timestamp}   Evaluate   long(str(time.time())[0:10])  time,string
-	${timestep}    Evaluate    7*24*3600-300
-	${timesteps}   Evaluate    (${times}-1)*${timestep}
-	${timestamp}   Evaluate    ${timestamp}-${timesteps} 
+    ${timestamp}    Gettimel
+    ${timestep}    Evaluate    7*24*3600-300
+    ${timesteps}    Evaluate    (${times}-1)*${timestep}
+    ${timestamp}    Evaluate    ${timestamp}-${timesteps}
     ${isaltitude}    Get Count    ${src}    "altitude":
     ${altitude}    Run Keyword If    ${isaltitude}>0    get json value    ${src}    /runrecord/altitude
     ...    ELSE    set variable    0

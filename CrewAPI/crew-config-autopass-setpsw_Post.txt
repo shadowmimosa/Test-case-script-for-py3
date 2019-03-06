@@ -32,10 +32,8 @@ crew-config-autopass-setpsw_Post_Keywords
     log json    ${content}
     log    ======开始断言验证=====
     log    验证ret是否符合预期
-    Run Keyword IF    '${env}'=='Online'    should contain    ${content}    "ret":"100"
-    ...    ELSE    should contain    ${content}    "ret":"${ret}"
+    should contain    ${content}    "ret":"${ret}"
     log    ret 符合预期为:${ret}
     log    验证msg是否符合预期:${msg}
-    Run Keyword IF    '${env}'=='Online'    should contain    ${content}    "msg":"您没有该权限！"
-    ...    ELSE    should contain    ${content}    "msg":"${msg}"
+    should contain    ${content}    "msg":"${msg}"
     log    验证OK！！用户${userName}；URL：${crew_URL}${path}；传参：${maps}！！

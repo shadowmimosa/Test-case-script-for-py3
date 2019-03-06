@@ -45,7 +45,7 @@ Gettimes
 
 Gettimel	
     [Arguments]    ${fields}=None
-	${timel}    Evaluate      long(str(time.time())[0:10])    time,string
+	${timel}    Evaluate      int(str(time.time())[0:10])    time,string
 	[Return]    ${timel}
 	
 	
