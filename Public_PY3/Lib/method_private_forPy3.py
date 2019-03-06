@@ -1,4 +1,4 @@
-import jsonpointer,json
+import jsonpointer, json
 
 ### global variable
 null = None
@@ -42,14 +42,14 @@ def use_jsonpointer(doc, pointer):
     elif pointer_in_doc == None:
         print("It's right!!")
         print(type("null"))
-        return 'null'
+        return None
 
     elif type(pointer_in_doc) == list:
         pointer_in_doc = str(pointer_in_doc)
 
     elif type(pointer_in_doc) == dict:
         # pointer_in_doc = str(pointer_in_doc)
-        pointer_in_doc=json.dumps(pointer_in_doc)
+        pointer_in_doc = json.dumps(pointer_in_doc)
 
     else:
         pointer_in_doc = str(pointer_in_doc)
@@ -205,11 +205,9 @@ def stringify_json(content):
             content, exc))
 
 
-
-a='{"ret":"0","msg":"成功","data":null}'
+a = '{"ret":"0","msg":"成功","data":null}'
 import json
 # b=json.loads(a)
-
 
 # 	'{
 #     "ret": "0",
@@ -263,4 +261,4 @@ import json
 #     }
 # }'
 
-get_json_value("{'data':null}","/data")
+get_json_value("{'data':null}", "/data")
