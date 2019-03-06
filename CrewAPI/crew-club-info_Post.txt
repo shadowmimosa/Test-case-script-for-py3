@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation     crew-club-info 接口脚本
+Documentation     跑盟信息crew-club-info 接口脚本
 Resource          ../Public/public_lib.txt    #Library    Collections    #Library    RequestsLibrary    #Library    pymysql
 ...               #Library    DatabaseLibrary    #Library    String    #Library    HttpLibrary.HTTP    #Library
 ...               # ../Public/Lib/tools_library.py
@@ -10,15 +10,15 @@ ${userName}       13829744542    # 默认的用户名
 ${ContentType}    application/x-www-form-urlencoded;charset=UTF-8    # POST数据格式
 
 *** Test Cases ***    clubid             ret
-Class_01              [Documentation]    crew-club-info TestCase测试用例
-                      [Tags]             Test                            Online    auto_v1
+Class_01              [Documentation]    跑盟信息crew-club-info TestCase测试用例
+                      [Tags]             Test                               Online    auto_v1
                       [Template]         crew-club-info_Post_Keywords
                       A1391              0
 
 *** Keywords ***
 crew-club-info_Post_Keywords
     [Arguments]    ${clubid}    ${ret}
-    [Documentation]    crew-club-info 接口用例的Keywords关健字
+    [Documentation]    跑盟信息crew-club-info 接口用例的Keywords关健字
     ######Evaluate    reload(sys)    sys
     ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例

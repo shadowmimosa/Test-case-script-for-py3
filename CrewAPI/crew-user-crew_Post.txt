@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation     crew-user-crew 接口脚本
+Documentation     查看某人跑团信息crew-user-crew 接口脚本
 Resource          ../Public/public_lib.txt
 
 *** Variable ***
@@ -7,23 +7,23 @@ ${pwd}            67889911    # 密码
 ${userName}       13829744541    # 默认的用户名
 ${ContentType}    application/x-www-form-urlencoded;charset=UTF-8    # POST数据格式
 
-*** Test Cases ***    uid                ret                             msg
-Class_01              [Documentation]    crew-user-crew TestCase测试用例
-                      [Tags]             Test                            auto_v1
+*** Test Cases ***    uid                ret                                    msg
+Class_01              [Documentation]    查看某人跑团信息crew-user-crew TestCase测试用例
+                      [Tags]             Test                                   auto_v1
                       [Template]         crew-user-crew_Post_Keywords
-                      32521559           "0"                             成功
+                      32521559           "0"                                    成功
 
-Class_02              [Documentation]    crew-user-crew TestCase测试用例
-                      [Tags]             auto_v1                         Online
+Class_02              [Documentation]    查看某人跑团信息crew-user-crew TestCase测试用例
+                      [Tags]             auto_v1                                Online
                       [Template]         crew-user-crew_Post_Keywords
-                      86072310           "0"                             成功
+                      86072310           "0"                                    成功
 
 *** Keywords ***
 crew-user-crew_Post_Keywords
     [Arguments]    ${uid}    ${ret}    ${msg}
-    [Documentation]    crew-user-crew 接口用例的Keywords关健字
-    ######Evaluate       reload(sys)    sys
-    ##Evaluate      sys.setdefaultencoding( "utf-8" )    sys
+    [Documentation]    查看某人跑团信息crew-user-crew 接口用例的Keywords关健字
+    ######Evaluate    reload(sys)    sys
+    ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
     #从配置的用户列表中随机取一个用户运行此用例
     #${userName}    Env_username
     ${path}=    set variable    /crew-user-crew
