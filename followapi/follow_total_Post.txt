@@ -11,9 +11,9 @@ ${ContentType}    application/x-www-form-urlencoded;charset=UTF-8    # POST数�
 
 *** Test Cases ***    uid                ret                           msg
 Class_01              [Documentation]    follow/total TestCase测试用例
-                      [Tags]             Test                          Online    txy    v4.7
+                      [Tags]             Test                          Online      txy    v4.7
                       [Template]         follow_total_Post_Keywords
-                      2121463            0                             成功
+                      2121463            0                             ${EMPTY}
 
 *** Keywords ***
 follow_total_Post_Keywords
