@@ -91,6 +91,9 @@ racelive_URL='http://racelive.api.thejoyrun.com'
 #搜索
 search_URL='http://search.api.thejoyrun.com'
 
+#社区-关注&筛选好友
+follow_URL='http://follow.api.thejoyrun.com'
+
 
 #=====小程序相关配置=================================
 

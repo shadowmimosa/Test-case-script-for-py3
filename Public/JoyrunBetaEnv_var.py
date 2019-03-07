@@ -102,6 +102,10 @@ search_URL='http://search-betaenv.api.thejoyrun.com'
 training_dubbox_URL='http://training.dubbox.betaenv.thejoyrun.com'
 
 
+#社区-关注&筛选好友
+follow_URL='http://follow-betaenv.api.thejoyrun.com'
+
+
 #=====小程序相关配置=================================
 
 #小程序统一域名
