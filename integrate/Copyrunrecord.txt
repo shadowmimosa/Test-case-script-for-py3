@@ -50,6 +50,9 @@ RunRecord_Run
     ${isaltitude}    Get Count    ${src}    "altitude":
     ${altitude}    Run Keyword If    ${isaltitude}>0    get json value    ${src}    /runrecord/altitude
     ...    ELSE    set variable    0
+	${altitudelen}   Evaluate   len(${altitude})
+	${altitude}    Run Keyword If    ${altitudelen}>2    set variable    ${altitude}
+    ...    ELSE    set variable    0
     ${content}=    get json value    ${src}    /runrecord/content
     ${daka}=    get json value    ${src}    /runrecord/daka
     ${heartrate}=    get json value    ${src}    /runrecord/heartrate
@@ -96,7 +99,7 @@ RunRecord_Run
     ${starttime}=    convert to string    ${starttime}
     #对数组类型处理
     ${altitude}=    Run Keyword If    ${altitude}!=0    arraytostring    ${altitude}
-    ${heartrate}=    arraytostring    ${heartrate}
+    ${heartrate}    Run Keyword If    '${altitude}'!='null' or '${altitude}'!='None'    arraytostring    ${heartrate}
     ${content}=    arraytostring    ${content}
     ${stepcontent}=    arraytostring    ${stepcontent}
     ${stepremark}=    arraytostring    ${stepremark}
