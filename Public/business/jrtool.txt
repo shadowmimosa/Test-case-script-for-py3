@@ -236,6 +236,7 @@ arraytostring
     [Arguments]    ${array}
     [Documentation]    将字符类型改为数组类型，例如变量值"[a,b c]" 换成[a,b,c]
     log    arraytostring Start ......
+	Run Keyword IF   '${array}'=='None' or '${array}'=='null'   Return From Keyword   None   
     ${list}=    evaluate    "".join(${array})
     log    arraytostring End ......
     [Return]    ${list}
