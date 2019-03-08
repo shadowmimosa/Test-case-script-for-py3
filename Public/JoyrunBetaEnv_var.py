@@ -101,6 +101,8 @@ search_URL='http://search-betaenv.api.thejoyrun.com'
 #语音训练—H5
 training_dubbox_URL='http://training.dubbox.betaenv.thejoyrun.com'
 
+#feed
+post_URL='http://post-betaenv.api.thejoyrun.com' 
 
 #=====小程序相关配置=================================
 

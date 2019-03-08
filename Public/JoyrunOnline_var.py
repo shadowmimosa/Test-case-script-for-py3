@@ -90,7 +90,8 @@ trip_URL='http://trip.api.thejoyrun.com'
 racelive_URL='http://racelive.api.thejoyrun.com'
 #搜索
 search_URL='http://search.api.thejoyrun.com'
-
+#feed
+post_URL='http://post.api.thejoyrun.com'
 
 #=====小程序相关配置=================================
 
