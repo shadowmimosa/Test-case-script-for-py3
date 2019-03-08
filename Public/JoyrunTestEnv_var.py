@@ -95,8 +95,14 @@ search_URL='http://search-test.api.thejoyrun.com'
 #语音训练—H5
 training_dubbox_URL='http://training.dubbox.test.thejoyrun.com'
 
+
 #feed
 post_URL='http://post-test.api.thejoyrun.com'
+
+
+#社区-关注&筛选好友
+follow_URL='http://follow-test.api.thejoyrun.com'
+
 
 
 ##===================小程序相关配置=====================
