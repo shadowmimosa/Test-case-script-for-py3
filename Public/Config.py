@@ -23,7 +23,7 @@ print("Python version is %s" %pyvs)
 home=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ##用于存储存用户相关的信息 uid,sid,crewid,
 usersinfo_dict={}
-	
+    
 ##==================================开发测试生产环境通用参数=======================
 #请求头参数-前端系统版本号
 SYSVERSION='11.2.1'
@@ -90,13 +90,13 @@ JoyrunEvn='Beta'
 Env=''
 ##根据JoyrunEnv变量导入不同的变量文件；
 if  JoyrunEvn in ['Test','test','0',0]:
-	from JoyrunTestEnv_var import *
-	Env='Test'
+    from JoyrunTestEnv_var import *
+    Env='Test'
 elif JoyrunEvn in ['Beta','beta','BeataEnv','betaenv','1',1,None]:
-	from JoyrunBetaEnv_var import *
-	Env='Beta'
+    from JoyrunBetaEnv_var import *
+    Env='Beta'
 else:
-	from JoyrunOnline_var import *
-	Env='Online'
+    from JoyrunOnline_var import *
+    Env='Online'
 
 

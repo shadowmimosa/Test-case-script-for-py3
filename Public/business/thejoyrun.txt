@@ -1,7 +1,6 @@
 *** Settings ***
 Library           ../Lib/tool_reptile.py
 Library           ../Lib/tools_library.py
-Resource          ../OtherMethod/cookie_operation.txt
 Resource          ../Public/http_request.txt
 Resource          jrtool.txt
 

@@ -59,16 +59,16 @@ if cmdpamlen >= 2:
 
 if Env in ['Test', 'test', '0', 0,'TEST','DEV','Dev']:
     Label = 'Test'
-    Vfile = os.path.join(os.path.join(home, 'Public'), 'JoyrunTestEnv_var.py')
+    Vfile = os.path.join(os.path.join(home, 'PubliCom'), 'JoyrunTestEnv_var.py')
 elif Env in ['Beta', 'beta', 'BeataEnv', 'betaenv', '1', 1, None,'']:
     Label = 'Test'
-    Vfile = os.path.join(os.path.join(home, 'Public'), 'JoyrunBetaEnv_var.py')
+    Vfile = os.path.join(os.path.join(home, 'PubliCom'), 'JoyrunBetaEnv_var.py')
 elif Env in ['Online', 'online', 'OnLine', 'ONLINE', '2', 2, 'ON','on']:
     Label = 'Online'
-    Vfile = os.path.join(os.path.join(home, 'Public'), 'JoyrunOnline_var.py')
+    Vfile = os.path.join(os.path.join(home, 'PubliCom'), 'JoyrunOnline_var.py')
 else:
     Label = 'All'
-    Vfile = os.path.join(os.path.join(home, 'Public'), 'JoyrunBetaEnv_var.py')
+    Vfile = os.path.join(os.path.join(home, 'PubliCom'), 'JoyrunBetaEnv_var.py')
 print('Run Env is [{}]'.format(Env))
 print('Run Label is [{}]'.format(Label))
 print('Run Vfile is [{}]'.format(Vfile))

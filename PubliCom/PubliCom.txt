@@ -1,0 +1,33 @@
+*** Settings ***
+Resource          ../Public/public_lib.txt
+Variables         Config.py    #Resource | ../Public_PY3/public_lib.txt
+
+*** Variable ***
+
+*** Keywords ***
+importRes
+    [Arguments]    ${path}=None    ${num}=None
+    [Documentation]    导入res资源
+    Run Keyword If    ${pyvs}==2    Import Resource    ${CURDIR}/../Public/Public/business/thejoyrun.txt
+    ... ELSE    Import Resource    ${CURDIR}/../Public_PY3/Public/business/thejoyrun.txt
+    Run Keyword If    ${pyvs}==2    Import Resource    ${CURDIR}/../Public/Public/business/joyrunbusiness.txt
+    ... ELSE    Import Resource    ${CURDIR}/../Public_PY3/Public/business/joyrunbusiness.txt
+    Run Keyword If    ${pyvs}==2    Import Resource    ${CURDIR}/../Public/public_lib.txt
+    ... ELSE    Import Resource    ${CURDIR}/../Public_PY3/public_lib.txt
+    Run Keyword If    ${pyvs}==2    Import Resource    ${CURDIR}/../Public/Public/business/jrtool.txt
+    [Return]    ${1}
+
+importLibs
+    [Arguments]    ${path}=None    ${num}=None
+    [Documentation]    导入lib库文件
+    Run Keyword If    ${pyvs}==2    Import Library    ${CURDIR}/../Public/Public/Lib/tools_library.py
+    ... ELSE    Import Library    ${CURDIR}/../Public_PY3/Public/Lib/tools_library.py
+    Run Keyword If    ${pyvs}==2    Import Library    ${CURDIR}/../Public/Public/Lib/Usertool_01.py
+    ... ELSE    Import Library    ${CURDIR}/../Public_PY3/Public/Lib/Usertool_01.py
+    Run Keyword If    ${pyvs}==2    Import Library    ${CURDIR}/../Public/Public/Lib/tool_reptile.py
+    ... ELSE    Import Library    ${CURDIR}/../Public_PY3/Public/Lib/tool_reptile.py
+    Run Keyword If    ${pyvs}==2    Import Library    ${CURDIR}/../Public/Public/Lib/Verification_Field.py
+    ... ELSE    Import Library    ${CURDIR}/../Public_PY3/Public/Lib/Verification_Field.py
+    Run Keyword If    ${pyvs}==2    Import Library    ${CURDIR}/../Public/Public/Lib/Verification.py
+    ... ELSE    Import Library    ${CURDIR}/../Public_PY3/Public/Lib/Verification.py
+    [Return]    ${1}

@@ -1,6 +1,6 @@
 *** Settings ***
 Documentation     全局广告接口
-Resource          ../Public/public_lib.txt
+Resource          ../PubliCom/PubliCom.txt
 
 *** Variable ***
 ${pwd}            67889911    #
@@ -21,7 +21,7 @@ advert-list_Post_assertClass
     ${maps}=    create dictionary
     log    ---输出参数---
     log    ${maps}
-    log    ---输出测试地址---
+    log    ---输出测试地址--
     log    ${advert_URL}
     #${resp}=    thejoyrun_postd    ${path}    ${maps}    ${userName}    ${advert_URL}
     ${content}    thejoyrun_Keywords    ${advert_URL}    ${path}    ${userName}    ${pwd}
