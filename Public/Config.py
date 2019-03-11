@@ -85,7 +85,7 @@ SRPam=123456
 ##运行次数,用于运行个别用例多次运行；
 times=0
 
-JoyrunEvn='Beta'
+JoyrunEvn='Test'
 
 Env=''
 ##根据JoyrunEnv变量导入不同的变量文件；
