@@ -40,4 +40,4 @@ follow_list_Post_Keywords
     should contain    ${content}    "msg":"${msg}"
     #当需要添加对data的内容进行单独验证时，可以以下方式
     #${data}    get json value    ${content}    /data
-    log    验证OK！！用户${userName}；URL：${equipment_URL}${path}；传参：${maps}！！
+    log    验证OK！！用户${userName}；URL：${follow_URL}${path}；传参：${maps}！！

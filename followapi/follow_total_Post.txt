@@ -5,19 +5,19 @@ Resource          ../Public/public_lib.txt    #Library    Collections    #Librar
 ...               # ../Public/Lib/tools_library.py
 
 *** Variable ***
-${pwd}            xy000000    # 密码
-${userName}       15435124    # 默认的用户名
+${pwd}            67889911    # 密码
+${userName}       13829744541    # 默认的用户名
 ${ContentType}    application/x-www-form-urlencoded;charset=UTF-8    # POST数据格式
 
 *** Test Cases ***    targetUid          ret                           msg
 Class_01              [Documentation]    follow/total TestCase测试用例
                       [Tags]             Test                          Online      txy    v4.7
                       [Template]         follow_total_Post_Keywords
-                      32518359           0                             ${EMPTY}
+                      15435124           0                             ${EMPTY}
 
 *** Keywords ***
 follow_total_Post_Keywords
-    [Arguments]    ${uid}    ${ret}    ${msg}
+    [Arguments]    ${targetUid}    ${ret}    ${msg}
     [Documentation]    follow/total 接口用例的Keywords关健字
     ######Evaluate    reload(sys)    sys
     ##Evaluate    sys.setdefaultencoding( "utf-8" )    sys
@@ -25,7 +25,7 @@ follow_total_Post_Keywords
     #${userName}    Env_username
     ${path}=    set variable    /follow/total
     ${maps}=    create dictionary
-    set to dictionary    ${maps}    uid=${uid}
+    set to dictionary    ${maps}    targetUid=${targetUid}
     log    ========输出接口URL：${follow_URL}${path}
     log    ========接口的入参为：${userName}:${maps}==========
     ${resp}=    thejoyrun_postd    ${path}    ${maps}    ${userName}    ${follow_URL}
