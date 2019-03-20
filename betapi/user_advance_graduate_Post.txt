@@ -24,7 +24,7 @@ selectfiltergraduate
     ...    ELSE    get json value    ${classIdsrc}    /todayComplete
     ${classId}    Run Keyword If    '${classIdsrc}'=='0'    set variable    1
     ...    ELSE    get json value    ${classIdsrc}    /classId
-    Run Keyword If    '${classIdsrc}'=='0'    log    =======${userName}没有参加约定跑！！========
+    Run Keyword If    '${classIdsrc}'=='0' or '${classId}'=='0'   log    =======${userName}没有参加约定跑！！========
     ...    ELSE IF    ${fullComplete}==0    user_advance_graduate_Post_Keywords    ${classId}    61005    暂时无法提前毕业
     ...    ELSE    user_advance_graduate_Post_Keywords    ${classId}    ${ret}    ${msg}
 
