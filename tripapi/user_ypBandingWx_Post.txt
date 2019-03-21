@@ -5,8 +5,8 @@ Resource          ../Public/public_lib.txt    #Library    Collections    #Librar
 ...               # ../Public/Lib/tools_library.py
 
 *** Variable ***
-${pwd}            123321    # 密码
-${userName}       15724057586    # 默认的用户名
+${pwd}            67889911    # 密码
+${userName}       13064764870    # 默认的用户名
 ${ContentType}    application/x-www-form-urlencoded;charset=UTF-8    # POST数据格式
 
 *** Test Cases ***    ret                msg

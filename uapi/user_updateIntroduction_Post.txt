@@ -13,7 +13,11 @@ ${ContentType}    application/x-www-form-urlencoded;charset=UTF-8    # POST数�
 Class_01              [Documentation]    user/updateIntroduction TestCase测试用例
                       [Tags]             Test                                     txy    Online    v4.7    auto_v1
                       [Template]         user_updateIntroduction_Post_Keywords
-                      微商                 0                                        成功
+                      跑步大咖！                 0                                        成功
+Class_02              [Documentation]    敏感词user/updateIntroduction TestCase测试用例
+                      [Tags]                                                  txy    Online    v4.7    auto_v1
+                      [Template]         user_updateIntroduction_Post_Keywords
+                      微商                 -1                                        保存的内容包含敏感词，请更换后重试					  
 
 *** Keywords ***
 user_updateIntroduction_Post_Keywords
