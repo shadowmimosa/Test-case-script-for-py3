@@ -16,7 +16,7 @@ pyvs = sys.version_info.major
 if pyvs == 3:
     print('python version is  V3.x')
 
-    # On python3, rename folder.
+    # On python3, rename folder.  
     if not os.path.exists(os.path.join(home, 'Public_PY2')):
         try:
             os.rename(
